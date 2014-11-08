@@ -16,3 +16,7 @@ Trapped
 **Q:** *Where is issues dashboard?*
 
 **A:** *[Here!](https://trello.com/b/0SxSY5va/trapped)*
+
+**Q:** *Where is documents?*
+
+**A:** *[Here!](https://drive.google.com/folderview?id=0B-irCNF2gBrHMno2MzJtcFZLalE&usp=sharing)*
