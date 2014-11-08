@@ -12,3 +12,7 @@ Trapped
 5. Choose folder with project.
 6. ??????
 7. PROFIT!
+
+**Q:** *Where is issues dashboard?*
+
+**A:** *[Here!](https://trello.com/b/0SxSY5va/trapped)*
