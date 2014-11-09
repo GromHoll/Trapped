@@ -66,7 +66,7 @@ public class GameEntry : MonoBehaviour {
 		for (int x = 0; x < level.xSize; x++) {
 			for (int y = 0; y < level.ySize; y++) {
 				GameObject prefab = null;
-                switch (level.cells[x,y].getType()) {
+                switch (level.cells[x,y].GetType()) {
 					case CellType.EMPTY: 
 						prefab = tilePrefab;
 						break;
@@ -87,10 +87,10 @@ public class GameEntry : MonoBehaviour {
 						break;				
 				}
 				GameObject gameObject = InstantiateChild(prefab, GameCoord(x, y), Quaternion.identity);
-                if (level.cells[x,y].getType() == CellType.SPEAR) {
+                if (level.cells[x,y].GetType() == CellType.SPEAR) {
 					spearsCells.Add(level.cells[x,y], gameObject);
 				}
-                if (level.cells[x,y].getType() != CellType.EMPTY && level.cells[x,y].getType() != CellType.WALL) {
+                if (level.cells[x,y].GetType() != CellType.EMPTY && level.cells[x,y].GetType() != CellType.WALL) {
 					InstantiateChild(tilePrefab, GameCoord(x, y), Quaternion.identity);
 				}
 			}		
@@ -102,12 +102,12 @@ public class GameEntry : MonoBehaviour {
 	private void CreateLaserCover() {
 		for (int x = 0; x < level.xSize; x++) {
 			for (int y = 0; y < level.ySize; y++) {
-                if(level.cells[x,y].getType() == CellType.LASER) {
+                if(level.cells[x,y].GetType() == CellType.LASER) {
 					LaserCell laserCell = (LaserCell)level.cells[x,y];
 					ArrayList prefabs = new ArrayList();
 					
 					if(laserCell.IsUp()) {
-						int yCoord = laserCell.getY();
+						int yCoord = laserCell.GetY();
 						
 						while(--yCoord!=-1 ) {
 							if(level.cells[x, yCoord].IsBocked()) { break; }
@@ -116,7 +116,7 @@ public class GameEntry : MonoBehaviour {
 						}
 					}
 					if(laserCell.IsRight()) {
-						int xCoord = laserCell.getX();
+						int xCoord = laserCell.GetX();
 						while(++xCoord!=level.xSize) {
 							if(level.cells[xCoord, y].IsBocked()) { break; }
 							
@@ -125,7 +125,7 @@ public class GameEntry : MonoBehaviour {
 					}
 					
 					if(laserCell.IsDown()) {
-                        int yCoord = laserCell.getY();
+                        int yCoord = laserCell.GetY();
 						while(++yCoord!=level.ySize ) {
 							if(level.cells[x, yCoord].IsBocked()) { break; }
 							
@@ -133,7 +133,7 @@ public class GameEntry : MonoBehaviour {
 						}
 					}
 					if(laserCell.IsLeft()) {
-                        int xCoord = laserCell.getX();
+                        int xCoord = laserCell.GetX();
 						while(--xCoord!=-1) {
 							if(level.cells[xCoord, y].IsBocked()) { break; }
 							
@@ -301,7 +301,7 @@ public class GameEntry : MonoBehaviour {
 				pathObjects.Remove(last);
 
 				hero.transform.position = heroPos;
-				level.backTick();
+				level.BackTick();
 			} else if (!HeroWasHere(heroPos) && !failStep) {
 				Vector2 oldCoord = LevelCoord (hero.transform.position);
 				path.Add(oldCoord);
@@ -326,7 +326,7 @@ public class GameEntry : MonoBehaviour {
 				pathObjects.Add(oldCoord, pathObject);
 
 				hero.transform.position = heroPos;
-				level.nextTick();
+				level.NextTick();
 			}
 		}
 	}

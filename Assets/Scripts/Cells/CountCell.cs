@@ -21,7 +21,7 @@ public class CountCell : Cell {
     public CountCell(Vector2 coordinate, CellType type)
         : this(coordinate, type, DEFAULT_PERIOD, DEFAULT_PERIOD, 0, DEFAULT_ON_STATE) {}
 
-    public override void nextTick() {
+    public override void NextTick() {
         currentTick++;
         if (currentTick == getCurrentPeriod()) {
             currentTick = 0;
@@ -29,7 +29,7 @@ public class CountCell : Cell {
         }
     }
 
-    public override void backTick() {
+    public override void BackTick() {
         currentTick--;
         if (currentTick == -1) {
             currentTick = getCurrentPeriod() - 1;

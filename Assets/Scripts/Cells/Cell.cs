@@ -23,22 +23,22 @@ public class Cell {
         return false;
     }
 
-    public Vector2 getCoordinate() {
+    public Vector2 GetCoordinate() {
         return coordinate;
     }
 
-    public int getX() {
+    public int GetX() {
         return (int) coordinate.x;
     }
 
-    public int getY() {
+    public int GetY() {
         return (int) coordinate.y;
     }
     
-    public CellType getType() {
+    public CellType GetType() {
         return type;
     }
 
-    public virtual void nextTick() {}
-    public virtual void backTick() {}
+    public virtual void NextTick() {}
+    public virtual void BackTick() {}
 }

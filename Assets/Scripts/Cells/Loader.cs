@@ -44,7 +44,7 @@ public class Loader {
 	}
 
 	public Level makeLevel() {
-		Level l = new Level (xSize, ySize, levelName);
+        Level l = new Level(levelName, xSize, ySize);
 
 		Cell cell;
 		for (int y = 0; y < ySize; y++) {
@@ -55,7 +55,7 @@ public class Loader {
 				} else if(currentSymbol=='f') {
 					l.finish = new Vector2(x, y);
 				} else if(currentSymbol=='b') {
-					l.addBonus(new Vector2(x, y));
+					l.AddBonus(new Vector2(x, y));
 				}
 
 				if(description.Contains(symbols[y, x])) {
@@ -65,7 +65,7 @@ public class Loader {
 					cell = CellFactory.getCellBySymbol(symbols[y, x], new Vector2(x, y));
 				}
 
-				l.addCell(cell);
+				l.AddCell(cell);
 			}
 		}
 
