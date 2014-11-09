@@ -3,16 +3,16 @@
 public class Cell {
 
     protected Vector2 coordinate;
-    protected CellType type;
+    protected CellType cellType;
    
     public Cell(Vector2 coordinate) {
         this.coordinate = coordinate;
-        this.type = CellType.EMPTY;
+        this.cellType = CellType.EMPTY;
     }
 
     public Cell(Vector2 coordinate, CellType type) {
         this.coordinate = coordinate;
-        this.type = type;
+        this.cellType = type;
     }
 
     public virtual bool IsBocked() {
@@ -35,8 +35,8 @@ public class Cell {
         return (int) coordinate.y;
     }
     
-    public CellType GetType() {
-        return type;
+    public CellType GetCellType() {
+        return cellType;
     }
 
     public virtual void NextTick() {}

@@ -66,7 +66,7 @@ public class GameEntry : MonoBehaviour {
 		for (int x = 0; x < level.xSize; x++) {
 			for (int y = 0; y < level.ySize; y++) {
 				GameObject prefab = null;
-                switch (level.cells[x,y].GetType()) {
+                switch (level.cells[x,y].GetCellType()) {
 					case CellType.EMPTY: 
 						prefab = tilePrefab;
 						break;
@@ -87,10 +87,10 @@ public class GameEntry : MonoBehaviour {
 						break;				
 				}
                 GameObject gameObject = InstantiateChild(prefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
-                if (level.cells[x,y].GetType() == CellType.SPEAR) {
+                if (level.cells[x,y].GetCellType() == CellType.SPEAR) {
 					spearsCells.Add(level.cells[x,y], gameObject);
 				}
-                if (level.cells[x,y].GetType() != CellType.EMPTY && level.cells[x,y].GetType() != CellType.WALL) {
+                if (level.cells[x,y].GetCellType() != CellType.EMPTY && level.cells[x,y].GetCellType() != CellType.WALL) {
                     InstantiateChild(tilePrefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
 				}
 			}		
@@ -102,7 +102,7 @@ public class GameEntry : MonoBehaviour {
 	private void CreateLaserCover() {
 		for (int x = 0; x < level.xSize; x++) {
 			for (int y = 0; y < level.ySize; y++) {
-                if(level.cells[x,y].GetType() == CellType.LASER) {
+                if(level.cells[x,y].GetCellType() == CellType.LASER) {
 					LaserCell laserCell = (LaserCell)level.cells[x,y];
 					ArrayList prefabs = new ArrayList();
 					
@@ -319,8 +319,6 @@ public class GameEntry : MonoBehaviour {
 		}
 	}
 
-
-
 	private bool HeroOnMap(Vector2 pos) {
         var p = level.ConvertToLevelCoord(pos);
 		return p.x >= 0 && p.x <= level.xSize - 1 && p.y >= 0 && p.y <= level.ySize - 1; 
@@ -345,11 +343,10 @@ public class GameEntry : MonoBehaviour {
 	private bool HeroIsBack(Vector2 pos) {
 		if (path.Count != 0) {
             var p = level.ConvertToLevelCoord(pos);
-			var last = (Vector2)path [path.Count - 1];
+			var last = (Vector2) path[path.Count - 1];
 			return p == last;
 		} else {
 			return false;
 		}
 	}
-
 }
