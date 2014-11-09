@@ -46,4 +46,20 @@ public class Level {
             cell.BackTick();
         }
     }
+
+    public Vector2 ConvertToGameCoord(Vector2 pos) {
+        return ConvertToGameCoord(pos.x, pos.y);
+    }
+
+    public Vector2 ConvertToGameCoord(float x, float y) {
+        float gameX = x - (xSize - 1)/2f;
+        float gameY = y - (ySize - 1)/2f;
+        return new Vector2(gameX, gameY);
+    }
+    
+    public Vector2 ConvertToLevelCoord(Vector2 pos) {
+        float levelX = pos.x + (xSize - 1)/2f;
+        float levelY = pos.y + (ySize - 1)/2f;
+        return new Vector2(levelX, levelY);
+    }
 }

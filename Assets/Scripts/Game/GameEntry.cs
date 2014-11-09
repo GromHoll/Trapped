@@ -53,11 +53,11 @@ public class GameEntry : MonoBehaviour {
 		level = loader.makeLevel();
 		CreateLevelObjects();
 
-		hero = InstantiateChild(heroPrefab, GameCoord(level.start), Quaternion.identity);
-		deadHero = InstantiateChild(skullPrefab, GameCoord(level.start), Quaternion.identity);
-		finish = InstantiateChild(finishPrefab, GameCoord(level.finish), Quaternion.identity);
+        hero = InstantiateChild(heroPrefab, level.ConvertToGameCoord(level.start), Quaternion.identity);
+        deadHero = InstantiateChild(skullPrefab, level.ConvertToGameCoord(level.start), Quaternion.identity);
+        finish = InstantiateChild(finishPrefab, level.ConvertToGameCoord(level.finish), Quaternion.identity);
 		foreach (Vector2 coord in level.bonuses) {
-			bonuses.Add(InstantiateChild(bonusPrefab, GameCoord(coord), Quaternion.identity));	
+            bonuses.Add(InstantiateChild(bonusPrefab, level.ConvertToGameCoord(coord), Quaternion.identity));	
 		}
 		UpdateLasers();
 	}
@@ -86,12 +86,12 @@ public class GameEntry : MonoBehaviour {
 						prefab = unknownPrefab;	
 						break;				
 				}
-				GameObject gameObject = InstantiateChild(prefab, GameCoord(x, y), Quaternion.identity);
+                GameObject gameObject = InstantiateChild(prefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
                 if (level.cells[x,y].GetType() == CellType.SPEAR) {
 					spearsCells.Add(level.cells[x,y], gameObject);
 				}
                 if (level.cells[x,y].GetType() != CellType.EMPTY && level.cells[x,y].GetType() != CellType.WALL) {
-					InstantiateChild(tilePrefab, GameCoord(x, y), Quaternion.identity);
+                    InstantiateChild(tilePrefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
 				}
 			}		
 		}
@@ -112,7 +112,7 @@ public class GameEntry : MonoBehaviour {
 						while(--yCoord!=-1 ) {
 							if(level.cells[x, yCoord].IsBocked()) { break; }
 							
-							prefabs.Add (InstantiateChild(lineVPrefab, GameCoord(x, yCoord), Quaternion.identity));
+                            prefabs.Add (InstantiateChild(lineVPrefab, level.ConvertToGameCoord(x, yCoord), Quaternion.identity));
 						}
 					}
 					if(laserCell.IsRight()) {
@@ -120,7 +120,7 @@ public class GameEntry : MonoBehaviour {
 						while(++xCoord!=level.xSize) {
 							if(level.cells[xCoord, y].IsBocked()) { break; }
 							
-							prefabs.Add (InstantiateChild(lineHPrefab, GameCoord(xCoord, y), Quaternion.identity));
+                            prefabs.Add (InstantiateChild(lineHPrefab, level.ConvertToGameCoord(xCoord, y), Quaternion.identity));
 						}
 					}
 					
@@ -129,7 +129,7 @@ public class GameEntry : MonoBehaviour {
 						while(++yCoord!=level.ySize ) {
 							if(level.cells[x, yCoord].IsBocked()) { break; }
 							
-							prefabs.Add (InstantiateChild(lineVPrefab, GameCoord(x, yCoord), Quaternion.identity));
+                            prefabs.Add (InstantiateChild(lineVPrefab, level.ConvertToGameCoord(x, yCoord), Quaternion.identity));
 						}
 					}
 					if(laserCell.IsLeft()) {
@@ -137,7 +137,7 @@ public class GameEntry : MonoBehaviour {
 						while(--xCoord!=-1) {
 							if(level.cells[xCoord, y].IsBocked()) { break; }
 							
-							prefabs.Add (InstantiateChild(lineHPrefab, GameCoord(xCoord, y), Quaternion.identity));
+                            prefabs.Add (InstantiateChild(lineHPrefab, level.ConvertToGameCoord(xCoord, y), Quaternion.identity));
 						}
 					}
 					laserCoverCells.Add (new Vector2(x, y), prefabs);
@@ -261,18 +261,6 @@ public class GameEntry : MonoBehaviour {
 		return hero.transform.position == finish.transform.position;
 	}
 
-	private Vector2 GameCoord(float x, float y) {
-		return new Vector2(x - (level.xSize-1)/2f, y - (level.ySize-1)/2f);
-	}
-
-	private Vector2 GameCoord(Vector2 pos) {
-		return GameCoord(pos.x, pos.y);
-	}
-	
-	private Vector2 LevelCoord(Vector2 pos) {
-		return new Vector2(pos.x + (level.xSize-1)/2f, pos.y + (level.ySize-1)/2f);
-	}
-
 	void UpdateInput() {
 		bool left  = Input.GetKeyDown(KeyCode.LeftArrow);
 		bool right = Input.GetKeyDown(KeyCode.RightArrow);
@@ -303,10 +291,10 @@ public class GameEntry : MonoBehaviour {
 				hero.transform.position = heroPos;
 				level.BackTick();
 			} else if (!HeroWasHere(heroPos) && !failStep) {
-				Vector2 oldCoord = LevelCoord (hero.transform.position);
+                Vector2 oldCoord = level.ConvertToLevelCoord(hero.transform.position);
 				path.Add(oldCoord);
 				GameObject prefab;
-				Vector2 coord = GameCoord(oldCoord);
+                Vector2 coord = level.ConvertToGameCoord(oldCoord);
 				if (hero.transform.position.x - heroPos.x == 0) {
 					prefab = pathVPrefab;
 					if (hero.transform.position.y - heroPos.y < 0) {
@@ -334,12 +322,12 @@ public class GameEntry : MonoBehaviour {
 
 
 	private bool HeroOnMap(Vector2 pos) {
-		var p = LevelCoord (pos);
+        var p = level.ConvertToLevelCoord(pos);
 		return p.x >= 0 && p.x <= level.xSize - 1 && p.y >= 0 && p.y <= level.ySize - 1; 
 	}
 
 	private bool HeroIsBocked(Vector2 pos) {
-		var p = LevelCoord (pos);
+        var p = level.ConvertToLevelCoord (pos);
 		return level.cells[(int)p.x, (int)p.y].IsBocked();
 	}
 
@@ -350,13 +338,13 @@ public class GameEntry : MonoBehaviour {
 	}
 
 	private bool HeroWasHere(Vector2 pos) {
-		var p = LevelCoord (pos);
+        var p = level.ConvertToLevelCoord(pos);
 		return path.Contains(p);
 	}
 
 	private bool HeroIsBack(Vector2 pos) {
 		if (path.Count != 0) {
-			var p = LevelCoord (pos);
+            var p = level.ConvertToLevelCoord(pos);
 			var last = (Vector2)path [path.Count - 1];
 			return p == last;
 		} else {
