@@ -8,7 +8,6 @@ public class SpearCell : CountCell {
     public SpearCell(Vector2 coordinate)
         : base(coordinate, CellType.SPEAR) {}
 
-
     public override bool IsDeadly() {
         return isOn;
     }

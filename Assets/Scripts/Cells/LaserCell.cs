@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class LaserCell : CountCell {
     
@@ -8,10 +7,10 @@ public class LaserCell : CountCell {
     protected bool down;
     protected bool left;
 
-    public LaserCell(
-        Vector2 coordinate, int onPeriod, int offPeriod, int currentTick, bool isOn,
-        bool up, bool right, bool down, bool left
-        ) : base(coordinate, CellType.LASER, onPeriod, offPeriod, currentTick, isOn) {
+    public LaserCell(Vector2 coordinate, 
+                     int onPeriod, int offPeriod, int currentTick, bool isOn,
+                     bool up, bool right, bool down, bool left) 
+        : base(coordinate, CellType.LASER, onPeriod, offPeriod, currentTick, isOn) {
         this.up = up;
         this.right = right;
         this.down = down;
@@ -20,11 +19,11 @@ public class LaserCell : CountCell {
 
     public LaserCell(Vector2 coordinate, bool up, bool right, bool down, bool left)
         : base(coordinate, CellType.LASER) {
-		this.up = up;
-		this.right = right;
-		this.down = down;
-		this.left = left;
-	}
+        this.up = up;
+        this.right = right;
+        this.down = down;
+        this.left = left;
+    }
 
     public override bool IsBocked() {
         return true;

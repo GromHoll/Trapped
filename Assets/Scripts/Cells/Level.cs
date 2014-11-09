@@ -22,7 +22,7 @@ public class Level {
 		this.cells = new Cell[xSize, ySize];
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				addCell(new Tile(new Vector2(x, y), CellType.UNKNOWN));
+				addCell(new Cell(new Vector2(x, y), CellType.UNKNOWN));
 			}
 		}
 

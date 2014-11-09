@@ -1,7 +1,9 @@
 using UnityEngine;
-using System.Collections;
 
 public class CountCell : Cell {
+
+    public static readonly int DEFAULT_PERIOD = 1;
+    public static readonly bool DEFAULT_ON_STATE = false;
 
     protected bool isOn;
     protected int onPeriod;
@@ -9,7 +11,7 @@ public class CountCell : Cell {
     protected int currentTick;
 
     public CountCell(Vector2 coordinate, CellType type, int onPeriod, int offPeriod, int currentTick, bool isOn)
-            : base(coordinate, type) {
+        : base(coordinate, type) {
         this.onPeriod = onPeriod;
         this.offPeriod = offPeriod;
         this.currentTick = currentTick;
@@ -17,7 +19,7 @@ public class CountCell : Cell {
     }
 
     public CountCell(Vector2 coordinate, CellType type)
-        : this(coordinate, type, 1, 1, 0, false) {}
+        : this(coordinate, type, DEFAULT_PERIOD, DEFAULT_PERIOD, 0, DEFAULT_ON_STATE) {}
 
     public override void nextTick() {
         currentTick++;
