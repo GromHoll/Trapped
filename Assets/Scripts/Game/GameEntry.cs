@@ -66,7 +66,7 @@ public class GameEntry : MonoBehaviour {
 		for (int x = 0; x < level.xSize; x++) {
 			for (int y = 0; y < level.ySize; y++) {
 				GameObject prefab = null;
-				switch (level.cells[x,y].type) {
+                switch (level.cells[x,y].getType()) {
 					case CellType.EMPTY: 
 						prefab = tilePrefab;
 						break;
@@ -77,7 +77,7 @@ public class GameEntry : MonoBehaviour {
 						prefab = laserPrefab;
 						break;
 					case CellType.SPEAR: 
-						prefab = ((CountCell) level.cells[x,y]).isOn ? spearOnPrefab : spearOffPrefab;
+                        prefab = level.cells[x,y].IsDeadly() ? spearOnPrefab : spearOffPrefab;
 						break;
 					case CellType.WALL:  
 						prefab = wallPrefab;
@@ -87,10 +87,10 @@ public class GameEntry : MonoBehaviour {
 						break;				
 				}
 				GameObject gameObject = InstantiateChild(prefab, GameCoord(x, y), Quaternion.identity);
-				if (level.cells[x,y].type == CellType.SPEAR) {
+                if (level.cells[x,y].getType() == CellType.SPEAR) {
 					spearsCells.Add(level.cells[x,y], gameObject);
 				}
-				if (level.cells[x,y].type != CellType.EMPTY && level.cells[x,y].type != CellType.WALL) {
+                if (level.cells[x,y].getType() != CellType.EMPTY && level.cells[x,y].getType() != CellType.WALL) {
 					InstantiateChild(tilePrefab, GameCoord(x, y), Quaternion.identity);
 				}
 			}		
@@ -102,12 +102,12 @@ public class GameEntry : MonoBehaviour {
 	private void CreateLaserCover() {
 		for (int x = 0; x < level.xSize; x++) {
 			for (int y = 0; y < level.ySize; y++) {
-				if(level.cells[x,y].type == CellType.LASER) {
+                if(level.cells[x,y].getType() == CellType.LASER) {
 					LaserCell laserCell = (LaserCell)level.cells[x,y];
 					ArrayList prefabs = new ArrayList();
 					
-					if(laserCell.up) {
-						int yCoord = (int)laserCell.coordinate.y;
+					if(laserCell.IsUp()) {
+						int yCoord = laserCell.getY();
 						
 						while(--yCoord!=-1 ) {
 							if(level.cells[x, yCoord].IsBocked()) { break; }
@@ -115,8 +115,8 @@ public class GameEntry : MonoBehaviour {
 							prefabs.Add (InstantiateChild(lineVPrefab, GameCoord(x, yCoord), Quaternion.identity));
 						}
 					}
-					if(laserCell.right) {
-						int xCoord = (int)laserCell.coordinate.x;
+					if(laserCell.IsRight()) {
+						int xCoord = laserCell.getX();
 						while(++xCoord!=level.xSize) {
 							if(level.cells[xCoord, y].IsBocked()) { break; }
 							
@@ -124,16 +124,16 @@ public class GameEntry : MonoBehaviour {
 						}
 					}
 					
-					if(laserCell.down) {
-						int yCoord = (int)laserCell.coordinate.y;
+					if(laserCell.IsDown()) {
+                        int yCoord = laserCell.getY();
 						while(++yCoord!=level.ySize ) {
 							if(level.cells[x, yCoord].IsBocked()) { break; }
 							
 							prefabs.Add (InstantiateChild(lineVPrefab, GameCoord(x, yCoord), Quaternion.identity));
 						}
 					}
-					if(laserCell.left) {
-						int xCoord = (int)laserCell.coordinate.x;
+					if(laserCell.IsLeft()) {
+                        int xCoord = laserCell.getX();
 						while(--xCoord!=-1) {
 							if(level.cells[xCoord, y].IsBocked()) { break; }
 							
@@ -162,7 +162,7 @@ public class GameEntry : MonoBehaviour {
 		ICollection lasers = laserCoverCells.Keys;
 		foreach (Vector2 laserCoordinate in lasers) {
 			LaserCell laser = (LaserCell) level.cells[(int)laserCoordinate.x, (int)laserCoordinate.y];
-			if(laser.isOn) {
+            if(laser.IsOn()) {
 				ICollection covered = (ICollection) laserCoverCells[laserCoordinate];
 				foreach (GameObject obj in covered) {
 					obj.SetActive(true);
@@ -181,11 +181,11 @@ public class GameEntry : MonoBehaviour {
 		foreach (CountCell spear in spears) {
 			GameObject spearObject = (GameObject) spearsCells[spear];
 			SpriteRenderer renderer = spearObject.GetComponent<SpriteRenderer>();
-			SpriteRenderer newRenderer = spear.isOn ? spearOnPrefab.GetComponent<SpriteRenderer>()
+            SpriteRenderer newRenderer = spear.IsOn() ? spearOnPrefab.GetComponent<SpriteRenderer>()
 				                                    : spearOffPrefab.GetComponent<SpriteRenderer>();
 			renderer.sprite = newRenderer.sprite;	
 			renderer.color = newRenderer.color;		
-			spearObject.transform.localScale = spear.isOn ? spearOnPrefab.transform.localScale
+            spearObject.transform.localScale = spear.IsOn() ? spearOnPrefab.transform.localScale
 														  : spearOffPrefab.transform.localScale;
 		}
 	}
@@ -196,7 +196,7 @@ public class GameEntry : MonoBehaviour {
 		ICollection lasers = laserCoverCells.Keys;
 		foreach (Vector2 laserCoordinate in lasers) {
 			LaserCell laser = (LaserCell) level.cells[(int)laserCoordinate.x, (int)laserCoordinate.y];
-			if(laser.isOn) {
+            if(laser.IsOn()) {
 				ICollection covered = (ICollection) laserCoverCells[laserCoordinate];
 				foreach (GameObject obj in covered) {
 					if( heroCoord == (Vector2) obj.transform.position ) {
@@ -208,7 +208,7 @@ public class GameEntry : MonoBehaviour {
 
 		ICollection spears = spearsCells.Keys;
 		foreach (CountCell spear in spears) {
-			if(spear.isOn) {
+            if(spear.IsOn()) {
 				GameObject spearObject = (GameObject) spearsCells[spear];
 				if(heroCoord == (Vector2) spearObject.transform.position) {
 					return true;
@@ -340,7 +340,7 @@ public class GameEntry : MonoBehaviour {
 
 	private bool HeroIsBocked(Vector2 pos) {
 		var p = LevelCoord (pos);
-		return level.cells [(int)p.x, (int)p.y].IsBocked ();
+		return level.cells[(int)p.x, (int)p.y].IsBocked();
 	}
 
 	private bool HeroIsMoved(Vector2 pos) {

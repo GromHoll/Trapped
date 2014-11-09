@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public abstract class Cell {
-    public Vector2 coordinate;
-    public CellType type;
+public class Cell {
 
-    public bool IsBocked() {
-        return type == CellType.LASER || type == CellType.WALL;							
+    protected Vector2 coordinate;
+    protected CellType type;
+   
+    public Cell(Vector2 coordinate) {
+        this.coordinate = coordinate;
+        this.type = CellType.EMPTY;
     }
 
     public Cell(Vector2 coordinate, CellType type) {
@@ -14,6 +15,30 @@ public abstract class Cell {
         this.type = type;
     }
 
-    public abstract void nextTick();
-    public abstract void backTick();
+    public virtual bool IsBocked() {
+        return false;
+    }
+
+    public virtual bool IsDeadly() {
+        return false;
+    }
+
+    public Vector2 getCoordinate() {
+        return coordinate;
+    }
+
+    public int getX() {
+        return (int) coordinate.x;
+    }
+
+    public int getY() {
+        return (int) coordinate.y;
+    }
+    
+    public CellType getType() {
+        return type;
+    }
+
+    public virtual void nextTick() {}
+    public virtual void backTick() {}
 }

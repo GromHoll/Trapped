@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CellFactory {
@@ -14,7 +14,7 @@ public class CellFactory {
 
         if (name == "laser") {
             bool up = false, right = false, down = false, left = false;
-            result = new LaserCell (false, false, false, false, coordinate);
+            result = new LaserCell(coordinate, false, false, false, false);
             //ud off 3 3 1
             int directionCounter = items [1].Length;
             for (int i = 0; i< directionCounter; i++) {
@@ -32,7 +32,7 @@ public class CellFactory {
             offPeriod = int.Parse (items [4]);
             currentTick = int.Parse (items [5]);
 
-            result = new LaserCell (up, right, down, left, coordinate, onPeriod, offPeriod, currentTick, isOn);
+            result = new LaserCell (coordinate, onPeriod, offPeriod, currentTick, isOn, up, right, down, left);
 
         } else if (name == "spear") {
             if (items [1] == "on") { isOn = true; }
@@ -41,9 +41,9 @@ public class CellFactory {
             offPeriod = int.Parse (items [3]);
             currentTick = int.Parse (items [4]);
 
-            result = new CountCell (coordinate, CellType.SPEAR, onPeriod, offPeriod, currentTick, isOn);
+            result = new SpearCell(coordinate, onPeriod, offPeriod, currentTick, isOn);
         } else {
-            return new Tile (coordinate, CellType.UNKNOWN);
+            return new Cell(coordinate, CellType.UNKNOWN);
         }
 
         return result;
@@ -51,14 +51,14 @@ public class CellFactory {
 
     public static Cell getCellBySymbol(char symbol, Vector2 coordinate) {
         switch (symbol) {
-            case '.' : return new Tile(coordinate, CellType.EMPTY);
-            case '#' : return new Tile(coordinate, CellType.WALL);
-            case 'S' : return new CountCell(coordinate, CellType.SPEAR);
-            case 'L' : return new LaserCell(true, true, true, true, coordinate);
-            case 's' : return new Tile(coordinate, CellType.EMPTY);
-            case 'f' : return new Tile(coordinate, CellType.EMPTY);
-            case 'b' : return new Tile(coordinate, CellType.EMPTY);
+            case '.' : return new Cell(coordinate);
+            case '#' : return new WallCell(coordinate);
+            case 'S' : return new SpearCell(coordinate);
+            case 'L' : return new LaserCell(coordinate, true, true, true, true);
+            case 's' : return new Cell(coordinate);
+            case 'f' : return new Cell(coordinate);
+            case 'b' : return new Cell(coordinate);
         }
-        return new Tile(coordinate, CellType.UNKNOWN);
+        return new Cell(coordinate, CellType.UNKNOWN);
     }
 }

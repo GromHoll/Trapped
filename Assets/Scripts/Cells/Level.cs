@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 
@@ -34,26 +34,16 @@ public class Level {
 	}
 
 	public void addCell(Cell cell) {
-		int x = (int) cell.coordinate.x;
-		int y = (int) cell.coordinate.y;
+        int x = cell.getX();
+        int y = cell.getY();
 		cells[x, y] = cell;
 	}
 
-	public void show() {
-		for (int x = 0; x < xSize; x++) {
-			for (int y = 0; y < ySize; y++) {
-				Debug.Log(cells[x, y].type);
-			}
-		}	
-	}
-
 	public void nextTick() {
-//		foreach (Cell[] row in cells) {
-		foreach (Cell cell in cells) {
-				cell.nextTick();		
-			}
-		//}
-	}
+        foreach (Cell cell in cells) {
+            cell.nextTick();
+        }
+    }
 
 	public void backTick() {
 		//foreach (Cell[] row in cells) {

@@ -2,17 +2,14 @@ using UnityEngine;
 using System.Collections;
 
 public class CountCell : Cell {
-    public bool isOn;
-    public int onPeriod;
-    public int offPeriod;
 
-    public int currentTick;
+    protected bool isOn;
+    protected int onPeriod;
+    protected int offPeriod;
+    protected int currentTick;
 
-    public CountCell(
-        Vector2 coordinate, CellType type, int onPeriod, int offPeriod, int currentTick, bool isOn)
+    public CountCell(Vector2 coordinate, CellType type, int onPeriod, int offPeriod, int currentTick, bool isOn)
             : base(coordinate, type) {
-
-        this.type = type;
         this.onPeriod = onPeriod;
         this.offPeriod = offPeriod;
         this.currentTick = currentTick;
@@ -36,6 +33,10 @@ public class CountCell : Cell {
             currentTick = getCurrentPeriod() - 1;
             isOn = !isOn;
         }
+    }
+
+    public bool IsOn() {
+        return isOn;
     }
 
     private int getCurrentPeriod() {
