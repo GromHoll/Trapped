@@ -12,6 +12,9 @@ namespace TrappedUnitTests {
 			Assert.AreEqual(5, cell.GetX());
 			Assert.AreEqual(6, cell.GetY());
 			Assert.AreEqual(CellType.EMPTY, cell.GetCellType());
+
+			Assert.IsFalse(cell.IsBocked());
+			Assert.IsFalse(cell.IsDeadly());
         }
     }
 }
