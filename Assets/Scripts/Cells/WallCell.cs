@@ -8,4 +8,3 @@ public class WallCell : Cell {
         return true;
     }
 }
-

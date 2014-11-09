@@ -21,7 +21,7 @@ public class GameEntry : MonoBehaviour {
 	
 	public GameObject winPrefab;
 
-	private bool ifFinish = false; 
+	private bool isFinish = false; 
 
 	public Camera camera;
 
@@ -239,7 +239,7 @@ public class GameEntry : MonoBehaviour {
 			}
 
 		} else {
-			if (!ifFinish) {
+			if (!isFinish) {
 				int score = 0;
 				foreach (Vector2 bonus in level.bonuses) {
 					if (path.Contains(bonus)) {
@@ -252,7 +252,7 @@ public class GameEntry : MonoBehaviour {
 
 				InstantiateChild(winPrefab, new Vector2(0, 0), Quaternion.identity);
 			}
-			ifFinish = true;
+			isFinish = true;
 		}
 
 	}
