@@ -1,10 +1,10 @@
 using System;
 
 public enum CellType {
-	EMPTY,
-	WALL,
-	BONUS,
-	LASER,
-	SPEAR,
-	UNKNOWN
+    EMPTY,
+    WALL,
+    BONUS,
+    LASER,
+    SPEAR,
+    UNKNOWN
 }

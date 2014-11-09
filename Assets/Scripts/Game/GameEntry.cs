@@ -250,7 +250,7 @@ public class GameEntry : MonoBehaviour {
 				PlayerPrefs.SetInt("Score", score);
 				PlayerPrefs.SetInt("Death", failCounter);
 
-				GameObject win = InstantiateChild(winPrefab, new Vector2(0, 0), Quaternion.identity);
+				InstantiateChild(winPrefab, new Vector2(0, 0), Quaternion.identity);
 			}
 			ifFinish = true;
 		}

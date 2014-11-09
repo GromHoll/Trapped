@@ -2,18 +2,27 @@
 using System.Collections;
 
 public class LaserCell : CountCell {
-	public LaserCell(
-		bool up, bool right, bool down, bool left, Vector2 coordinate,
-		int onPeriod = 1, int offPeriod = 1, int currentTick = 0, bool isOn = false
-	) : base(coordinate, CellType.LASER, onPeriod, offPeriod, currentTick, isOn) {
+    
+    public bool up;
+    public bool right;
+    public bool down;
+    public bool left;
+
+    public LaserCell(
+        bool up, bool right, bool down, bool left, Vector2 coordinate, 
+        int onPeriod, int offPeriod, int currentTick, bool isOn
+    ) : base(coordinate, CellType.LASER, onPeriod, offPeriod, currentTick, isOn) {
+        this.up = up;
+        this.right = right;
+        this.down = down;
+        this.left = left;
+    }
+
+	public LaserCell(bool up, bool right, bool down, bool left, Vector2 coordinate)
+        : base(coordinate, CellType.LASER) {
 		this.up = up;
 		this.right = right;
 		this.down = down;
 		this.left = left;
 	}
-
-	public bool up;
-	public bool right;
-	public bool down;
-	public bool left;
 }
