@@ -8,12 +8,12 @@ public class CountCell : Cell {
     protected bool isOn;
     protected int onPeriod;
     protected int offPeriod;
-    protected int currentTick;
+    public int currentTick;
 
     public CountCell(Vector2 coordinate, CellType type, int onPeriod, int offPeriod, int currentTick, bool isOn)
         : base(coordinate, type) {
         this.onPeriod = onPeriod;
-        this.offPeriod = offPeriod;
+		this.offPeriod = offPeriod;
         this.currentTick = currentTick;
         this.isOn = isOn;
     }
@@ -23,7 +23,7 @@ public class CountCell : Cell {
 
     public override void NextTick() {
         currentTick++;
-        if (currentTick == getCurrentPeriod()) {
+		if (currentTick == GetCurrentPeriod()) {
             currentTick = 0;
             isOn = !isOn;
         }
@@ -32,7 +32,7 @@ public class CountCell : Cell {
     public override void BackTick() {
         currentTick--;
         if (currentTick == -1) {
-            currentTick = getCurrentPeriod() - 1;
+			currentTick = GetOtherPeriod() - 1;
             isOn = !isOn;
         }
     }
@@ -41,7 +41,11 @@ public class CountCell : Cell {
         return isOn;
     }
 
-    private int getCurrentPeriod() {
+    private int GetCurrentPeriod() {
         return isOn ? onPeriod : offPeriod;
     }
+
+	private int GetOtherPeriod() {
+		return isOn ? offPeriod : onPeriod;
+	}
 }

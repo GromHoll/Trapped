@@ -1,13 +1,13 @@
-using UnityEngine;
 using NUnit.Framework;
+using UnityEngine;
 using System;
 
 namespace TrappedUnitTests {
     [TestFixture]
-    public class CellsTest {
+    public class CellTest {
         [Test]
         public void CreateTest() {
-			Cell cell = new Cell(new Vector2(5, 6)); 
+			var cell = new Cell(new Vector2(5, 6)); 
 
 			Assert.AreEqual(5, cell.GetX());
 			Assert.AreEqual(6, cell.GetY());
