@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class GameEntry : MonoBehaviour {
 
+    private LevelLoader loader = new LevelLoader();
+
 	public GameObject heroPrefab;
 	public GameObject tilePrefab;
 	public GameObject unknownPrefab;
@@ -31,26 +33,21 @@ public class GameEntry : MonoBehaviour {
 	private GameObject finish;
 	private IList bonuses = new ArrayList();
 
-	private IDictionary laserCoverCells; 
-	private IDictionary spearsCells; 
+    private IDictionary laserCoverCells = new Dictionary<Vector2, ArrayList>();
+    private IDictionary spearsCells = new Dictionary<CountCell, GameObject>();
 
-	private IList path;
-	private IDictionary pathObjects;
+    private IList path = new ArrayList();
+    private IDictionary pathObjects = new Dictionary<Vector2, GameObject>();
 
 	bool failStep = false;
 
 	int  failCounter = 0;
 	bool failChanged = false;
 
-	void Start() {
-		laserCoverCells = new Dictionary<Vector2, ArrayList>();
-		spearsCells = new Dictionary<CountCell, GameObject>();
+	void Start() {        
+        string levelName = PlayerPrefs.GetString("CurrentLevel");
+        level = loader.LoadLevel(levelName);
 
-		path = new ArrayList();
-		pathObjects = new Dictionary<Vector2, GameObject>();
-
-		Loader loader = new Loader(PlayerPrefs.GetString("CurrentLevel"));
-		level = loader.makeLevel();
 		CreateLevelObjects();
 
         hero = InstantiateChild(heroPrefab, level.ConvertToGameCoord(level.start), Quaternion.identity);
@@ -106,7 +103,7 @@ public class GameEntry : MonoBehaviour {
 					LaserCell laserCell = (LaserCell)level.cells[x,y];
 					ArrayList prefabs = new ArrayList();
 					
-					if(laserCell.IsUp()) {
+                    if(laserCell.IsDown()) {
 						int yCoord = laserCell.GetY();
 						
 						while(--yCoord!=-1 ) {
@@ -124,7 +121,7 @@ public class GameEntry : MonoBehaviour {
 						}
 					}
 					
-					if(laserCell.IsDown()) {
+                    if(laserCell.IsUp()) {
                         int yCoord = laserCell.GetY();
 						while(++yCoord!=level.ySize ) {
 							if(level.cells[x, yCoord].IsBocked()) { break; }
