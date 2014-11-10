@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Level {
     
@@ -11,7 +11,7 @@ public class Level {
 
     public Vector2 start;
     public Vector2 finish;
-    public IList bonuses = new ArrayList();
+    public IList<Vector2> bonuses = new List<Vector2>();
 
     public Level(string name, int xSize, int ySize) {
         this.xSize = xSize;
