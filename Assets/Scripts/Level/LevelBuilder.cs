@@ -45,6 +45,7 @@ public class LevelBuilder {
     }
 
     public Level Build() {
+        // TODO refactor
         Level level = new Level(levelName, xSize, ySize);
         
         for(int x = 0; x < xSize; x++) {
