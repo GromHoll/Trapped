@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class GameEntry : MonoBehaviour {
 
     private LevelLoader loader = new LevelLoader();
+    private Game game;
 
 	public GameObject heroPrefab;
 	public GameObject tilePrefab;
@@ -47,23 +48,25 @@ public class GameEntry : MonoBehaviour {
 	void Start() {        
         string levelName = PlayerPrefs.GetString("CurrentLevel");
         level = loader.LoadLevel(levelName);
+        game = new Game(level);
 
 		CreateLevelObjects();
 
-        hero = InstantiateChild(heroPrefab, level.ConvertToGameCoord(level.start), Quaternion.identity);
-        deadHero = InstantiateChild(skullPrefab, level.ConvertToGameCoord(level.start), Quaternion.identity);
-        finish = InstantiateChild(finishPrefab, level.ConvertToGameCoord(level.finish), Quaternion.identity);
-		foreach (Vector2 coord in level.bonuses) {
+        hero = InstantiateChild(heroPrefab, level.ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
+        deadHero = InstantiateChild(skullPrefab, level.ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
+        finish = InstantiateChild(finishPrefab, level.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY()), Quaternion.identity);
+		foreach (IntVector2 coord in level.GetBonuses()) {
             bonuses.Add(InstantiateChild(bonusPrefab, level.ConvertToGameCoord(coord), Quaternion.identity));	
 		}
 		UpdateLasers();
 	}
 
 	void CreateLevelObjects() {
-		for (int x = 0; x < level.xSize; x++) {
-			for (int y = 0; y < level.ySize; y++) {
+		for (int x = 0; x < level.GetSizeX(); x++) {
+            for (int y = 0; y < level.GetSizeY(); y++) {
 				GameObject prefab = null;
-                switch (level.cells[x,y].GetCellType()) {
+                Cell cell = level.GetCell(x,y);
+                switch (cell.GetCellType()) {
 					case CellType.EMPTY: 
 						prefab = tilePrefab;
 						break;
@@ -74,7 +77,7 @@ public class GameEntry : MonoBehaviour {
 						prefab = laserPrefab;
 						break;
 					case CellType.SPEAR: 
-                        prefab = level.cells[x,y].IsDeadly() ? spearOnPrefab : spearOffPrefab;
+                        prefab = cell.IsDeadly() ? spearOnPrefab : spearOffPrefab;
 						break;
 					case CellType.WALL:  
 						prefab = wallPrefab;
@@ -84,10 +87,10 @@ public class GameEntry : MonoBehaviour {
 						break;				
 				}
                 GameObject gameObject = InstantiateChild(prefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
-                if (level.cells[x,y].GetCellType() == CellType.SPEAR) {
-					spearsCells.Add(level.cells[x,y], gameObject);
+                if (cell.GetCellType() == CellType.SPEAR) {
+                    spearsCells.Add(cell, gameObject);
 				}
-                if (level.cells[x,y].GetCellType() != CellType.EMPTY && level.cells[x,y].GetCellType() != CellType.WALL) {
+                if (cell.GetCellType() != CellType.EMPTY && cell.GetCellType() != CellType.WALL) {
                     InstantiateChild(tilePrefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
 				}
 			}		
@@ -97,25 +100,25 @@ public class GameEntry : MonoBehaviour {
 	}
 
 	private void CreateLaserCover() {
-		for (int x = 0; x < level.xSize; x++) {
-			for (int y = 0; y < level.ySize; y++) {
-                if(level.cells[x,y].GetCellType() == CellType.LASER) {
-					LaserCell laserCell = (LaserCell)level.cells[x,y];
+		for (int x = 0; x < level.GetSizeX(); x++) {
+            for (int y = 0; y < level.GetSizeY(); y++) {
+                if(level.GetCell(x,y).GetCellType() == CellType.LASER) {
+                    LaserCell laserCell = (LaserCell)level.GetCell(x,y);
 					ArrayList prefabs = new ArrayList();
 					
                     if(laserCell.IsDown()) {
 						int yCoord = laserCell.GetY();
 						
 						while(--yCoord!=-1 ) {
-							if(level.cells[x, yCoord].IsBocked()) { break; }
+                            if(level.GetCell(x, yCoord).IsBocked()) { break; }
 							
                             prefabs.Add (InstantiateChild(lineVPrefab, level.ConvertToGameCoord(x, yCoord), Quaternion.identity));
 						}
 					}
 					if(laserCell.IsRight()) {
 						int xCoord = laserCell.GetX();
-						while(++xCoord!=level.xSize) {
-							if(level.cells[xCoord, y].IsBocked()) { break; }
+                        while(++xCoord!=level.GetSizeX()) {
+                            if(level.GetCell(xCoord, y).IsBocked()) { break; }
 							
                             prefabs.Add (InstantiateChild(lineHPrefab, level.ConvertToGameCoord(xCoord, y), Quaternion.identity));
 						}
@@ -123,8 +126,8 @@ public class GameEntry : MonoBehaviour {
 					
                     if(laserCell.IsUp()) {
                         int yCoord = laserCell.GetY();
-						while(++yCoord!=level.ySize ) {
-							if(level.cells[x, yCoord].IsBocked()) { break; }
+						while(++yCoord!=level.GetSizeY() ) {
+							if(level.GetCell(x, yCoord).IsBocked()) { break; }
 							
                             prefabs.Add (InstantiateChild(lineVPrefab, level.ConvertToGameCoord(x, yCoord), Quaternion.identity));
 						}
@@ -132,7 +135,7 @@ public class GameEntry : MonoBehaviour {
 					if(laserCell.IsLeft()) {
                         int xCoord = laserCell.GetX();
 						while(--xCoord!=-1) {
-							if(level.cells[xCoord, y].IsBocked()) { break; }
+                            if(level.GetCell(xCoord, y).IsBocked()) { break; }
 							
                             prefabs.Add (InstantiateChild(lineHPrefab, level.ConvertToGameCoord(xCoord, y), Quaternion.identity));
 						}
@@ -151,14 +154,14 @@ public class GameEntry : MonoBehaviour {
 
 	private void UpdateCamera() {
 		if (camera != null) {
-			camera.orthographicSize = Mathf.Max(level.xSize, level.ySize)/2f;
+            camera.orthographicSize = Mathf.Max(level.GetSizeX(), level.GetSizeY())/2f;
 		}
 	}
 
 	private void UpdateLasers() {
 		ICollection lasers = laserCoverCells.Keys;
 		foreach (Vector2 laserCoordinate in lasers) {
-			LaserCell laser = (LaserCell) level.cells[(int)laserCoordinate.x, (int)laserCoordinate.y];
+			LaserCell laser = (LaserCell) level.GetCell((int)laserCoordinate.x, (int)laserCoordinate.y);
             if(laser.IsOn()) {
 				ICollection covered = (ICollection) laserCoverCells[laserCoordinate];
 				foreach (GameObject obj in covered) {
@@ -192,7 +195,7 @@ public class GameEntry : MonoBehaviour {
 
 		ICollection lasers = laserCoverCells.Keys;
 		foreach (Vector2 laserCoordinate in lasers) {
-			LaserCell laser = (LaserCell) level.cells[(int)laserCoordinate.x, (int)laserCoordinate.y];
+			LaserCell laser = (LaserCell) level.GetCell((int)laserCoordinate.x, (int)laserCoordinate.y);
             if(laser.IsOn()) {
 				ICollection covered = (ICollection) laserCoverCells[laserCoordinate];
 				foreach (GameObject obj in covered) {
@@ -238,7 +241,7 @@ public class GameEntry : MonoBehaviour {
 		} else {
 			if (!isFinish) {
 				int score = 0;
-				foreach (Vector2 bonus in level.bonuses) {
+				foreach (IntVector2 bonus in level.GetBonuses()) {
 					if (path.Contains(bonus)) {
 						score++;
 					}
@@ -318,12 +321,12 @@ public class GameEntry : MonoBehaviour {
 
 	private bool HeroOnMap(Vector2 pos) {
         var p = level.ConvertToLevelCoord(pos);
-		return p.x >= 0 && p.x <= level.xSize - 1 && p.y >= 0 && p.y <= level.ySize - 1; 
+        return p.x >= 0 && p.x <= level.GetSizeX() - 1 && p.y >= 0 && p.y <= level.GetSizeY() - 1; 
 	}
 
 	private bool HeroIsBocked(Vector2 pos) {
         var p = level.ConvertToLevelCoord (pos);
-		return level.cells[(int)p.x, (int)p.y].IsBocked();
+		return level.GetCell((int)p.x, (int)p.y).IsBocked();
 	}
 
 	private bool HeroIsMoved(Vector2 pos) {

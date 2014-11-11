@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Cell {
+public class Cell : ITickable {
 
     protected Vector2 coordinate;
     protected CellType cellType;

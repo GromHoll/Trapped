@@ -52,11 +52,11 @@ public class LevelBuilder {
             for (int y = 0; y < ySize; y++) {
                 char symbol = symbols[x, y];
                 if (symbol == DEFAULT_START) {
-                    level.start = new Vector2(x, y);
+                    level.SetStart(x, y);
                 } else if (symbol == DEFAULT_FINISH) {
-                    level.finish = new Vector2(x, y);
+                    level.SetFinish(x, y);
                 } else if (symbol == DEFAULT_BONUS) {
-                    level.AddBonus(new Vector2(x, y));
+                    level.AddBonus(new IntVector2(x, y));
                 }
 
                 Cell cell;
