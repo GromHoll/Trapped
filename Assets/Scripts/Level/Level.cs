@@ -90,6 +90,7 @@ public class Level : ITickable {
         return bonuses;
     }
 
+    // TODO Remove convector methods after refactor
     public Vector2 ConvertToGameCoord(Vector2 pos) {
         return ConvertToGameCoord(pos.x, pos.y);
     }
