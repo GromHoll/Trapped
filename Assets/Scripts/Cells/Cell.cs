@@ -2,16 +2,14 @@
 
 public class Cell : ITickable {
 
-    protected Vector2 coordinate;
+    protected IntVector2 coordinate;
     protected CellType cellType;
    
-    public Cell(Vector2 coordinate) {
-        this.coordinate = coordinate;
-        this.cellType = CellType.EMPTY;
-    }
+    public Cell(int x, int y) 
+    : this(x, y, CellType.EMPTY) {}
 
-    public Cell(Vector2 coordinate, CellType type) {
-        this.coordinate = coordinate;
+    public Cell(int x, int y, CellType type) {
+        this.coordinate = new IntVector2(x, y);
         this.cellType = type;
     }
 
@@ -23,16 +21,16 @@ public class Cell : ITickable {
         return false;
     }
 
-    public Vector2 GetCoordinate() {
+    public IntVector2 GetCoordinate() {
         return coordinate;
     }
 
     public int GetX() {
-        return (int) coordinate.x;
+        return coordinate.x;
     }
 
     public int GetY() {
-        return (int) coordinate.y;
+        return coordinate.y;
     }
     
     public CellType GetCellType() {

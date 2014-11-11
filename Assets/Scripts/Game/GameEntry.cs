@@ -34,11 +34,11 @@ public class GameEntry : MonoBehaviour {
 	private GameObject finish;
 	private IList bonuses = new ArrayList();
 
-    private IDictionary laserCoverCells = new Dictionary<Vector2, ArrayList>();
-    private IDictionary spearsCells = new Dictionary<CountCell, GameObject>();
+    private IDictionary<IntVector2, ArrayList> laserCoverCells = new Dictionary<IntVector2, ArrayList>();
+    private IDictionary<CountCell, GameObject> spearsCells = new Dictionary<CountCell, GameObject>();
 
-    private IList path = new ArrayList();
-    private IDictionary pathObjects = new Dictionary<Vector2, GameObject>();
+    private IList<IntVector2> path = new List<IntVector2>();
+    private IDictionary<IntVector2, GameObject> pathObjects = new Dictionary<IntVector2, GameObject>();
 
 	bool failStep = false;
 
@@ -64,8 +64,10 @@ public class GameEntry : MonoBehaviour {
 	void CreateLevelObjects() {
 		for (int x = 0; x < level.GetSizeX(); x++) {
             for (int y = 0; y < level.GetSizeY(); y++) {
+                Debug.Log("Coord = " + x + " " + y);
 				GameObject prefab = null;
                 Cell cell = level.GetCell(x,y);
+                Debug.Log("cell = " + cell.GetCellType());
                 switch (cell.GetCellType()) {
 					case CellType.EMPTY: 
 						prefab = tilePrefab;
@@ -88,7 +90,8 @@ public class GameEntry : MonoBehaviour {
 				}
                 GameObject gameObject = InstantiateChild(prefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
                 if (cell.GetCellType() == CellType.SPEAR) {
-                    spearsCells.Add(cell, gameObject);
+                    CountCell countCell = (CountCell) cell;
+                    spearsCells.Add(countCell, gameObject);
 				}
                 if (cell.GetCellType() != CellType.EMPTY && cell.GetCellType() != CellType.WALL) {
                     InstantiateChild(tilePrefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
@@ -140,7 +143,7 @@ public class GameEntry : MonoBehaviour {
                             prefabs.Add (InstantiateChild(lineHPrefab, level.ConvertToGameCoord(xCoord, y), Quaternion.identity));
 						}
 					}
-					laserCoverCells.Add (new Vector2(x, y), prefabs);
+					laserCoverCells.Add (new IntVector2(x, y), prefabs);
 				}
 			}
 		}
@@ -159,9 +162,9 @@ public class GameEntry : MonoBehaviour {
 	}
 
 	private void UpdateLasers() {
-		ICollection lasers = laserCoverCells.Keys;
-		foreach (Vector2 laserCoordinate in lasers) {
-			LaserCell laser = (LaserCell) level.GetCell((int)laserCoordinate.x, (int)laserCoordinate.y);
+		ICollection<IntVector2> lasers = laserCoverCells.Keys;
+		foreach (IntVector2 laserCoordinate in lasers) {
+			LaserCell laser = (LaserCell) level.GetCell(laserCoordinate.x, laserCoordinate.y);
             if(laser.IsOn()) {
 				ICollection covered = (ICollection) laserCoverCells[laserCoordinate];
 				foreach (GameObject obj in covered) {
@@ -177,7 +180,7 @@ public class GameEntry : MonoBehaviour {
 	}
 
 	private void UpdateSpears() {
-		ICollection spears = spearsCells.Keys;
+        ICollection<CountCell> spears = spearsCells.Keys;
 		foreach (CountCell spear in spears) {
 			GameObject spearObject = (GameObject) spearsCells[spear];
 			SpriteRenderer renderer = spearObject.GetComponent<SpriteRenderer>();
@@ -193,9 +196,9 @@ public class GameEntry : MonoBehaviour {
 	private bool isFail() {
 		Vector2 heroCoord = hero.transform.position;
 
-		ICollection lasers = laserCoverCells.Keys;
-		foreach (Vector2 laserCoordinate in lasers) {
-			LaserCell laser = (LaserCell) level.GetCell((int)laserCoordinate.x, (int)laserCoordinate.y);
+        ICollection<IntVector2> lasers = laserCoverCells.Keys;
+        foreach (IntVector2 laserCoordinate in lasers) {
+			LaserCell laser = (LaserCell) level.GetCell(laserCoordinate.x, laserCoordinate.y);
             if(laser.IsOn()) {
 				ICollection covered = (ICollection) laserCoverCells[laserCoordinate];
 				foreach (GameObject obj in covered) {
@@ -206,7 +209,7 @@ public class GameEntry : MonoBehaviour {
 			}
 		}
 
-		ICollection spears = spearsCells.Keys;
+        ICollection<CountCell> spears = spearsCells.Keys;
 		foreach (CountCell spear in spears) {
             if(spear.IsOn()) {
 				GameObject spearObject = (GameObject) spearsCells[spear];
@@ -280,9 +283,9 @@ public class GameEntry : MonoBehaviour {
 			heroPos.y -= 1; 
 		}
 
-		if (HeroOnMap (heroPos) && !HeroIsBocked (heroPos) && HeroIsMoved(heroPos)) {
+		if (HeroOnMap (heroPos) && !HeroIsBocked(heroPos) && HeroIsMoved(heroPos)) {
 			if (HeroIsBack(heroPos)) { 
-				var last = (Vector2) path [path.Count - 1];
+				var last = path [path.Count - 1];
 				path.Remove(last);
 				GameObject lastObject = (GameObject) pathObjects[last];
 				lastObject.SetActive(false);
@@ -291,7 +294,7 @@ public class GameEntry : MonoBehaviour {
 				hero.transform.position = heroPos;
 				level.BackTick();
 			} else if (!HeroWasHere(heroPos) && !failStep) {
-                Vector2 oldCoord = level.ConvertToLevelCoord(hero.transform.position);
+                IntVector2 oldCoord = level.ConvertToLevelCoord(hero.transform.position);
 				path.Add(oldCoord);
 				GameObject prefab;
                 Vector2 coord = level.ConvertToGameCoord(oldCoord);
@@ -324,9 +327,9 @@ public class GameEntry : MonoBehaviour {
         return p.x >= 0 && p.x <= level.GetSizeX() - 1 && p.y >= 0 && p.y <= level.GetSizeY() - 1; 
 	}
 
-	private bool HeroIsBocked(Vector2 pos) {
+    private bool HeroIsBocked(Vector2 pos) {
         var p = level.ConvertToLevelCoord (pos);
-		return level.GetCell((int)p.x, (int)p.y).IsBocked();
+		return level.GetCell(p.x, p.y).IsBocked();
 	}
 
 	private bool HeroIsMoved(Vector2 pos) {
@@ -343,7 +346,7 @@ public class GameEntry : MonoBehaviour {
 	private bool HeroIsBack(Vector2 pos) {
 		if (path.Count != 0) {
             var p = level.ConvertToLevelCoord(pos);
-			var last = (Vector2) path[path.Count - 1];
+			var last = path[path.Count - 1];
 			return p == last;
 		} else {
 			return false;

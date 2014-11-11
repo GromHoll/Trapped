@@ -7,7 +7,7 @@ namespace TrappedUnitTests {
     public class CellTest {
         [Test]
         public void CreateTest() {
-			var cell = new Cell(new Vector2(5, 6)); 
+			var cell = new Cell(5, 6); 
 
 			Assert.AreEqual(5, cell.GetX());
 			Assert.AreEqual(6, cell.GetY());

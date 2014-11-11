@@ -7,18 +7,18 @@ public class LaserCell : CountCell {
     protected bool down;
     protected bool left;
 
-    public LaserCell(Vector2 coordinate, 
+    public LaserCell(int x, int y, 
                      int onPeriod, int offPeriod, int currentTick, bool isOn,
                      bool up, bool right, bool down, bool left) 
-        : base(coordinate, CellType.LASER, onPeriod, offPeriod, currentTick, isOn) {
+        : base(x, y, CellType.LASER, onPeriod, offPeriod, currentTick, isOn) {
         this.up = up;
         this.right = right;
         this.down = down;
         this.left = left;
     }
 
-    public LaserCell(Vector2 coordinate, bool up, bool right, bool down, bool left)
-        : base(coordinate, CellType.LASER) {
+    public LaserCell(int x, int y, bool up, bool right, bool down, bool left)
+        : base(x, y, CellType.LASER) {
         this.up = up;
         this.right = right;
         this.down = down;

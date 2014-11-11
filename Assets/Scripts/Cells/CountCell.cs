@@ -10,16 +10,16 @@ public class CountCell : Cell {
     protected int offPeriod;
     public int currentTick;
 
-    public CountCell(Vector2 coordinate, CellType type, int onPeriod, int offPeriod, int currentTick, bool isOn)
-        : base(coordinate, type) {
+    public CountCell(int x, int y, CellType type, int onPeriod, int offPeriod, int currentTick, bool isOn)
+        : base(x, y, type) {
         this.onPeriod = onPeriod;
 		this.offPeriod = offPeriod;
         this.currentTick = currentTick;
         this.isOn = isOn;
     }
 
-    public CountCell(Vector2 coordinate, CellType type)
-        : this(coordinate, type, DEFAULT_PERIOD, DEFAULT_PERIOD, 0, DEFAULT_ON_STATE) {}
+    public CountCell(int x, int y, CellType type)
+        : this(x, y, type, DEFAULT_PERIOD, DEFAULT_PERIOD, 0, DEFAULT_ON_STATE) {}
 
     public override void NextTick() {
         currentTick++;

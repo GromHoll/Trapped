@@ -62,9 +62,9 @@ public class LevelBuilder {
                 Cell cell;
                 if(descriptions.ContainsKey(symbols[x, y])) {
                     string description = descriptions[symbols[x, y]];
-                    cell = CellFactory.getCellByDescription(description, new Vector2(x, y));
+                    cell = CellFactory.getCellByDescription(description, x, y);
                 } else {
-                    cell = CellFactory.getCellBySymbol(symbols[x, y], new Vector2(x, y));
+                    cell = CellFactory.getCellBySymbol(symbols[x, y], x, y);
                 }                
                 level.AddCell(cell);
             }

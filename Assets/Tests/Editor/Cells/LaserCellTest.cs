@@ -16,7 +16,7 @@ namespace TrappedUnitTests {
         }
 
         private void TestLaser(int x, int y, bool up, bool right, bool down, bool left) {
-            var laser = new LaserCell(new Vector2(x, y), up, right, down, left);
+            var laser = new LaserCell(x, y, up, right, down, left);
 
             Assert.AreEqual(x, laser.GetX());
             Assert.AreEqual(y, laser.GetY());

@@ -7,7 +7,7 @@ namespace TrappedUnitTests {
     public class SpearCellTest {
         [Test]
         public void SimpleCreateTest() {
-            var spear = new SpearCell(new Vector2(2, 3)); 
+            var spear = new SpearCell(2, 3); 
             
             Assert.AreEqual(2, spear.GetX());
             Assert.AreEqual(3, spear.GetY());
@@ -24,7 +24,7 @@ namespace TrappedUnitTests {
         }
 
         private void SpearTest(int x, int y, bool state) {
-            var spear = new SpearCell(new Vector2(x, y), 0, 0, 0, state); 
+            var spear = new SpearCell(x, y, 0, 0, 0, state); 
             AssertSpear(spear, x, y, state);
         }
 
@@ -43,7 +43,7 @@ namespace TrappedUnitTests {
 
         [Test]
         public void NexTickTest() {
-            var spear = new SpearCell(new Vector2(0, 0), 1, 2, 1, false); 
+            var spear = new SpearCell(0, 0, 1, 2, 1, false); 
 
             AssertSpear(spear, false);
 
@@ -62,7 +62,7 @@ namespace TrappedUnitTests {
         
         [Test]
         public void BackTickTest() {
-            var spear = new SpearCell(new Vector2(0, 0), 2, 2, 0, true); 
+            var spear = new SpearCell(0, 0, 2, 2, 0, true); 
             
             AssertSpear(spear, true);
             

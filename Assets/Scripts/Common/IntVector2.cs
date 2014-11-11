@@ -13,6 +13,25 @@ public struct IntVector2 {
         this.x = x;
         this.y = y;
     }
+
+    public static bool operator == (IntVector2 left, IntVector2 right) {
+        return left.x == right.x && left.y == right.y;
+    }
+
+    public static bool operator != (IntVector2 left, IntVector2 right) {
+        return left.x != right.x || left.y != right.y;
+    }
+
+    public override bool Equals(object other) {
+        if (!(other is IntVector2)) {
+            return false;
+        }
+        IntVector2 vector = (IntVector2) other;
+        return this.x.Equals(vector.x) && this.y.Equals(vector.y);
+    }
+    
+    public override int GetHashCode() {
+        return this.x.GetHashCode () ^ this.y.GetHashCode () << 2;
+    }
+
 }
-
-

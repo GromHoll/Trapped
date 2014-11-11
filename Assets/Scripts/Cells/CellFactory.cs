@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class CellFactory {
-    public static Cell getCellByDescription(string description, Vector2 coordinate) {
+    public static Cell getCellByDescription(string description, int x, int y) {
         Cell result;
         bool isOn = false;
         int onPeriod = 1;
@@ -14,7 +14,7 @@ public class CellFactory {
 
         if (name == "laser") {
             bool up = false, right = false, down = false, left = false;
-            result = new LaserCell(coordinate, false, false, false, false);
+            result = new LaserCell(x, y, false, false, false, false);
             //ud off 3 3 1
             int directionCounter = items [1].Length;
             for (int i = 0; i< directionCounter; i++) {
@@ -32,7 +32,7 @@ public class CellFactory {
             offPeriod = int.Parse (items [4]);
             currentTick = int.Parse (items [5]);
 
-            result = new LaserCell (coordinate, onPeriod, offPeriod, currentTick, isOn, up, right, down, left);
+            result = new LaserCell (x, y, onPeriod, offPeriod, currentTick, isOn, up, right, down, left);
 
         } else if (name == "spear") {
             if (items [1] == "on") { isOn = true; }
@@ -41,24 +41,24 @@ public class CellFactory {
             offPeriod = int.Parse (items [3]);
             currentTick = int.Parse (items [4]);
 
-            result = new SpearCell(coordinate, onPeriod, offPeriod, currentTick, isOn);
+            result = new SpearCell(x, y, onPeriod, offPeriod, currentTick, isOn);
         } else {
-            return new Cell(coordinate, CellType.UNKNOWN);
+            return new Cell(x, y, CellType.UNKNOWN);
         }
 
         return result;
     }
 
-    public static Cell getCellBySymbol(char symbol, Vector2 coordinate) {
+    public static Cell getCellBySymbol(char symbol, int x, int y) {
         switch (symbol) {
-            case '.' : return new Cell(coordinate);
-            case '#' : return new WallCell(coordinate);
-            case 'S' : return new SpearCell(coordinate);
-            case 'L' : return new LaserCell(coordinate, true, true, true, true);
-            case 's' : return new Cell(coordinate);
-            case 'f' : return new Cell(coordinate);
-            case 'b' : return new Cell(coordinate);
+            case '.' : return new Cell(x, y);
+            case '#' : return new WallCell(x, y);
+            case 'S' : return new SpearCell(x, y);
+            case 'L' : return new LaserCell(x, y, true, true, true, true);
+            case 's' : return new Cell(x, y);
+            case 'f' : return new Cell(x, y);
+            case 'b' : return new Cell(x, y);
         }
-        return new Cell(coordinate, CellType.UNKNOWN);
+        return new Cell(x, y, CellType.UNKNOWN);
     }
 }

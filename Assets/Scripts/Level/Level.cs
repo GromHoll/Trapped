@@ -21,7 +21,7 @@ public class Level : ITickable {
         cells = new Cell[size.x, size.y];
         for (int x = 0; x < size.x; x++) {
             for (int y = 0; y < size.y; y++) {
-                AddCell(new Cell(new Vector2(x, y), CellType.UNKNOWN));
+                AddCell(new Cell(x, y, CellType.UNKNOWN));
             }
         }
     }
@@ -105,9 +105,9 @@ public class Level : ITickable {
         return new Vector2(gameX, gameY);
     }
     
-    public Vector2 ConvertToLevelCoord(Vector2 pos) {
-        float levelX = pos.x + (size.x - 1)/2f;
-        float levelY = pos.y + (size.y - 1)/2f;
-        return new Vector2(levelX, levelY);
+    public IntVector2 ConvertToLevelCoord(Vector2 pos) {
+        int levelX = (int) (pos.x + (size.x - 1)/2f);
+        int levelY = (int) (pos.y + (size.y - 1)/2f);
+        return new IntVector2(levelX, levelY);
     }
 }
