@@ -90,6 +90,10 @@ public class Level : ITickable {
         return bonuses;
     }
 
+    public bool contains(int x, int y) {
+        return x >= 0 && x <= size.x - 1 && y >= 0 && y <= size.y - 1; 
+    }
+
     // TODO Remove convector methods after refactor
     public Vector2 ConvertToGameCoord(Vector2 pos) {
         return ConvertToGameCoord(pos.x, pos.y);
