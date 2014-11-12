@@ -43,10 +43,11 @@ public class LevelBuilder {
     public void AddDescription(char symbol, string description) {
         descriptions.Add(symbol, description);
     }
-
+    
+    // TODO refactor
     public Level Build() {
-        // TODO refactor
         Level level = new Level(levelName, xSize, ySize);
+        CellFactory cellFacrory = new CellFactory();
         
         for(int x = 0; x < xSize; x++) {
             for (int y = 0; y < ySize; y++) {
@@ -62,9 +63,9 @@ public class LevelBuilder {
                 Cell cell;
                 if(descriptions.ContainsKey(symbols[x, y])) {
                     string description = descriptions[symbols[x, y]];
-                    cell = CellFactory.getCellByDescription(description, x, y);
+                    cell = cellFacrory.getCellByDescription(description, x, y);
                 } else {
-                    cell = CellFactory.getCellBySymbol(symbols[x, y], x, y);
+                    cell = cellFacrory.getCellBySymbol(symbols[x, y], x, y);
                 }                
                 level.AddCell(cell);
             }

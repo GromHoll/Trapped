@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class CellFactory {
-    public static Cell getCellByDescription(string description, int x, int y) {
+
+    public Cell getCellByDescription(string description, int x, int y) {
         Cell result;
         bool isOn = false;
         int onPeriod = 1;
@@ -49,7 +50,7 @@ public class CellFactory {
         return result;
     }
 
-    public static Cell getCellBySymbol(char symbol, int x, int y) {
+    public Cell getCellBySymbol(char symbol, int x, int y) {
         switch (symbol) {
             case '.' : return new Cell(x, y);
             case '#' : return new WallCell(x, y);
