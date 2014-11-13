@@ -1,3 +1,4 @@
+using UnityEngine;
 using System;
 
 namespace TrappedGame {

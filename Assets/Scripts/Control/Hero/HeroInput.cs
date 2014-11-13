@@ -5,10 +5,10 @@ namespace TrappedGame {
     public class HeroInput {
 
         private HeroMovement noMovement = new HeroMovement();
-        private HeroMovement upMovement = new HeroMovement();
-        private HeroMovement rightMovement = new HeroMovement();
-        private HeroMovement downMovement = new HeroMovement();
-        private HeroMovement leftMovement = new HeroMovement();
+        private HeroMovement upMovement = new UpHeroMovement();
+        private HeroMovement rightMovement = new RightHeroMovement();
+        private HeroMovement downMovement = new DownHeroMovement();
+        private HeroMovement leftMovement = new LeftHeroMovement();
 
         public HeroMovement GetMovement() {
             bool up    = Input.GetKeyDown(KeyCode.UpArrow);

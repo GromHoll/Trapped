@@ -95,10 +95,6 @@ public class Level : ITickable {
     }
 
     // TODO Remove convector methods after refactor
-    public Vector2 ConvertToGameCoord(Vector2 pos) {
-        return ConvertToGameCoord(pos.x, pos.y);
-    }
-
     public Vector2 ConvertToGameCoord(IntVector2 pos) {
         return ConvertToGameCoord(pos.x, pos.y);
     }
@@ -107,11 +103,5 @@ public class Level : ITickable {
         float gameX = x - (size.x - 1)/2f;
         float gameY = y - (size.y - 1)/2f;
         return new Vector2(gameX, gameY);
-    }
-    
-    public IntVector2 ConvertToLevelCoord(Vector2 pos) {
-        int levelX = (int) (pos.x + (size.x - 1)/2f);
-        int levelY = (int) (pos.y + (size.y - 1)/2f);
-        return new IntVector2(levelX, levelY);
     }
 }
