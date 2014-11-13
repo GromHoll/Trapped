@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,7 +6,7 @@ namespace TrappedGame {
     public class GameEntry : MonoBehaviour {
 
         private LevelLoader loader = new LevelLoader();
-        private Controller controller = new Controller();
+        private HeroInput heroInput = new HeroInput();
         private Game game;
 
     	public GameObject heroPrefab;
@@ -264,21 +264,10 @@ namespace TrappedGame {
     	}
 
         void UpdateInput() {
-            bool up    = Input.GetKeyDown(KeyCode.UpArrow);
-    		bool right = Input.GetKeyDown(KeyCode.RightArrow);
-            bool down  = Input.GetKeyDown(KeyCode.DownArrow);
-            bool left  = Input.GetKeyDown(KeyCode.LeftArrow);
+            HeroMovement heroMovement = heroInput.GetMovement();
+            heroMovement.MoveHeroInGame(game);
 
-            if (up) { 
-                game.MoveHeroUp();
-            } else if (right) {
-                game.MoveHeroRight();
-            } else if (down) {
-                game.MoveHeroDown();
-            } else if (left) {
-                game.MoveHeroLeft();
-            }
-
+            // TODO Move to graphic update
             int x = game.GetHero().GetX();
             int y = game.GetHero().GetY();
             hero.transform.position = level.ConvertToGameCoord(x, y);
