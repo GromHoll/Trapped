@@ -14,6 +14,10 @@ namespace TrappedGame {
             this.hero = new Hero(level.GetStartX(), level.GetStartY());
         }
 
+        public bool IsWin() {
+            return level.GetStartX() == level.GetFinishX() && level.GetStartY() == level.GetFinishY();
+        }
+
         public Hero GetHero() {
             return hero;
         }
@@ -35,21 +39,14 @@ namespace TrappedGame {
         }
 
         private void MoveHeroTo(int x, int y) {
-            Debug.Log("Move hero to = (" + x + ", " + y + ")");
             if (!HeroOnMap(x, y)) return;
-            Debug.Log("Hero on map");
             if (!IsAvailableForMovementCell(x, y)) return;
-            Debug.Log("Cell not blocked");
             if (IsBackTurn(x, y)) {
-                Debug.Log("Is back turn");
                 hero.MoveBack();
                 level.BackTick();
             } else {
-                Debug.Log("Is next turn");
                 if (hero.IsDead()) return;
-                Debug.Log("Hero not dead");
                 if (HeroWasHere(x, y)) return;
-                Debug.Log("Hero not was here");
                 hero.MoveTo(x, y);
                 level.NextTick();
             }

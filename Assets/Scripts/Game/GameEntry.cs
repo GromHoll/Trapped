@@ -223,7 +223,7 @@ namespace TrappedGame {
     	}
 
     	private void Update() {
-    		if (!IsWin ()) {
+    		if (!game.IsWin()) {
     			UpdateCamera();
     			UpdateInput();
     			UpdateLasers();
@@ -257,10 +257,6 @@ namespace TrappedGame {
     			}
     			isFinish = true;
     		}
-    	}
-
-    	private bool IsWin() {
-    		return hero.transform.position == finish.transform.position;
     	}
 
         void UpdateInput() {
