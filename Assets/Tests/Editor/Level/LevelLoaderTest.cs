@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using TrappedGame;
 using System;
 
 namespace TrappedUnitTests {

@@ -224,8 +224,9 @@ namespace TrappedGame {
 
     	private void Update() {
     		if (!game.IsWin()) {
-    			UpdateCamera();
-    			UpdateInput();
+                UpdateInput();
+                // TODO Update Graphic
+                UpdateCamera();
     			UpdateLasers();
     			UpdateSpears();
 
