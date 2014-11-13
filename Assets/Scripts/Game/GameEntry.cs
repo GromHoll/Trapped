@@ -9,15 +9,11 @@ namespace TrappedGame {
         private HeroInput heroInput = new HeroInput();
         private Game game;
 
+        public CellGameObjectFactory cellGameObjectFactory;
+
     	public GameObject heroPrefab;
-    	public GameObject tilePrefab;
-    	public GameObject unknownPrefab;
     	public GameObject bonusPrefab;
     	public GameObject finishPrefab;
-    	public GameObject laserPrefab;
-    	public GameObject wallPrefab;
-    	public GameObject spearOnPrefab;
-    	public GameObject spearOffPrefab;
     	public GameObject lineHPrefab;
     	public GameObject lineVPrefab;
     	public GameObject skullPrefab;
@@ -66,34 +62,15 @@ namespace TrappedGame {
     	void CreateLevelObjects() {
     		for (int x = 0; x < level.GetSizeX(); x++) {
                 for (int y = 0; y < level.GetSizeY(); y++) {
-    				GameObject prefab = null;
                     Cell cell = level.GetCell(x,y);
-                    switch (cell.GetCellType()) {
-    					case CellType.EMPTY: 
-    						prefab = tilePrefab;
-    						break;
-    					case CellType.UNKNOWN: 
-    						prefab = unknownPrefab;
-    						break;
-    					case CellType.LASER: 
-    						prefab = laserPrefab;
-    						break;
-    					case CellType.SPEAR: 
-                            prefab = cell.IsDeadly() ? spearOnPrefab : spearOffPrefab;
-    						break;
-    					case CellType.WALL:  
-    						prefab = wallPrefab;
-    						break;
-    					default:
-    						prefab = unknownPrefab;	
-    						break;				
-    				}
+                    GameObject prefab = cellGameObjectFactory.GetCellPrefab(cell);
                     GameObject gameObject = InstantiateChild(prefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
                     if (cell.GetCellType() == CellType.SPEAR) {
                         CountCell countCell = (CountCell) cell;
                         spearsCells.Add(countCell, gameObject);
     				}
                     if (cell.GetCellType() != CellType.EMPTY && cell.GetCellType() != CellType.WALL) {
+                        GameObject tilePrefab = cellGameObjectFactory.GetCellPrefab(CellType.EMPTY);
                         InstantiateChild(tilePrefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
     				}
     			}		
@@ -138,8 +115,7 @@ namespace TrappedGame {
     					if(laserCell.IsLeft()) {
                             int xCoord = laserCell.GetX();
     						while(--xCoord!=-1) {
-                                if(level.GetCell(xCoord, y).IsBocked()) { break; }
-    							
+                                if(level.GetCell(xCoord, y).IsBocked()) { break; }    							
                                 prefabs.Add (InstantiateChild(lineHPrefab, level.ConvertToGameCoord(xCoord, y), Quaternion.identity));
     						}
     					}
@@ -184,12 +160,11 @@ namespace TrappedGame {
     		foreach (CountCell spear in spears) {
     			GameObject spearObject = (GameObject) spearsCells[spear];
     			SpriteRenderer renderer = spearObject.GetComponent<SpriteRenderer>();
-                SpriteRenderer newRenderer = spear.IsOn() ? spearOnPrefab.GetComponent<SpriteRenderer>()
-    				                                    : spearOffPrefab.GetComponent<SpriteRenderer>();
+                GameObject newPrefab = cellGameObjectFactory.GetCellPrefab(spear);
+                SpriteRenderer newRenderer = newPrefab.GetComponent<SpriteRenderer>();
     			renderer.sprite = newRenderer.sprite;	
     			renderer.color = newRenderer.color;		
-                spearObject.transform.localScale = spear.IsOn() ? spearOnPrefab.transform.localScale
-    														  : spearOffPrefab.transform.localScale;
+                spearObject.transform.localScale = newPrefab.transform.localScale;
     		}
     	}
 
