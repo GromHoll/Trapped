@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using TrappedGame;
+// TODO include to TrappedGame
 
 public class Cell : ITickable {
 

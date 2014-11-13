@@ -1,6 +1,8 @@
 using System;
-    
-public interface ITickable {
-    void NextTick();
-    void BackTick();
+
+namespace TrappedGame {   
+    public interface ITickable {
+        void NextTick();
+        void BackTick();
+    }
 }
