@@ -50,6 +50,14 @@ namespace TrappedGame {
                 hero.MoveTo(x, y);
                 level.NextTick();
             }
+            CheckCell();
+        }
+
+        private void CheckCell() {
+            int x = hero.GetX();
+            int y = hero.GetY();
+            Cell cell = level.GetCell(x, y);
+            hero.SetDead(cell.IsDeadly());
         }
 
         private bool HeroOnMap(int x, int y) {

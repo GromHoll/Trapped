@@ -238,7 +238,6 @@ namespace TrappedGame {
         void UpdateInput() {
             HeroMovement heroMovement = heroInput.GetMovement();
             heroMovement.MoveHeroInGame(game);
-
             // TODO Move to graphic update
             int x = game.GetHero().GetX();
             int y = game.GetHero().GetY();

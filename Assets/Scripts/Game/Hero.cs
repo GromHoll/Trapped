@@ -7,7 +7,9 @@ namespace TrappedGame {
 
         private IntVector2 position;
         private Path path = new Path();
+
         private bool isDead = false;
+        private int deadCounter = 0;
 
         public Hero(int x, int y) {
             position = new IntVector2(x, y);
@@ -37,6 +39,10 @@ namespace TrappedGame {
         
         public void SetDead(bool isDead) {
             this.isDead = isDead;
+            Debug.Log("Die!");
+            if (isDead) {
+                deadCounter++;
+            }
         }
 
         public bool IsDead() {

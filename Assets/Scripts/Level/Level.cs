@@ -20,10 +20,12 @@ namespace TrappedGame {
             finish = builder.GetFinish();
             cells = builder.GetCells();
             bonuses = builder.GetBonuses();
-            // TODO create covers
+            CreateDangerZones();
         }
 
+        private void CreateDangerZones() {
 
+        }
 
 
         public void NextTick() {
