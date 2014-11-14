@@ -1,6 +1,26 @@
 ﻿using UnityEngine;
+using TrappedGame;
+// TODO add to namespace
 
 public class LaserCell : CountCell {
+
+    public class Laser {
+        private LaserCell owner;
+        private IntRect line;
+
+        public Laser(LaserCell owner, IntRect line) {
+            this.owner = owner;
+            this.line = line;
+        }
+
+        public bool IsDangerFor(int x, int y) {
+            return line.Contains(x, y) && owner.IsDeadly();
+        }
+
+        public IntRect GetCover() {
+            return line;
+        }
+    }
     
     protected bool up;
     protected bool right;
@@ -27,6 +47,10 @@ public class LaserCell : CountCell {
 
     public override bool IsBocked() {
         return true;
+    }
+
+    public override bool IsDeadly() {
+        return isOn;
     }
 
     public bool IsUp() { 

@@ -56,8 +56,8 @@ namespace TrappedGame {
         private void CheckCell() {
             int x = hero.GetX();
             int y = hero.GetY();
-            Cell cell = level.GetCell(x, y);
-            hero.SetDead(cell.IsDeadly());
+            bool isDanger = level.IsDangerCell(x, y);
+            hero.SetDead(isDanger);
         }
 
         private bool HeroOnMap(int x, int y) {

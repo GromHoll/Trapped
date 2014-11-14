@@ -1,3 +1,4 @@
+using UnityEngine;
 using System;
 
 namespace TrappedGame {
@@ -20,6 +21,22 @@ namespace TrappedGame {
                 && Math.Max(point1.x, point2.x) >= x
                 && Math.Min(point1.y, point2.y) <= y 
                 && Math.Max(point1.y, point2.y) >= y;
+        }
+
+        public int GetMinX() {
+            return Math.Min(point1.x, point2.x);
+        }
+
+        public int GetMaxX() {
+            return Math.Max(point1.x, point2.x);
+        }
+
+        public int GetMinY() {
+            return Math.Min(point1.y, point2.y);
+        }
+        
+        public int GetMaxY() {
+            return Math.Max(point1.y, point2.y);
         }
     }
 }

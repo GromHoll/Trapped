@@ -10,6 +10,8 @@ namespace TrappedGame {
         private IntVector2 size;
         private Cell[,] cells;
 
+        private List<LaserCell.Laser> lasers = new List<LaserCell.Laser>();
+
         private IntVector2 start;
         private IntVector2 finish;
         private IList<IntVector2> bonuses;
@@ -24,9 +26,37 @@ namespace TrappedGame {
         }
 
         private void CreateDangerZones() {
-
+            CreateLasers();
         }
 
+        // TODO Refactor
+        private void CreateLasers() {
+            LaserHelper laserHelper = new LaserHelper();
+            foreach (Cell cell in cells) {
+                // TODO maybe store LaserCell in specias list and don't use cast?
+                if(cell.GetCellType() == CellType.LASER) {
+                    LaserCell laser = (LaserCell) cell;
+
+                    var up = laserHelper.CreateUpLaser(laser, this);
+                    addLaser(up);
+
+                    var right = laserHelper.CreateRightLaser(laser, this);
+                    addLaser(right);
+
+                    var down = laserHelper.CreateDownLaser(laser, this);
+                    addLaser(down);
+
+                    var left = laserHelper.CreateLeftLaser(laser, this);
+                    addLaser(left);
+                }
+            }
+        }
+
+        private void addLaser(LaserCell.Laser laser) {
+            if (laser != null) {
+                lasers.Add(laser);
+            }
+        }
 
         public void NextTick() {
             foreach (Cell cell in cells) {
@@ -38,6 +68,19 @@ namespace TrappedGame {
             foreach (Cell cell in cells) {
                 cell.BackTick();
             }
+        }
+
+        public bool IsDangerCell(int x, int y) {            
+            Cell cell = GetCell(x, y);
+            if(cell.IsDeadly()) {
+                return true;
+            }
+            foreach (LaserCell.Laser laser in lasers) {
+                if (laser.IsDangerFor(x, y)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public int GetStartX() {

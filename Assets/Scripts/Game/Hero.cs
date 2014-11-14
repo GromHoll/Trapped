@@ -39,7 +39,6 @@ namespace TrappedGame {
         
         public void SetDead(bool isDead) {
             this.isDead = isDead;
-            Debug.Log("Die!");
             if (isDead) {
                 deadCounter++;
             }
