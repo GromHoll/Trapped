@@ -243,6 +243,10 @@ namespace TrappedGame {
                     if (link.IsAdjacent()) {
                         GameObject pathLinkPrefab = link.IsHorizontal() ? pathHPrefab : pathVPrefab;
                         Vector2 coord = ConvertToGameCoord(link.GetFromX(), link.GetFromY());
+                        if (link.IsWentUp()) { coord.y += 0.5f; }
+                        if (link.IsWentRight()) { coord.x += 0.5f; }
+                        if (link.IsWentDown()) { coord.y -= 0.5f; }
+                        if (link.IsWentLeft()) { coord.x -= 0.5f; }
                         GameObject linkGameObject = InstantiateChild(pathLinkPrefab, coord, Quaternion.identity);
                         pathObjects[link] = linkGameObject;
                     }

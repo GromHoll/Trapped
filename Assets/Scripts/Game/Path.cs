@@ -32,6 +32,22 @@ namespace TrappedGame {
                 return to.y;
             }
 
+            public bool IsWentUp() {
+                return from.y < to.y;
+            }
+            
+            public bool IsWentRight() {
+                return from.x < to.x;
+            }
+            
+            public bool IsWentDown() {
+                return from.y > to.y;
+            }
+            
+            public bool IsWentLeft() {
+                return from.x > to.x;
+            }
+
             public bool IsAdjacent() {
                 return Math.Abs(from.x - to.x) <= 1
                     && Math.Abs(from.y - to.y) <= 1;
