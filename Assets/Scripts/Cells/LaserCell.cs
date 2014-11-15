@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using TrappedGame;
-// TODO add to namespace
 
+// TODO add to namespace
 public class LaserCell : CountCell {
 
     public class Laser {
