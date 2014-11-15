@@ -61,7 +61,7 @@ namespace TrappedGame {
         }
 
         private bool HeroOnMap(int x, int y) {
-            return level.contains(x, y); 
+            return level.Contains(x, y); 
         }
 
         private bool IsAvailableForMovementCell(int x, int y) {

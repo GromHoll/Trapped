@@ -10,7 +10,7 @@ namespace TrappedGame {
         private IntVector2 size;
         private Cell[,] cells;
 
-        private List<LaserCell.Laser> lasers = new List<LaserCell.Laser>();
+        private IList<LaserCell.Laser> lasers = new List<LaserCell.Laser>();
 
         private IntVector2 start;
         private IntVector2 finish;
@@ -108,8 +108,7 @@ namespace TrappedGame {
         }
 
         public Cell GetCell(int x, int y) {
-            if (x < 0 || x >= size.x) throw new ArgumentException("Size should be positive and less than xSize", "x");
-            if (y < 0 || y >= size.y) throw new ArgumentException("Size should be positive and less than ySize", "y");
+            if (!Contains(x, y)) throw new ArgumentException("Wrong coordinates");
             return cells[x, y];
         }
 
@@ -117,19 +116,12 @@ namespace TrappedGame {
             return bonuses;
         }
 
-        public bool contains(int x, int y) {
+        public IList<LaserCell.Laser> GetLaserLines() {
+            return lasers;
+        }
+
+        public bool Contains(int x, int y) {
             return x >= 0 && x <= size.x - 1 && y >= 0 && y <= size.y - 1; 
-        }
-
-        // TODO Remove convector methods after refactor
-        public Vector2 ConvertToGameCoord(IntVector2 pos) {
-            return ConvertToGameCoord(pos.x, pos.y);
-        }
-
-        public Vector2 ConvertToGameCoord(float x, float y) {
-            float gameX = x - (size.x - 1)/2f;
-            float gameY = y - (size.y - 1)/2f;
-            return new Vector2(gameX, gameY);
         }
     }
 }

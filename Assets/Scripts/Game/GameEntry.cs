@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,6 +11,9 @@ namespace TrappedGame {
         private Game game;
 
         public CellGameObjectFactory cellGameObjectFactory;
+        
+        private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
+
 
     	public GameObject heroPrefab;
     	public GameObject bonusPrefab;
@@ -35,12 +39,7 @@ namespace TrappedGame {
         private IDictionary<IntVector2, ArrayList> laserCoverCells = new Dictionary<IntVector2, ArrayList>();
         private IDictionary<CountCell, GameObject> spearsCells = new Dictionary<CountCell, GameObject>();
 
-        private IList<IntVector2> path = new List<IntVector2>();
-        private IDictionary<IntVector2, GameObject> pathObjects = new Dictionary<IntVector2, GameObject>();
-
     	bool failStep = false;
-
-    	int  failCounter = 0;
     	bool failChanged = false;
 
     	void Start() {        
@@ -50,11 +49,11 @@ namespace TrappedGame {
 
     		CreateLevelObjects();
 
-            hero = InstantiateChild(heroPrefab, level.ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
-            deadHero = InstantiateChild(skullPrefab, level.ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
-            finish = InstantiateChild(finishPrefab, level.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY()), Quaternion.identity);
+            hero = InstantiateChild(heroPrefab, ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
+            deadHero = InstantiateChild(skullPrefab, ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
+            finish = InstantiateChild(finishPrefab, ConvertToGameCoord(level.GetFinishX(), level.GetFinishY()), Quaternion.identity);
     		foreach (IntVector2 coord in level.GetBonuses()) {
-                bonuses.Add(InstantiateChild(bonusPrefab, level.ConvertToGameCoord(coord), Quaternion.identity));	
+                bonuses.Add(InstantiateChild(bonusPrefab, ConvertToGameCoord(coord), Quaternion.identity));	
     		}
     		UpdateLasers();
     	}
@@ -64,14 +63,14 @@ namespace TrappedGame {
                 for (int y = 0; y < level.GetSizeY(); y++) {
                     Cell cell = level.GetCell(x,y);
                     GameObject prefab = cellGameObjectFactory.GetCellPrefab(cell);
-                    GameObject gameObject = InstantiateChild(prefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
+                    GameObject gameObject = InstantiateChild(prefab, ConvertToGameCoord(x, y), Quaternion.identity);
                     if (cell.GetCellType() == CellType.SPEAR) {
                         CountCell countCell = (CountCell) cell;
                         spearsCells.Add(countCell, gameObject);
     				}
                     if (cell.GetCellType() != CellType.EMPTY && cell.GetCellType() != CellType.WALL) {
                         GameObject tilePrefab = cellGameObjectFactory.GetCellPrefab(CellType.EMPTY);
-                        InstantiateChild(tilePrefab, level.ConvertToGameCoord(x, y), Quaternion.identity);
+                        InstantiateChild(tilePrefab, ConvertToGameCoord(x, y), Quaternion.identity);
     				}
     			}		
     		}
@@ -92,7 +91,7 @@ namespace TrappedGame {
     						while(--yCoord!=-1 ) {
                                 if(level.GetCell(x, yCoord).IsBocked()) { break; }
     							
-                                prefabs.Add (InstantiateChild(lineVPrefab, level.ConvertToGameCoord(x, yCoord), Quaternion.identity));
+                                prefabs.Add (InstantiateChild(lineVPrefab, ConvertToGameCoord(x, yCoord), Quaternion.identity));
     						}
     					}
     					if(laserCell.IsRight()) {
@@ -100,7 +99,7 @@ namespace TrappedGame {
                             while(++xCoord!=level.GetSizeX()) {
                                 if(level.GetCell(xCoord, y).IsBocked()) { break; }
     							
-                                prefabs.Add (InstantiateChild(lineHPrefab, level.ConvertToGameCoord(xCoord, y), Quaternion.identity));
+                                prefabs.Add (InstantiateChild(lineHPrefab, ConvertToGameCoord(xCoord, y), Quaternion.identity));
     						}
     					}
     					
@@ -109,14 +108,14 @@ namespace TrappedGame {
     						while(++yCoord!=level.GetSizeY() ) {
     							if(level.GetCell(x, yCoord).IsBocked()) { break; }
     							
-                                prefabs.Add (InstantiateChild(lineVPrefab, level.ConvertToGameCoord(x, yCoord), Quaternion.identity));
+                                prefabs.Add (InstantiateChild(lineVPrefab, ConvertToGameCoord(x, yCoord), Quaternion.identity));
     						}
     					}
     					if(laserCell.IsLeft()) {
                             int xCoord = laserCell.GetX();
     						while(--xCoord!=-1) {
                                 if(level.GetCell(xCoord, y).IsBocked()) { break; }    							
-                                prefabs.Add (InstantiateChild(lineHPrefab, level.ConvertToGameCoord(xCoord, y), Quaternion.identity));
+                                prefabs.Add (InstantiateChild(lineHPrefab, ConvertToGameCoord(xCoord, y), Quaternion.identity));
     						}
     					}
     					laserCoverCells.Add (new IntVector2(x, y), prefabs);
@@ -131,6 +130,18 @@ namespace TrappedGame {
     		return child;
     	}
 
+        // TODO Remove convector methods after refactor
+        public Vector2 ConvertToGameCoord(IntVector2 pos) {
+            return ConvertToGameCoord(pos.x, pos.y);
+        }
+        
+        public Vector2 ConvertToGameCoord(float x, float y) {
+            float gameX = x - (level.GetSizeX() - 1)/2f;
+            float gameY = y - (level.GetSizeY() - 1)/2f;
+            return new Vector2(gameX, gameY);
+        }
+
+        // TODO Find good way for scaling camera
     	private void UpdateCamera() {
     		if (camera != null) {
                 camera.orthographicSize = Mathf.Max(level.GetSizeX(), level.GetSizeY())/2f;
@@ -168,66 +179,23 @@ namespace TrappedGame {
     		}
     	}
 
-    	private bool isFail() {
-    		Vector2 heroCoord = hero.transform.position;
-
-            ICollection<IntVector2> lasers = laserCoverCells.Keys;
-            foreach (IntVector2 laserCoordinate in lasers) {
-    			LaserCell laser = (LaserCell) level.GetCell(laserCoordinate.x, laserCoordinate.y);
-                if(laser.IsOn()) {
-    				ICollection covered = (ICollection) laserCoverCells[laserCoordinate];
-    				foreach (GameObject obj in covered) {
-    					if( heroCoord == (Vector2) obj.transform.position ) {
-    						return true;
-    					}
-    				}
-    			}
-    		}
-
-            ICollection<CountCell> spears = spearsCells.Keys;
-    		foreach (CountCell spear in spears) {
-                if(spear.IsOn()) {
-    				GameObject spearObject = (GameObject) spearsCells[spear];
-    				if(heroCoord == (Vector2) spearObject.transform.position) {
-    					return true;
-    				}
-    			}
-    		}
-
-    		return false;
-    	}
-
     	private void Update() {
     		if (!game.IsWin()) {
                 UpdateInput();
-                // TODO Update Graphic
                 UpdateCamera();
-    			UpdateLasers();
-    			UpdateSpears();
-
-    			failStep = isFail();
-    			deadHero.transform.position = hero.transform.position;
-    			hero.SetActive(!failStep);
-    			deadHero.SetActive(failStep);
-
-    			if(failChanged != failStep) {
-    				failChanged = failStep;
-    				if (failStep) {
-    					failCounter ++;
-    				}
-    			}
-
+                UpdadeGraphics();
     		} else {
     			if (!isFinish) {
     				int score = 0;
     				foreach (IntVector2 bonus in level.GetBonuses()) {
-    					if (path.Contains(bonus)) {
+                        // TODO Calculate score
+    					if (/*path.Contains(bonus)*/ false) {
     						score++;
     					}
     				}
     				
     				PlayerPrefs.SetInt("Score", score);
-    				PlayerPrefs.SetInt("Death", failCounter);
+    				PlayerPrefs.SetInt("Death", game.GetHero().GetDeaths());
 
     				InstantiateChild(winPrefab, new Vector2(0, 0), Quaternion.identity);
     			}
@@ -241,7 +209,45 @@ namespace TrappedGame {
             // TODO Move to graphic update
             int x = game.GetHero().GetX();
             int y = game.GetHero().GetY();
-            hero.transform.position = level.ConvertToGameCoord(x, y);
+            hero.transform.position = ConvertToGameCoord(x, y);
     	}
+
+        void UpdadeGraphics() {
+            UpdatePath();
+
+            UpdateLasers();
+            UpdateSpears();
+            
+            failStep = game.GetHero().IsDead();
+            deadHero.transform.position = hero.transform.position;
+            hero.SetActive(!failStep);
+            deadHero.SetActive(failStep);
+            
+            if(failChanged != failStep) {
+                failChanged = failStep;
+            }
+        }
+
+        void UpdatePath() {
+            Path path = game.GetHero().GetPath();
+            IEnumerable<Path.PathLink> existLinks = path.GetLinks();
+            IEnumerable<Path.PathLink> showedLinks = pathObjects.Keys;
+            HashSet<Path.PathLink> differens = new HashSet<Path.PathLink>(existLinks);
+            differens.SymmetricExceptWith(showedLinks);
+            foreach (Path.PathLink link in differens) {
+                if (showedLinks.Contains(link)) {
+                    GameObject linkGameObject = pathObjects[link];
+                    pathObjects.Remove(link);
+                    Destroy(linkGameObject);
+                } else {
+                    if (link.IsAdjacent()) {
+                        GameObject pathLinkPrefab = link.IsHorizontal() ? pathHPrefab : pathVPrefab;
+                        Vector2 coord = ConvertToGameCoord(link.GetFromX(), link.GetFromY());
+                        GameObject linkGameObject = InstantiateChild(pathLinkPrefab, coord, Quaternion.identity);
+                        pathObjects[link] = linkGameObject;
+                    }
+                }
+            }
+        }
     }
 }

@@ -25,11 +25,24 @@ namespace TrappedGame {
             }
 
             public int GetToX() {
-                return to.y;            
+                return to.x;            
             }
 
             public int GetToY() {
                 return to.y;
+            }
+
+            public bool IsAdjacent() {
+                return Math.Abs(from.x - to.x) <= 1
+                    && Math.Abs(from.y - to.y) <= 1;
+            }
+
+            public bool IsVertical() {
+                return from.x == to.x;
+            }
+
+            public bool IsHorizontal() {
+                return from.y == to.y;
             }
         }
 

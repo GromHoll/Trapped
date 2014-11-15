@@ -48,6 +48,14 @@ namespace TrappedGame {
             return isDead;
         }
 
+        public int GetDeaths() {
+            return deadCounter;
+        }
+
+        public Path GetPath() {
+            return path;
+        }
+
         public Path.PathLink GetPreviousTurn() {
             return path.GetPreviousTurn();
         }
@@ -60,5 +68,7 @@ namespace TrappedGame {
             }
             return false;
         }
+
+
     }
 }
