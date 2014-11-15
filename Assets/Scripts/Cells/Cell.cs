@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using TrappedGame;
-// TODO include to TrappedGame
 
+// TODO include to TrappedGame
 public class Cell : ITickable {
 
     protected IntVector2 coordinate;
