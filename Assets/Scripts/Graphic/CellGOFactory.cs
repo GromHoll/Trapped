@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace TrappedGame {
-    public class CellGameObjectFactory : MonoBehaviour {
+    public class CellGOFactory : MonoBehaviour {
         public GameObject tilePrefab;
         public GameObject unknownPrefab;
         public GameObject laserPrefab;

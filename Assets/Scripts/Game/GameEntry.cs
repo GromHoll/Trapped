@@ -6,7 +6,8 @@ using System.Collections.Generic;
 namespace TrappedGame {
     public class GameEntry : MonoBehaviour {
         
-        public CellGameObjectFactory cellGameObjectFactory;
+        public CellGOFactory cellGameObjectFactory;
+        public LaserLineGOFactory laserLineGOFactory;
 
         private LevelLoader loader = new LevelLoader();
         private HeroInput heroInput = new HeroInput();
@@ -15,15 +16,15 @@ namespace TrappedGame {
 
         private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
         private IDictionary<LaserCell.Laser, IList<GameObject>> lasers = new Dictionary<LaserCell.Laser, IList<GameObject>>();
+        
+        public Camera gameCamera;
 
         private GameObject winWindow = null;
         
         // TODO refactor
         public GameObject pathHPrefab;
         public GameObject pathVPrefab;
-        public GameObject lineHPrefab;
-        public GameObject lineVPrefab;
-        
+                
         // TODO refactor
     	public GameObject heroPrefab;
     	public GameObject bonusPrefab;
@@ -33,8 +34,6 @@ namespace TrappedGame {
         // TODO refactor
     	public GameObject winPrefab;
 
-    	public Camera gameCamera;
-        
         // TODO refactor
     	private GameObject hero;
     	private GameObject deadHero;
@@ -58,64 +57,28 @@ namespace TrappedGame {
                 for (int y = 0; y < level.GetSizeY(); y++) {
                     Cell cell = level.GetCell(x,y);
                     GameObject prefab = cellGameObjectFactory.GetCellPrefab(cell);
-                    GameObject gameObject = InstantiateChild(prefab, ConvertToGameCoord(x, y), Quaternion.identity);
+                    GameObject cellObject = GameUtils.InstantiateChild(prefab, GameUtils.ConvertToGameCoord(x, y, level), gameObject);
                     if (cell.GetCellType() == CellType.SPEAR) {
                         CountCell countCell = (CountCell) cell;
-                        spearsCells.Add(countCell, gameObject);
+                        spearsCells.Add(countCell, cellObject);
     				}
                     if (cell.GetCellType() != CellType.EMPTY && cell.GetCellType() != CellType.WALL) {
                         GameObject tilePrefab = cellGameObjectFactory.GetCellPrefab(CellType.EMPTY);
-                        InstantiateChild(tilePrefab, ConvertToGameCoord(x, y), Quaternion.identity);
+                        GameUtils.InstantiateChild(tilePrefab, GameUtils.ConvertToGameCoord(x, y, level), gameObject);
     				}
     			}		
     		}
-
-    		CreateLaserCover();
+            
+            lasers = laserLineGOFactory.CreateLasersForLevel(level);
             
             // TODO refactor
-            hero = InstantiateChild(heroPrefab, ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
-            deadHero = InstantiateChild(skullPrefab, ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
-            finish = InstantiateChild(finishPrefab, ConvertToGameCoord(level.GetFinishX(), level.GetFinishY()), Quaternion.identity);
+            hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
+            deadHero = GameUtils.InstantiateChild(skullPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
+            finish = GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY(), level), gameObject);
             foreach (IntVector2 coord in level.GetBonuses()) {
-                bonuses.Add(InstantiateChild(bonusPrefab, ConvertToGameCoord(coord), Quaternion.identity)); 
+                bonuses.Add(GameUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject)); 
             }
     	}
-
-    	private void CreateLaserCover() {
-            foreach (LaserCell.Laser line in level.GetLaserLines()) {
-                GameObject prefab = line.IsHorizontal() ? lineHPrefab : lineVPrefab;
-                IList<GameObject> laserObjects = new List<GameObject>();
-                IntRect cover = line.GetCover();
-                for (int x = cover.GetMinX(); x <= cover.GetMaxX(); x++) {
-                    for (int y = cover.GetMinY(); y <= cover.GetMaxY(); y++) {
-                        GameObject laserObject = InstantiateChild(prefab, ConvertToGameCoord(x, y), Quaternion.identity);
-                        laserObject.SetActive(line.IsDanger());     
-                        laserObjects.Add(laserObject);                        
-                    }
-                }
-                lasers.Add(line, laserObjects);
-            }
-    	}
-        
-        // TODO refactor
-    	private GameObject InstantiateChild(GameObject gameObject, Vector2 vector, Quaternion quaternion) {
-    		GameObject child = Instantiate(gameObject, vector, quaternion) as GameObject;
-    		child.transform.parent = transform;
-    		return child;
-    	}
-        
-        // TODO refactor
-        // TODO Remove convector methods after refactor
-        public Vector2 ConvertToGameCoord(IntVector2 pos) {
-            return ConvertToGameCoord(pos.x, pos.y);
-        }
-        
-        // TODO refactor
-        public Vector2 ConvertToGameCoord(float x, float y) {
-            float gameX = x - (level.GetSizeX() - 1)/2f;
-            float gameY = y - (level.GetSizeY() - 1)/2f;
-            return new Vector2(gameX, gameY);
-        }
 
     	private void Update() {
     		if (!game.IsWin()) {
@@ -153,12 +116,12 @@ namespace TrappedGame {
                 } else {
                     if (link.IsAdjacent()) {
                         GameObject pathLinkPrefab = link.IsHorizontal() ? pathHPrefab : pathVPrefab;
-                        Vector2 coord = ConvertToGameCoord(link.GetFromX(), link.GetFromY());
+                        Vector2 coord = GameUtils.ConvertToGameCoord(link.GetFromX(), link.GetFromY(), level);
                         if (link.IsWentUp()) { coord.y += 0.5f; }
                         if (link.IsWentRight()) { coord.x += 0.5f; }
                         if (link.IsWentDown()) { coord.y -= 0.5f; }
                         if (link.IsWentLeft()) { coord.x -= 0.5f; }
-                        GameObject linkGameObject = InstantiateChild(pathLinkPrefab, coord, Quaternion.identity);
+                        GameObject linkGameObject = GameUtils.InstantiateChild(pathLinkPrefab, coord, gameObject);
                         pathObjects[link] = linkGameObject;
                     }
                 }
@@ -168,8 +131,8 @@ namespace TrappedGame {
         void UpdateHero() {
             int x = game.GetHero().GetX();
             int y = game.GetHero().GetY();
-            hero.transform.position = ConvertToGameCoord(x, y);
-            deadHero.transform.position = ConvertToGameCoord(x, y);
+            hero.transform.position = GameUtils.ConvertToGameCoord(x, y, level);
+            deadHero.transform.position = GameUtils.ConvertToGameCoord(x, y, level);
 
             bool isDead = game.GetHero().IsDead();
             hero.SetActive(!isDead);
@@ -210,7 +173,7 @@ namespace TrappedGame {
             if (winWindow == null) {        
                 PlayerPrefs.SetInt("Score", game.GetScore());
                 PlayerPrefs.SetInt("Death", game.GetHero().GetDeaths());
-                winWindow = InstantiateChild(winPrefab, new Vector2(0, 0), Quaternion.identity);
+                winWindow = GameUtils.InstantiateChild(winPrefab, new Vector2(0, 0), gameObject);
             }
         }
     }
