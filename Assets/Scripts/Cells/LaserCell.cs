@@ -14,11 +14,23 @@ public class LaserCell : CountCell {
         }
 
         public bool IsDangerFor(int x, int y) {
-            return line.Contains(x, y) && owner.IsDeadly();
+            return line.Contains(x, y) && IsDanger();
+        }
+        
+        public bool IsDanger() {
+            return owner.IsDeadly();
         }
 
         public IntRect GetCover() {
             return line;
+        }
+
+        public bool IsHorizontal() {
+            return line.GetMaxY() == line.GetMinY() && line.GetMaxY() == owner.GetY();
+        }
+
+        public bool IsVertical() {
+            return line.GetMaxX() == line.GetMinX() && line.GetMaxX() == owner.GetX();
         }
     }
     
