@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 
 namespace TrappedGame {
@@ -15,7 +16,19 @@ namespace TrappedGame {
         }
 
         public bool IsWin() {
-            return level.GetStartX() == level.GetFinishX() && level.GetStartY() == level.GetFinishY();
+            return hero.GetX() == level.GetFinishX() && hero.GetY() == level.GetFinishY();
+        }
+
+        public int GetScore() {
+            int score = 0;
+            IList<IntVector2> bonuses = level.GetBonuses();
+            Path path = hero.GetPath();
+            foreach(Path.PathLink link in path.GetLinks()) {
+                if (bonuses.Contains(link.GetFrom())) {
+                    score++;
+                }
+            }
+            return score;
         }
 
         public Hero GetHero() {

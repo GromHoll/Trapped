@@ -16,12 +16,21 @@ namespace TrappedGame {
             public bool IsFrom(int x, int y) {
                 return from.x == x && from.y == y;
             }
+            
+            public IntVector2 GetFrom() {
+                return from;
+            }
 
             public int GetFromX() {
                 return from.x;
             }
+
             public int GetFromY() {
                 return from.y;
+            }
+
+            public IntVector2 GetTo() {
+                return to;
             }
 
             public int GetToX() {

@@ -149,16 +149,8 @@ namespace TrappedGame {
                 UpdateCamera();
                 UpdadeGraphics();
     		} else {
-    			if (!isFinish) {
-    				int score = 0;
-    				foreach (IntVector2 bonus in level.GetBonuses()) {
-                        // TODO Calculate score
-    					if (/*path.Contains(bonus)*/ false) {
-    						score++;
-    					}
-    				}
-    				
-    				PlayerPrefs.SetInt("Score", score);
+    			if (!isFinish) {    				
+                    PlayerPrefs.SetInt("Score", game.GetScore());
     				PlayerPrefs.SetInt("Death", game.GetHero().GetDeaths());
 
     				InstantiateChild(winPrefab, new Vector2(0, 0), Quaternion.identity);
