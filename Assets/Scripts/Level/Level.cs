@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace TrappedGame {
     public class Level : ITickable {
@@ -110,6 +111,10 @@ namespace TrappedGame {
         public Cell GetCell(int x, int y) {
             if (!Contains(x, y)) throw new ArgumentException("Wrong coordinates");
             return cells[x, y];
+        }
+
+        public IEnumerable GetCells() {
+            return cells;
         }
 
         public IList<IntVector2> GetBonuses() {

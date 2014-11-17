@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TrappedGame {
     public class GameEntry : MonoBehaviour {
-        
+
         public CellGOFactory cellGameObjectFactory;
         public LaserLineGOFactory laserLineGOFactory;
         public PathGOFactory pathGOFactory;
@@ -17,26 +17,23 @@ namespace TrappedGame {
 
         private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
         private IDictionary<LaserCell.Laser, IList<GameObject>> lasers = new Dictionary<LaserCell.Laser, IList<GameObject>>();
-        private IDictionary<CountCell, GameObject> spearsCells = new Dictionary<CountCell, GameObject>();
-
-        public Camera gameCamera;
+        private IDictionary<SpearCell, GameObject> spearsCells = new Dictionary<SpearCell, GameObject>();
 
         private GameObject winWindow = null;
                 
-        // TODO refactor
+        
+        public Camera gameCamera;
+
+        public GameObject winPrefab;
     	public GameObject heroPrefab;
     	public GameObject bonusPrefab;
     	public GameObject finishPrefab;
     	public GameObject skullPrefab;
-        
-        // TODO refactor
-    	public GameObject winPrefab;
 
-        // TODO refactor
     	private GameObject hero;
     	private GameObject deadHero;
     	private GameObject finish;
-    	private IList bonuses = new ArrayList();
+        private IList<GameObject> bonuses = new List<GameObject>();
         
 
         void Start() {        
@@ -48,24 +45,13 @@ namespace TrappedGame {
     	}
 
         void CreateLevelObjects() {
+            cellGameObjectFactory.CreateEmptyCells(level);
+            cellGameObjectFactory.CreateWallCells(level);
+
+            cellGameObjectFactory.CreateLaserCells(level);
             lasers = laserLineGOFactory.CreateLasersForLevel(level);
 
-            // TODO refactor
-    		for (int x = 0; x < level.GetSizeX(); x++) {
-                for (int y = 0; y < level.GetSizeY(); y++) {
-                    Cell cell = level.GetCell(x,y);
-                    GameObject prefab = cellGameObjectFactory.GetCellPrefab(cell);
-                    GameObject cellObject = GameUtils.InstantiateChild(prefab, GameUtils.ConvertToGameCoord(x, y, level), gameObject);
-                    if (cell.GetCellType() == CellType.SPEAR) {
-                        CountCell countCell = (CountCell) cell;
-                        spearsCells.Add(countCell, cellObject);
-    				}
-                    if (cell.GetCellType() != CellType.EMPTY && cell.GetCellType() != CellType.WALL) {
-                        GameObject tilePrefab = cellGameObjectFactory.GetCellPrefab(CellType.EMPTY);
-                        GameUtils.InstantiateChild(tilePrefab, GameUtils.ConvertToGameCoord(x, y, level), gameObject);
-    				}
-    			}		
-    		}
+            spearsCells = cellGameObjectFactory.CreateSpearCells(level);
                         
             hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
             deadHero = GameUtils.InstantiateChild(skullPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
@@ -147,8 +133,8 @@ namespace TrappedGame {
 
         // TODO Union Spears prefabs in single prefab
         private void UpdateSpears() {
-            ICollection<CountCell> spears = spearsCells.Keys;
-            foreach (CountCell spear in spears) {
+            ICollection<SpearCell> spears = spearsCells.Keys;
+            foreach (SpearCell spear in spears) {
                 GameObject spearObject = (GameObject) spearsCells[spear];
                 SpriteRenderer renderer = spearObject.GetComponent<SpriteRenderer>();
                 GameObject newPrefab = cellGameObjectFactory.GetCellPrefab(spear);
