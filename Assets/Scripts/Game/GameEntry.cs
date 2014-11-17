@@ -17,14 +17,12 @@ namespace TrappedGame {
         private IDictionary<LaserCell.Laser, IList<GameObject>> lasers = new Dictionary<LaserCell.Laser, IList<GameObject>>();
 
         private GameObject winWindow = null;
-
         
         // TODO refactor
         public GameObject pathHPrefab;
         public GameObject pathVPrefab;
         public GameObject lineHPrefab;
         public GameObject lineVPrefab;
-
         
         // TODO refactor
     	public GameObject heroPrefab;
@@ -35,7 +33,7 @@ namespace TrappedGame {
         // TODO refactor
     	public GameObject winPrefab;
 
-    	public Camera camera;
+    	public Camera gameCamera;
         
         // TODO refactor
     	private GameObject hero;
@@ -180,8 +178,8 @@ namespace TrappedGame {
 
         // TODO Find good way for scaling camera
         private void UpdateCamera() {
-            if (camera != null) {
-                camera.orthographicSize = Mathf.Max(level.GetSizeX(), level.GetSizeY())/2f;
+            if (gameCamera != null) {
+                gameCamera.orthographicSize = Mathf.Max(level.GetSizeX(), level.GetSizeY())/2f;
             }
         }
         
