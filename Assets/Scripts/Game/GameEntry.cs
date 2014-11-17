@@ -8,6 +8,7 @@ namespace TrappedGame {
         
         public CellGOFactory cellGameObjectFactory;
         public LaserLineGOFactory laserLineGOFactory;
+        public PathGOFactory pathGOFactory;
 
         private LevelLoader loader = new LevelLoader();
         private HeroInput heroInput = new HeroInput();
@@ -16,14 +17,11 @@ namespace TrappedGame {
 
         private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
         private IDictionary<LaserCell.Laser, IList<GameObject>> lasers = new Dictionary<LaserCell.Laser, IList<GameObject>>();
-        
+        private IDictionary<CountCell, GameObject> spearsCells = new Dictionary<CountCell, GameObject>();
+
         public Camera gameCamera;
 
         private GameObject winWindow = null;
-        
-        // TODO refactor
-        public GameObject pathHPrefab;
-        public GameObject pathVPrefab;
                 
         // TODO refactor
     	public GameObject heroPrefab;
@@ -40,10 +38,8 @@ namespace TrappedGame {
     	private GameObject finish;
     	private IList bonuses = new ArrayList();
         
-        // TODO refactor
-        private IDictionary<CountCell, GameObject> spearsCells = new Dictionary<CountCell, GameObject>();
 
-    	void Start() {        
+        void Start() {        
             string levelName = PlayerPrefs.GetString("CurrentLevel");
             level = loader.LoadLevel(levelName);
             game = new Game(level);
@@ -52,6 +48,8 @@ namespace TrappedGame {
     	}
 
         void CreateLevelObjects() {
+            lasers = laserLineGOFactory.CreateLasersForLevel(level);
+
             // TODO refactor
     		for (int x = 0; x < level.GetSizeX(); x++) {
                 for (int y = 0; y < level.GetSizeY(); y++) {
@@ -68,10 +66,7 @@ namespace TrappedGame {
     				}
     			}		
     		}
-            
-            lasers = laserLineGOFactory.CreateLasersForLevel(level);
-            
-            // TODO refactor
+                        
             hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
             deadHero = GameUtils.InstantiateChild(skullPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
             finish = GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY(), level), gameObject);
@@ -115,14 +110,9 @@ namespace TrappedGame {
                     Destroy(linkGameObject);
                 } else {
                     if (link.IsAdjacent()) {
-                        GameObject pathLinkPrefab = link.IsHorizontal() ? pathHPrefab : pathVPrefab;
                         Vector2 coord = GameUtils.ConvertToGameCoord(link.GetFromX(), link.GetFromY(), level);
-                        if (link.IsWentUp()) { coord.y += 0.5f; }
-                        if (link.IsWentRight()) { coord.x += 0.5f; }
-                        if (link.IsWentDown()) { coord.y -= 0.5f; }
-                        if (link.IsWentLeft()) { coord.x -= 0.5f; }
-                        GameObject linkGameObject = GameUtils.InstantiateChild(pathLinkPrefab, coord, gameObject);
-                        pathObjects[link] = linkGameObject;
+                        GameObject pathGameObject = pathGOFactory.CreatePathSegment(link, coord);
+                        pathObjects[link] = pathGameObject;
                     }
                 }
             }
