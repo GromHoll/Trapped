@@ -34,9 +34,6 @@ namespace TrappedGame {
         
         // TODO refactor
     	public GameObject winPrefab;
-        
-        // TODO refactor
-    	private bool isFinish = false; 
 
     	public Camera camera;
         
@@ -47,12 +44,7 @@ namespace TrappedGame {
     	private IList bonuses = new ArrayList();
         
         // TODO refactor
-        private IDictionary<IntVector2, ArrayList> laserCoverCells = new Dictionary<IntVector2, ArrayList>();
         private IDictionary<CountCell, GameObject> spearsCells = new Dictionary<CountCell, GameObject>();
-        
-        // TODO refactor
-    	bool failStep = false;
-    	bool failChanged = false;
 
     	void Start() {        
             string levelName = PlayerPrefs.GetString("CurrentLevel");
@@ -127,36 +119,6 @@ namespace TrappedGame {
             return new Vector2(gameX, gameY);
         }
 
-        // TODO Find good way for scaling camera
-    	private void UpdateCamera() {
-    		if (camera != null) {
-                camera.orthographicSize = Mathf.Max(level.GetSizeX(), level.GetSizeY())/2f;
-    		}
-    	}
-
-    	private void UpdateLasers() {
-            foreach (KeyValuePair<LaserCell.Laser, IList<GameObject>> pair in lasers) {
-                LaserCell.Laser line = pair.Key;
-                foreach (GameObject laserObject in pair.Value) {
-                    laserObject.SetActive(line.IsDanger());                        
-                }
-            }    
-    	}
-        
-        // TODO refactor
-    	private void UpdateSpears() {
-            ICollection<CountCell> spears = spearsCells.Keys;
-    		foreach (CountCell spear in spears) {
-    			GameObject spearObject = (GameObject) spearsCells[spear];
-    			SpriteRenderer renderer = spearObject.GetComponent<SpriteRenderer>();
-                GameObject newPrefab = cellGameObjectFactory.GetCellPrefab(spear);
-                SpriteRenderer newRenderer = newPrefab.GetComponent<SpriteRenderer>();
-    			renderer.sprite = newRenderer.sprite;	
-    			renderer.color = newRenderer.color;		
-                spearObject.transform.localScale = newPrefab.transform.localScale;
-    		}
-    	}
-
     	private void Update() {
     		if (!game.IsWin()) {
                 UpdateInput();
@@ -176,18 +138,7 @@ namespace TrappedGame {
             UpdateHero();
             UpdatePath();
             UpdateLasers();
-
-            // TODO refactor
             UpdateSpears();
-            
-            failStep = game.GetHero().IsDead();
-            deadHero.transform.position = hero.transform.position;
-            hero.SetActive(!failStep);
-            deadHero.SetActive(failStep);
-            
-            if(failChanged != failStep) {
-                failChanged = failStep;
-            }
         }
 
         void UpdatePath() {
@@ -220,6 +171,41 @@ namespace TrappedGame {
             int x = game.GetHero().GetX();
             int y = game.GetHero().GetY();
             hero.transform.position = ConvertToGameCoord(x, y);
+            deadHero.transform.position = ConvertToGameCoord(x, y);
+
+            bool isDead = game.GetHero().IsDead();
+            hero.SetActive(!isDead);
+            deadHero.SetActive(isDead);
+        }
+
+        // TODO Find good way for scaling camera
+        private void UpdateCamera() {
+            if (camera != null) {
+                camera.orthographicSize = Mathf.Max(level.GetSizeX(), level.GetSizeY())/2f;
+            }
+        }
+        
+        private void UpdateLasers() {
+            foreach (KeyValuePair<LaserCell.Laser, IList<GameObject>> pair in lasers) {
+                LaserCell.Laser line = pair.Key;
+                foreach (GameObject laserObject in pair.Value) {
+                    laserObject.SetActive(line.IsDanger());                        
+                }
+            }    
+        }
+
+        // TODO Union Spears prefabs in single prefab
+        private void UpdateSpears() {
+            ICollection<CountCell> spears = spearsCells.Keys;
+            foreach (CountCell spear in spears) {
+                GameObject spearObject = (GameObject) spearsCells[spear];
+                SpriteRenderer renderer = spearObject.GetComponent<SpriteRenderer>();
+                GameObject newPrefab = cellGameObjectFactory.GetCellPrefab(spear);
+                SpriteRenderer newRenderer = newPrefab.GetComponent<SpriteRenderer>();
+                renderer.sprite = newRenderer.sprite;   
+                renderer.color = newRenderer.color;     
+                spearObject.transform.localScale = newPrefab.transform.localScale;
+            }      
         }
     
         void ShowWinWindow() {
