@@ -16,33 +16,41 @@ namespace TrappedGame {
         private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
         private IDictionary<LaserCell.Laser, IList<GameObject>> lasers = new Dictionary<LaserCell.Laser, IList<GameObject>>();
 
+        private GameObject winWindow = null;
 
-
+        
+        // TODO refactor
         public GameObject pathHPrefab;
         public GameObject pathVPrefab;
         public GameObject lineHPrefab;
         public GameObject lineVPrefab;
 
-
+        
+        // TODO refactor
     	public GameObject heroPrefab;
     	public GameObject bonusPrefab;
     	public GameObject finishPrefab;
     	public GameObject skullPrefab;
-    	
+        
+        // TODO refactor
     	public GameObject winPrefab;
-
+        
+        // TODO refactor
     	private bool isFinish = false; 
 
     	public Camera camera;
-
+        
+        // TODO refactor
     	private GameObject hero;
     	private GameObject deadHero;
     	private GameObject finish;
     	private IList bonuses = new ArrayList();
-
+        
+        // TODO refactor
         private IDictionary<IntVector2, ArrayList> laserCoverCells = new Dictionary<IntVector2, ArrayList>();
         private IDictionary<CountCell, GameObject> spearsCells = new Dictionary<CountCell, GameObject>();
-
+        
+        // TODO refactor
     	bool failStep = false;
     	bool failChanged = false;
 
@@ -54,7 +62,8 @@ namespace TrappedGame {
     		CreateLevelObjects();
     	}
 
-    	void CreateLevelObjects() {
+        void CreateLevelObjects() {
+            // TODO refactor
     		for (int x = 0; x < level.GetSizeX(); x++) {
                 for (int y = 0; y < level.GetSizeY(); y++) {
                     Cell cell = level.GetCell(x,y);
@@ -72,7 +81,8 @@ namespace TrappedGame {
     		}
 
     		CreateLaserCover();
-
+            
+            // TODO refactor
             hero = InstantiateChild(heroPrefab, ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
             deadHero = InstantiateChild(skullPrefab, ConvertToGameCoord(level.GetStartX(), level.GetStartY()), Quaternion.identity);
             finish = InstantiateChild(finishPrefab, ConvertToGameCoord(level.GetFinishX(), level.GetFinishY()), Quaternion.identity);
@@ -96,18 +106,21 @@ namespace TrappedGame {
                 lasers.Add(line, laserObjects);
             }
     	}
-
+        
+        // TODO refactor
     	private GameObject InstantiateChild(GameObject gameObject, Vector2 vector, Quaternion quaternion) {
     		GameObject child = Instantiate(gameObject, vector, quaternion) as GameObject;
     		child.transform.parent = transform;
     		return child;
     	}
-
+        
+        // TODO refactor
         // TODO Remove convector methods after refactor
         public Vector2 ConvertToGameCoord(IntVector2 pos) {
             return ConvertToGameCoord(pos.x, pos.y);
         }
         
+        // TODO refactor
         public Vector2 ConvertToGameCoord(float x, float y) {
             float gameX = x - (level.GetSizeX() - 1)/2f;
             float gameY = y - (level.GetSizeY() - 1)/2f;
@@ -129,7 +142,8 @@ namespace TrappedGame {
                 }
             }    
     	}
-
+        
+        // TODO refactor
     	private void UpdateSpears() {
             ICollection<CountCell> spears = spearsCells.Keys;
     		foreach (CountCell spear in spears) {
@@ -148,14 +162,8 @@ namespace TrappedGame {
                 UpdateInput();
                 UpdateCamera();
                 UpdadeGraphics();
-    		} else {
-    			if (!isFinish) {    				
-                    PlayerPrefs.SetInt("Score", game.GetScore());
-    				PlayerPrefs.SetInt("Death", game.GetHero().GetDeaths());
-
-    				InstantiateChild(winPrefab, new Vector2(0, 0), Quaternion.identity);
-    			}
-    			isFinish = true;
+            } else {
+                ShowWinWindow();
     		}
     	}
 
@@ -169,6 +177,7 @@ namespace TrappedGame {
             UpdatePath();
             UpdateLasers();
 
+            // TODO refactor
             UpdateSpears();
             
             failStep = game.GetHero().IsDead();
@@ -211,6 +220,14 @@ namespace TrappedGame {
             int x = game.GetHero().GetX();
             int y = game.GetHero().GetY();
             hero.transform.position = ConvertToGameCoord(x, y);
+        }
+    
+        void ShowWinWindow() {
+            if (winWindow == null) {        
+                PlayerPrefs.SetInt("Score", game.GetScore());
+                PlayerPrefs.SetInt("Death", game.GetHero().GetDeaths());
+                winWindow = InstantiateChild(winPrefab, new Vector2(0, 0), Quaternion.identity);
+            }
         }
     }
 }
