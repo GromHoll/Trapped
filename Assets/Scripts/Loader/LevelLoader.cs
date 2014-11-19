@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.IO;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,8 +9,10 @@ namespace TrappedGame {
     public class LevelLoader {
 
         public Level LoadLevel(string fileName) {
-            // TODO change file loading to Assets access
-            StreamReader reader = File.OpenText(fileName);
+            // TODO rewrite this shit
+            TextAsset text = Resources.Load<TextAsset>(fileName);
+            MemoryStream stream = new MemoryStream(text.bytes);
+            StreamReader reader = new StreamReader(stream);
 
             LevelInfo levelInfo = ReadHeader(reader);
             ReadMap(reader, levelInfo);
