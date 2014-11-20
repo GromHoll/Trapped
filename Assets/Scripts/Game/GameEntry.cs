@@ -118,7 +118,16 @@ namespace TrappedGame {
         // TODO Find good way for scaling camera
         private void UpdateCamera() {
             if (gameCamera != null) {
-                gameCamera.orthographicSize = Mathf.Max(level.GetSizeX(), level.GetSizeY())/2f;
+                float screenXf = Screen.width;
+                float screenYf = Screen.height;
+                float screenScale = screenXf/screenYf;
+                float levelXf = level.GetSizeX();
+                float levelYf = level.GetSizeY();
+                float levelScale = levelXf/levelYf;
+
+                float scale = (screenScale > levelScale) ? levelXf : levelYf/screenScale;
+
+                gameCamera.orthographicSize = scale/2;
             }
         }
         
