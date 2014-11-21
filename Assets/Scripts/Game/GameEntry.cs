@@ -11,7 +11,7 @@ namespace TrappedGame {
         public PathGOFactory pathGOFactory;
 
         private LevelLoader loader = new LevelLoader();
-        private HeroInput heroInput = new HeroInput();
+        private HeroInput heroInput;
         private Game game;
         private Level level;
 
@@ -40,11 +40,20 @@ namespace TrappedGame {
             string levelName = PlayerPrefs.GetString("CurrentLevel");
             level = loader.LoadLevel(levelName);
             game = new Game(level);
-
+            
+            heroInput = CreateInput();
     		CreateLevelObjects();
     	}
 
-        void CreateLevelObjects() {
+        private HeroInput CreateInput() {
+            // TODO Move to factory when we will have more platforms
+            if (Application.platform == RuntimePlatform.Android) {
+                return new HeroSwipeInput();
+            }
+            return new HeroKeyInput();
+        }
+
+        private void CreateLevelObjects() {
             cellGameObjectFactory.CreateEmptyCells(level);
             cellGameObjectFactory.CreateWallCells(level);
 
@@ -71,19 +80,19 @@ namespace TrappedGame {
     		}
     	}
 
-        void UpdateInput() {
+        private void UpdateInput() {
             HeroMovement heroMovement = heroInput.GetMovement();
             heroMovement.MoveHeroInGame(game);
     	}
 
-        void UpdadeGraphics() {
+        private void UpdadeGraphics() {
             UpdateHero();
             UpdatePath();
             UpdateLasers();
             UpdateSpears();
         }
 
-        void UpdatePath() {
+        private void UpdatePath() {
             Path path = game.GetHero().GetPath();
             IEnumerable<Path.PathLink> existLinks = path.GetLinks();
             IEnumerable<Path.PathLink> showedLinks = pathObjects.Keys;
@@ -104,7 +113,7 @@ namespace TrappedGame {
             }
         }
 
-        void UpdateHero() {
+        private void UpdateHero() {
             int x = game.GetHero().GetX();
             int y = game.GetHero().GetY();
             hero.transform.position = GameUtils.ConvertToGameCoord(x, y, level);
@@ -154,7 +163,7 @@ namespace TrappedGame {
             }      
         }
     
-        void ShowWinWindow() {
+        private void ShowWinWindow() {
             if (winWindow == null) {        
                 PlayerPrefs.SetInt("Score", game.GetScore());
                 PlayerPrefs.SetInt("Death", game.GetHero().GetDeaths());
