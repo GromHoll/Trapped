@@ -15,6 +15,9 @@ public class CountCell : Cell {
     public CountCell(int x, int y, CellType type, int onPeriod, int offPeriod, int currentTick, bool isOn)
         : base(x, y, type) {        
         if (currentTick >= (isOn ? onPeriod : offPeriod)) throw new ArgumentException("CurrentTick can't be more than period"); 
+        if (onPeriod < 1) throw new ArgumentException("OnPeriod should be more than zero"); 
+        if (offPeriod < 1) throw new ArgumentException("OffPeriod should be more than zero"); 
+
         this.onPeriod = onPeriod;
 		this.offPeriod = offPeriod;
         this.currentTick = currentTick;

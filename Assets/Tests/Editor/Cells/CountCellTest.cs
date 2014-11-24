@@ -73,7 +73,8 @@ namespace TrappedUnitTests {
             cell.BackTick();
             Assert.IsFalse(cell.IsOn());
         }
-
+		
+		[Test]
         public void IllegaCurrentPeriodTest() {
             Assert.Throws(typeof(ArgumentException),
                           new TestDelegate(IllegaCurrentPeriod));
@@ -81,6 +82,26 @@ namespace TrappedUnitTests {
 
         private void IllegaCurrentPeriod() {
             var cell = new CountCell(1, 1, CellType.UNKNOWN, 1, 1, 2, true);
+        }
+        
+        [Test]
+        public void IllegaOnPeriodTest() {
+            Assert.Throws(typeof(ArgumentException),
+                          new TestDelegate(IllegaOnPeriod));
+        }
+        
+        private void IllegaOnPeriod() {
+            var cell = new CountCell(0, 1, CellType.UNKNOWN, 0, 1, 0, true);
+        }
+        
+        [Test]
+        public void IllegaOffPeriodTest() {
+            Assert.Throws(typeof(ArgumentException),
+                          new TestDelegate(IllegaOffPeriod));
+        }
+        
+        private void IllegaOffPeriod() {
+            var cell = new CountCell(1, -1, CellType.UNKNOWN, 1, -1, 0, true);
         }
 
 
