@@ -73,5 +73,16 @@ namespace TrappedUnitTests {
             cell.BackTick();
             Assert.IsFalse(cell.IsOn());
         }
+
+        public void IllegaCurrentPeriodTest() {
+            Assert.Throws(typeof(ArgumentException),
+                          new TestDelegate(IllegaCurrentPeriod));
+        }
+
+        private void IllegaCurrentPeriod() {
+            var cell = new CountCell(1, 1, CellType.UNKNOWN, 1, 1, 2, true);
+        }
+
+
     }
 }

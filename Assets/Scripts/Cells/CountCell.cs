@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using TrappedGame;
 
 public class CountCell : Cell {
 
@@ -11,7 +13,8 @@ public class CountCell : Cell {
     public int currentTick;
 
     public CountCell(int x, int y, CellType type, int onPeriod, int offPeriod, int currentTick, bool isOn)
-        : base(x, y, type) {
+        : base(x, y, type) {        
+        if (currentTick >= (isOn ? onPeriod : offPeriod)) throw new ArgumentException("CurrentTick can't be more than period"); 
         this.onPeriod = onPeriod;
 		this.offPeriod = offPeriod;
         this.currentTick = currentTick;
@@ -23,7 +26,7 @@ public class CountCell : Cell {
 
     public override void NextTick() {
         currentTick++;
-		if (currentTick == GetCurrentPeriod()) {
+		if (currentTick >= GetCurrentPeriod()) {
             currentTick = 0;
             isOn = !isOn;
         }

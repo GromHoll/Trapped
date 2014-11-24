@@ -24,7 +24,7 @@ namespace TrappedUnitTests {
         }
 
         private void SpearTest(int x, int y, bool state) {
-            var spear = new SpearCell(x, y, 0, 0, 0, state); 
+            var spear = new SpearCell(x, y, 1, 1, 0, state); 
             AssertSpear(spear, x, y, state);
         }
 

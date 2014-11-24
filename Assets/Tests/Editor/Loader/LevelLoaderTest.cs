@@ -6,7 +6,7 @@ namespace TrappedUnitTests {
     [TestFixture]
     public class LevelLoaderTest {
 
-        public static readonly string TEST_LEVEL_NAME = "./Assets/Tests/Editor/Level/TestLevel.txt";
+        public static readonly string TEST_LEVEL_NAME = "TestLevel";
 
         [Test]
         public void LoadTest() {
