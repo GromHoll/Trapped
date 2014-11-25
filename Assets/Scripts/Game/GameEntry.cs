@@ -89,7 +89,6 @@ namespace TrappedGame {
             UpdateHero();
             UpdatePath();
             UpdateLasers();
-            UpdateSpears();
         }
 
         private void UpdatePath() {
@@ -147,20 +146,6 @@ namespace TrappedGame {
                     laserObject.SetActive(line.IsDanger());                        
                 }
             }    
-        }
-
-        // TODO Union Spears prefabs in single prefab
-        private void UpdateSpears() {
-            ICollection<SpearCell> spears = spearsCells.Keys;
-            foreach (SpearCell spear in spears) {
-                GameObject spearObject = (GameObject) spearsCells[spear];
-                SpriteRenderer renderer = spearObject.GetComponent<SpriteRenderer>();
-                GameObject newPrefab = cellGameObjectFactory.GetCellPrefab(spear);
-                SpriteRenderer newRenderer = newPrefab.GetComponent<SpriteRenderer>();
-                renderer.sprite = newRenderer.sprite;   
-                renderer.color = newRenderer.color;     
-                spearObject.transform.localScale = newPrefab.transform.localScale;
-            }      
         }
     
         private void ShowWinWindow() {

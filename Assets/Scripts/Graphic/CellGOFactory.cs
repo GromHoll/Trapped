@@ -13,8 +13,8 @@ namespace TrappedGame {
         public GameObject unknownPrefab;
         public GameObject laserPrefab;
         public GameObject wallPrefab;
-        public GameObject spearOnPrefab;
-        public GameObject spearOffPrefab;
+        
+        public GameObject spearPrefab;
 
 
         private GameObject CreateCellGameObject(Cell cell, Level level, GameObject folder) {
@@ -27,16 +27,11 @@ namespace TrappedGame {
             return GameUtils.InstantiateChild(prefab, coord, folder);
         }
 
-        // TODO can be union with GetCellPrefab(CellType type) when spear will have single prefab
-        public GameObject GetCellPrefab(Cell cell) {
-            if (cell.GetCellType() == CellType.SPEAR) {
-                return cell.IsDeadly() ? spearOnPrefab : spearOffPrefab;
-            } else {
-                return GetCellPrefab(cell.GetCellType());
-            }
+        private GameObject GetCellPrefab(Cell cell) {
+            return GetCellPrefab(cell.GetCellType());
         }
 
-        public GameObject GetCellPrefab(CellType type) {
+        private GameObject GetCellPrefab(CellType type) {
             switch (type) {
             case CellType.EMPTY: 
                 return tilePrefab;
@@ -45,7 +40,7 @@ namespace TrappedGame {
             case CellType.LASER: 
                 return laserPrefab;
             case CellType.SPEAR: 
-                return spearOnPrefab;
+                return spearPrefab;
             case CellType.WALL:  
                 return wallPrefab;
             default:
@@ -66,8 +61,10 @@ namespace TrappedGame {
             foreach (Cell cell in level.GetCells()) {
                 if (cell.GetCellType() == CellType.SPEAR) {
                     GameObject spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
+                    SpearController controller = (SpearController) spearObject.GetComponent<SpearController>();
                     //TODO Add to level different cell accesses
                     SpearCell spear = (SpearCell) cell;
+                    controller.SetCell(spear);
                     spearsCells[spear] = spearObject;
                 }
             }
