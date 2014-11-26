@@ -8,19 +8,19 @@ public class SpearController : MonoBehaviour {
     private Animator aminator;
     private SpearCell cell;
 
-    public void Start() {
+    void Start() {
         aminator = GetComponent<Animator>();
     }
 
-    public void Update() {
-        aminator.SetBool(STATUS_KEY, getStatus());
+    void Update() {
+        aminator.SetBool(STATUS_KEY, GetStatus());
     }
 
     public void SetCell(SpearCell cell) {
         this.cell = cell;
     }
 
-    private bool getStatus() {
+    private bool GetStatus() {
         return cell != null ? cell.IsDeadly() : false;
     }
 }

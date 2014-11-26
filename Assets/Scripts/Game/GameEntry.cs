@@ -21,17 +21,16 @@ namespace TrappedGame {
 
         private GameObject winWindow = null;
                 
-        
         public Camera gameCamera;
 
         public GameObject winPrefab;
     	public GameObject heroPrefab;
     	public GameObject bonusPrefab;
     	public GameObject finishPrefab;
-    	public GameObject skullPrefab;
 
+        private HeroController heroController;
     	private GameObject hero;
-    	private GameObject deadHero;
+
     	private GameObject finish;
         private IList<GameObject> bonuses = new List<GameObject>();
         
@@ -46,7 +45,7 @@ namespace TrappedGame {
     	}
 
         private HeroInput CreateInput() {
-            // TODO Move to factory when we will have more platforms
+            // TODO Move to factory when we will have more platforms or input styles
             if (Application.platform == RuntimePlatform.Android) {
                 return new HeroSwipeInput();
             }
@@ -63,7 +62,9 @@ namespace TrappedGame {
             spearsCells = cellGameObjectFactory.CreateSpearCells(level);
                         
             hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
-            deadHero = GameUtils.InstantiateChild(skullPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
+            heroController = hero.GetComponent<HeroController>();
+            heroController.SetHero(game.GetHero());
+
             finish = GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY(), level), gameObject);
             foreach (IntVector2 coord in level.GetBonuses()) {
                 bonuses.Add(GameUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject)); 
@@ -116,11 +117,6 @@ namespace TrappedGame {
             int x = game.GetHero().GetX();
             int y = game.GetHero().GetY();
             hero.transform.position = GameUtils.ConvertToGameCoord(x, y, level);
-            deadHero.transform.position = GameUtils.ConvertToGameCoord(x, y, level);
-
-            bool isDead = game.GetHero().IsDead();
-            hero.SetActive(!isDead);
-            deadHero.SetActive(isDead);
         }
 
         // TODO Find good way for scaling camera
