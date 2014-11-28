@@ -1,0 +1,8 @@
+{
+	"Levels" : [
+		"Levels/Level1",
+		"Levels/Level2",
+		"Levels/Level3",
+		"Levels/Level4"
+	]
+}

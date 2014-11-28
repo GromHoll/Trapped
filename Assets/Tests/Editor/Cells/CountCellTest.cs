@@ -80,7 +80,7 @@ namespace TrappedGame.UnitTests {
         }
 
         private void IllegaCurrentPeriod() {
-            var cell = new CountCell(1, 1, CellType.UNKNOWN, 1, 1, 2, true);
+            new CountCell(1, 1, CellType.UNKNOWN, 1, 1, 2, true);
         }
         
         [Test]
@@ -90,7 +90,7 @@ namespace TrappedGame.UnitTests {
         }
         
         private void IllegaOnPeriod() {
-            var cell = new CountCell(0, 1, CellType.UNKNOWN, 0, 1, 0, true);
+            new CountCell(0, 1, CellType.UNKNOWN, 0, 1, 0, true);
         }
         
         [Test]
@@ -100,7 +100,7 @@ namespace TrappedGame.UnitTests {
         }
         
         private void IllegaOffPeriod() {
-            var cell = new CountCell(1, -1, CellType.UNKNOWN, 1, -1, 0, true);
+            new CountCell(1, -1, CellType.UNKNOWN, 1, -1, 0, true);
         }
 
 
