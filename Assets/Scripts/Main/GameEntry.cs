@@ -63,7 +63,7 @@ namespace TrappedGame {
                         
             hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
             heroController = hero.GetComponent<HeroController>();
-            heroController.SetHero(game.GetHero());
+            heroController.SetGame(game);
 
             finish = GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY(), level), gameObject);
             foreach (IntVector2 coord in level.GetBonuses()) {
@@ -71,22 +71,24 @@ namespace TrappedGame {
             }
     	}
 
-    	private void Update() {
+        private void Update() {
     		if (!game.IsWin()) {
                 UpdateInput();
-                UpdateCamera();
-                UpdadeGraphics();
+                UpdateGraphics();
             } else {
                 ShowWinWindow();
-    		}
+            }
+            UpdateCamera();
     	}
 
         private void UpdateInput() {
-            HeroMovement heroMovement = heroInput.GetMovement();
-            heroMovement.MoveHeroInGame(game);
+            if (!heroController.IsMoving()) { 
+                HeroMovement heroMovement = heroInput.GetMovement();
+                heroMovement.MoveHeroInGame(game);
+            }
     	}
 
-        private void UpdadeGraphics() {
+        private void UpdateGraphics() {
             UpdateHero();
             UpdatePath();
             UpdateLasers();
@@ -114,9 +116,9 @@ namespace TrappedGame {
         }
 
         private void UpdateHero() {
-            int x = game.GetHero().GetX();
-            int y = game.GetHero().GetY();
-            hero.transform.position = GameUtils.ConvertToGameCoord(x, y, level);
+            //int x = game.GetHero().GetX();
+            //int y = game.GetHero().GetY();
+            //hero.transform.position = GameUtils.ConvertToGameCoord(x, y, level);
         }
 
         // TODO Find good way for scaling camera

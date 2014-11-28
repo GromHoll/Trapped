@@ -9,6 +9,8 @@ namespace TrappedGame {
         private Level level;
         private Hero hero;
 
+        private IList<HeroMovementListener> heroMovementListeners = new List<HeroMovementListener>();
+
         public Game(Level level) {
             if (level == null) throw new ArgumentNullException("level"); 
             this.level = level;
@@ -33,6 +35,10 @@ namespace TrappedGame {
 
         public Hero GetHero() {
             return hero;
+        }
+                
+        public Level GetLevel() {
+            return level;
         }
 
         public void MoveHeroUp() {
@@ -63,6 +69,7 @@ namespace TrappedGame {
                 hero.MoveTo(x, y);
                 level.NextTick();
             }
+            NotifyHeroMovementListener();
             CheckCell();
         }
 
@@ -89,6 +96,20 @@ namespace TrappedGame {
 
         private bool HeroWasHere(int x, int y) {
             return hero.WasHere(x, y);
+        }
+
+        public void AddHeroMovementListener(HeroMovementListener listener) {
+            heroMovementListeners.Add(listener);
+        }        
+        
+        public void RemoveHeroMovementListener(HeroMovementListener listener) {
+            heroMovementListeners.Remove(listener);
+        }        
+        
+        private void NotifyHeroMovementListener() {
+            foreach(HeroMovementListener listener in heroMovementListeners) {
+                listener.HeroMoved(hero);
+            }
         }
     }
 }
