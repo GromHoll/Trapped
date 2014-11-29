@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
+using TrappedGame.Model.LevelUtils;
 
 namespace TrappedGame.Model {
     public class Level : ITickable {

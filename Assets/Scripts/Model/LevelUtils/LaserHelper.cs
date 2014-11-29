@@ -1,18 +1,16 @@
-using System;
-using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
 
-namespace TrappedGame {
+namespace TrappedGame.Model.LevelUtils {
     public class LaserHelper {
 
         public LaserCell.Laser CreateUpLaser(LaserCell laser, Level level) {
             if(!laser.IsUp()) return null;
             
-            int laserX = laser.GetX();
-            int laserY = laser.GetY();
-            int lenght = 0;
-            for (int y = laserY + 1; y < level.GetSizeY(); y++, lenght++) {
+            var laserX = laser.GetX();
+            var laserY = laser.GetY();
+            var lenght = 0;
+            for (var y = laserY + 1; y < level.GetSizeY(); y++, lenght++) {
                 if (level.GetCell(laserX, y).IsBocked()) { break; }
             }
             return (lenght != 0)
@@ -23,10 +21,10 @@ namespace TrappedGame {
         public LaserCell.Laser CreateDownLaser(LaserCell laser, Level level) {
             if(!laser.IsDown()) return null;
             
-            int laserX = laser.GetX();
-            int laserY = laser.GetY();
-            int lenght = 0;
-            for (int y = laserY - 1; y >= 0; y--, lenght++) {
+            var laserX = laser.GetX();
+            var laserY = laser.GetY();
+            var lenght = 0;
+            for (var y = laserY - 1; y >= 0; y--, lenght++) {
                 if (level.GetCell(laserX, y).IsBocked()) { break; }
             }
             return (lenght != 0)
@@ -37,10 +35,10 @@ namespace TrappedGame {
         public LaserCell.Laser CreateRightLaser(LaserCell laser, Level level) {
             if(!laser.IsRight()) return null;
 
-            int laserX = laser.GetX();
-            int laserY = laser.GetY();
-            int lenght = 0;
-            for (int x = laserX + 1; x < level.GetSizeX(); x++, lenght++) {
+            var laserX = laser.GetX();
+            var laserY = laser.GetY();
+            var lenght = 0;
+            for (var x = laserX + 1; x < level.GetSizeX(); x++, lenght++) {
                 if (level.GetCell(x, laserY).IsBocked()) { break; }
             }
             return (lenght != 0)
@@ -51,10 +49,10 @@ namespace TrappedGame {
         public LaserCell.Laser CreateLeftLaser(LaserCell laser, Level level) {
             if(!laser.IsLeft()) return null;
             
-            int laserX = laser.GetX();
-            int laserY = laser.GetY();
-            int lenght = 0;
-            for (int x = laserX - 1; x >= 0; x--, lenght++) {
+            var laserX = laser.GetX();
+            var laserY = laser.GetY();
+            var lenght = 0;
+            for (var x = laserX - 1; x >= 0; x--, lenght++) {
                 if (level.GetCell(x, laserY).IsBocked()) { break; }
             }
             return (lenght != 0)
@@ -63,4 +61,3 @@ namespace TrappedGame {
         }
     }
 }
-

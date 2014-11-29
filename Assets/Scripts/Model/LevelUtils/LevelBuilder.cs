@@ -1,23 +1,20 @@
 using System;
-using TrappedGame.Model;
+using System.Collections.Generic;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace TrappedGame {
+namespace TrappedGame.Model.LevelUtils {
     public class LevelBuilder {
 
         private string name;
         
-        private IntVector2 size;
-        private Cell[,] cells;
+        private readonly IntVector2 size;
+        private readonly Cell[,] cells;
         
         private IntVector2 start;
         private IntVector2 finish;
-        private IList<IntVector2> bonuses = new List<IntVector2>();
-        private IDictionary<IntVector2, LevelTick> timeBonuses = new Dictionary<IntVector2, LevelTick>();
+        private readonly IList<IntVector2> bonuses = new List<IntVector2>();
+        private readonly IDictionary<IntVector2, LevelTick> timeBonuses = new Dictionary<IntVector2, LevelTick>();
 
         public LevelBuilder(string name, int xSize, int ySize) {
             if (xSize <= 0) throw new ArgumentException("Size should be positive", "xSize");
@@ -25,16 +22,16 @@ namespace TrappedGame {
             
             size = new IntVector2(xSize, ySize);
             cells = new Cell[size.x, size.y];
-            for (int x = 0; x < size.x; x++) {
-                for (int y = 0; y < size.y; y++) {
+            for (var x = 0; x < size.x; x++) {
+                for (var y = 0; y < size.y; y++) {
                     AddCell(new Cell(x, y, CellType.UNKNOWN));
                 }
             }
         }
 
         public void AddCell(Cell cell) {
-            int x = cell.GetX();
-            int y = cell.GetY();
+            var x = cell.GetX();
+            var y = cell.GetY();
             cells[x, y] = cell;
         }
 

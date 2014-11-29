@@ -1,10 +1,9 @@
 using System;
-using TrappedGame.Model;
 
-namespace TrappedGame {
+namespace TrappedGame.Model.LevelUtils {
     public class LevelTick {
         
-        private int tickCount = 1;
+        private readonly int tickCount = 1;
 
         public LevelTick(int tickCount) {
             if (tickCount < 0) throw new ArgumentException("Tick Count should be positive", "tickCount");
@@ -12,13 +11,13 @@ namespace TrappedGame {
         }
 
         public void BackTick(Level level) {
-            for (int i = 0; i < tickCount; i++) {
+            for (var i = 0; i < tickCount; i++) {
                 level.BackTick();
             }
         }
 
         public void NextTick(Level level) {
-            for (int i = 0; i < tickCount; i++) {
+            for (var i = 0; i < tickCount; i++) {
                 level.NextTick();
             }
         }
