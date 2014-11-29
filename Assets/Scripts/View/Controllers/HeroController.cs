@@ -1,5 +1,6 @@
 ﻿using TrappedGame.Model;
 using TrappedGame.Model.Listeners;
+using TrappedGame.Utils;
 using UnityEngine;
 using System.Collections;
 
