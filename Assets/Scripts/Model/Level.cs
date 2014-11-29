@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
 using TrappedGame.Model.LevelUtils;
@@ -11,14 +12,15 @@ namespace TrappedGame.Model {
         private string name;
         
         private IntVector2 size;
-        private Cell[,] cells;
-
-        private IList<LaserCell.Laser> lasers = new List<LaserCell.Laser>();
+        private readonly Cell[,] cells;
 
         private IntVector2 start;
         private IntVector2 finish;
-        private IList<IntVector2> bonuses;
-        private IDictionary<IntVector2, LevelTick> timeBonuses;
+
+        private readonly IList<IntVector2> bonuses;
+        private readonly IDictionary<IntVector2, LevelTick> timeBonuses;
+
+        private readonly IList<LaserCell.Laser> lasers = new List<LaserCell.Laser>();
 
         public Level(LevelBuilder builder) {
             size = builder.GetSize();
@@ -36,53 +38,48 @@ namespace TrappedGame.Model {
 
         // TODO Refactor
         private void CreateLasers() {
-            LaserHelper laserHelper = new LaserHelper();
-            foreach (Cell cell in cells) {
+            var laserHelper = new LaserHelper();
+            foreach (var cell in cells) {
                 // TODO maybe store LaserCell in specias list and don't use cast?
                 if(cell.GetCellType() == CellType.LASER) {
-                    LaserCell laser = (LaserCell) cell;
-                    addLaser(laserHelper.CreateUpLaser(laser, this));
-                    addLaser(laserHelper.CreateRightLaser(laser, this));
-                    addLaser(laserHelper.CreateDownLaser(laser, this));
-                    addLaser(laserHelper.CreateLeftLaser(laser, this));
+                    var laser = (LaserCell) cell;
+                    AddLaser(laserHelper.CreateUpLaser(laser, this));
+                    AddLaser(laserHelper.CreateRightLaser(laser, this));
+                    AddLaser(laserHelper.CreateDownLaser(laser, this));
+                    AddLaser(laserHelper.CreateLeftLaser(laser, this));
                 }
             }
         }
 
-        private void addLaser(LaserCell.Laser laser) {
+        private void AddLaser(LaserCell.Laser laser) {
             if (laser != null) {
                 lasers.Add(laser);
             }
         }
 
         public void NextTick() {
-            foreach (Cell cell in cells) {
+            foreach (var cell in cells) {
                 cell.NextTick();
             }
         }
 
         public void BackTick() {
-            foreach (Cell cell in cells) {
+            foreach (var cell in cells) {
                 cell.BackTick();
             }
         }
 
         public LevelTick GetLevelTick(int x, int y) {
-            IntVector2 coord = new IntVector2(x, y);
+            var coord = new IntVector2(x, y);
             return timeBonuses.ContainsKey(coord) ? timeBonuses[coord] : LevelTick.DEFAULT_LEVEL_TICK;
         }
 
         public bool IsDangerCell(int x, int y) {            
-            Cell cell = GetCell(x, y);
-            if(cell.IsDeadly()) {
+            var cell = GetCell(x, y);
+            if (cell.IsDeadly()) {
                 return true;
             }
-            foreach (LaserCell.Laser laser in lasers) {
-                if (laser.IsDangerFor(x, y)) {
-                    return true;
-                }
-            }
-            return false;
+            return lasers.Any(laser => laser.IsDangerFor(x, y));
         }
 
         public int GetStartX() {
@@ -133,6 +130,5 @@ namespace TrappedGame.Model {
         public bool Contains(int x, int y) {
             return x >= 0 && x <= size.x - 1 && y >= 0 && y <= size.y - 1; 
         }
-
     }
 }
