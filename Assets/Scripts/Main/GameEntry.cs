@@ -1,3 +1,5 @@
+using TrappedGame.Control.Hero;
+using TrappedGame.Main;
 using UnityEngine;
 using System.Linq;
 using System.Collections;

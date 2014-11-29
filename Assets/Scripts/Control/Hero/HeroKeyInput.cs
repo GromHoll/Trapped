@@ -1,20 +1,19 @@
-using System;
 using UnityEngine;
 
-namespace TrappedGame {
+namespace TrappedGame.Control.Hero {
     public class HeroKeyInput : HeroInput {
 
         public override HeroMovement GetMovement() {
-            bool up    = Input.GetKeyDown(KeyCode.UpArrow);
-            bool right = Input.GetKeyDown(KeyCode.RightArrow);
-            bool down  = Input.GetKeyDown(KeyCode.DownArrow);
-            bool left  = Input.GetKeyDown(KeyCode.LeftArrow);
+            var up    = Input.GetKeyDown(KeyCode.UpArrow);
+            var right = Input.GetKeyDown(KeyCode.RightArrow);
+            var down  = Input.GetKeyDown(KeyCode.DownArrow);
+            var left  = Input.GetKeyDown(KeyCode.LeftArrow);
             
-            if (up)    return upMovement;
-            if (right) return rightMovement;
-            if (down)  return downMovement;
-            if (left)  return leftMovement;
-            return noMovement;
+            if (up)    return UP_MOVEMENT;
+            if (right) return RIGHT_MOVEMENT;
+            if (down)  return DOWN_MOVEMENT;
+            if (left)  return LEFT_MOVEMENT;
+            return NO_MOVEMENT;
         }
 
     }

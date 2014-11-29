@@ -1,7 +1,4 @@
-using UnityEngine;
-using System;
-
-namespace TrappedGame {
+namespace TrappedGame.Control.Hero {
 
     public class HeroMovement {
         public virtual void MoveHeroInGame(Game game) {}
@@ -30,6 +27,4 @@ namespace TrappedGame {
             game.MoveHeroLeft();
         }
     }
-
 }
-
