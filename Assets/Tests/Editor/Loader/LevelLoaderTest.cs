@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
+using TrappedGame.Model.Loader;
 
 namespace TrappedGame.UnitTests {
     [TestFixture]

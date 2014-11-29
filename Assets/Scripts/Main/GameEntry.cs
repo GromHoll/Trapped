@@ -3,6 +3,7 @@ using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
+using TrappedGame.Model.Loader;
 using UnityEngine;
 
 namespace TrappedGame.Main {

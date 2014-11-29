@@ -1,13 +1,10 @@
 using System;
-using TrappedGame.Model;
+using System.Collections.Generic;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
 using TrappedGame.Model.LevelUtils;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace TrappedGame {
+namespace TrappedGame.Model.Loader {
     public class LevelInfo {
 
         public static readonly string DEFAULT_LEVEL_NAME = "Unknown";
@@ -19,16 +16,16 @@ namespace TrappedGame {
         public static readonly char DEFAULT_TIME_0 = '0';
         public static readonly char DEFAULT_TIME_2 = '2';
         
-        private string levelName;
-        private int xSize;
-        private int ySize;
-        private char[,] symbols;
-        private IDictionary<char, string> descriptions = new Dictionary<char, string>();
+        private readonly string levelName;
+        private readonly int xSize;
+        private readonly int ySize;
+        private readonly char[,] symbols;
+        private readonly IDictionary<char, string> descriptions = new Dictionary<char, string>();
         
         public LevelInfo(string levelName, int xSize, int ySize) {
             if (xSize <= 0) throw new ArgumentException("Size should be positive", "xSize");
             if (ySize <= 0) throw new ArgumentException("Size should be positive", "ySize");
-            this.levelName = (levelName != null) ? levelName : DEFAULT_LEVEL_NAME;
+            this.levelName = levelName ?? DEFAULT_LEVEL_NAME;
             this.symbols = new char[xSize, ySize];
             this.xSize = xSize;
             this.ySize = ySize;
@@ -54,36 +51,35 @@ namespace TrappedGame {
         
         // TODO refactor
         public Level CreateLevel() {
-            LevelBuilder LevelBuilder = new LevelBuilder(levelName, xSize, ySize);
-            CellFactory cellFacrory = new CellFactory();
+            var levelBuilder = new LevelBuilder(levelName, xSize, ySize);
+            var cellFacrory = new CellFactory();
             
-            for(int x = 0; x < xSize; x++) {
-                for (int y = 0; y < ySize; y++) {
-                    char symbol = symbols[x, y];
+            for(var x = 0; x < xSize; x++) {
+                for (var y = 0; y < ySize; y++) {
+                    var symbol = symbols[x, y];
                     if (symbol == DEFAULT_START) {
-                        LevelBuilder.SetStart(x, y);
+                        levelBuilder.SetStart(x, y);
                     } else if (symbol == DEFAULT_FINISH) {
-                        LevelBuilder.SetFinish(x, y);
+                        levelBuilder.SetFinish(x, y);
                     } else if (symbol == DEFAULT_BONUS) {
-                        LevelBuilder.AddBonus(new IntVector2(x, y));
+                        levelBuilder.AddBonus(new IntVector2(x, y));
                     } else if (symbol == DEFAULT_TIME_0) {
-                        LevelBuilder.AddTimeBonus(new IntVector2(x, y), LevelTick.FREEZE_LEVEL_TICK);
+                        levelBuilder.AddTimeBonus(new IntVector2(x, y), LevelTick.FREEZE_LEVEL_TICK);
                     } else if (symbol == DEFAULT_TIME_2) {
-                        LevelBuilder.AddTimeBonus(new IntVector2(x, y), new LevelTick(2));
+                        levelBuilder.AddTimeBonus(new IntVector2(x, y), new LevelTick(2));
                     }
                     
                     Cell cell;
                     if(descriptions.ContainsKey(symbols[x, y])) {
-                        string description = descriptions[symbols[x, y]];
-                        cell = cellFacrory.getCellByDescription(description, x, y);
+                        var description = descriptions[symbols[x, y]];
+                        cell = cellFacrory.GetCellByDescription(description, x, y);
                     } else {
-                        cell = cellFacrory.getCellBySymbol(symbols[x, y], x, y);
+                        cell = cellFacrory.GetCellBySymbol(symbols[x, y], x, y);
                     }                
-                    LevelBuilder.AddCell(cell);
+                    levelBuilder.AddCell(cell);
                 }
             }        
-            return LevelBuilder.Build();
+            return levelBuilder.Build();
         }        
     }
 }
-

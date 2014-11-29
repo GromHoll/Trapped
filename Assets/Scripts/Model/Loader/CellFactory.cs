@@ -1,11 +1,9 @@
 using TrappedGame.Model.Cells;
-using UnityEngine;
-using System.Collections;
 
-namespace TrappedGame {
+namespace TrappedGame.Model.Loader {
     public class CellFactory {
 
-        public Cell getCellByDescription(string description, int x, int y) {
+        public Cell GetCellByDescription(string description, int x, int y) {
             Cell result;
             bool isOn = false;
             int onPeriod = 1;
@@ -52,7 +50,7 @@ namespace TrappedGame {
             return result;
         }
 
-        public Cell getCellBySymbol(char symbol, int x, int y) {
+        public Cell GetCellBySymbol(char symbol, int x, int y) {
             switch (symbol) {
                 case '.' : return new Cell(x, y);
                 case '#' : return new WallCell(x, y);
