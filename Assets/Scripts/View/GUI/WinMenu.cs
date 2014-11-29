@@ -8,7 +8,7 @@ public class WinMenu : MonoBehaviour {
 		         + "\nYou die " + PlayerPrefs.GetInt("Death") + " count");
 		
 		if (GUI.Button(new Rect(20, 80, 80, 20), "Back!")) {
-			Application.LoadLevel("Menu");
+			Application.LoadLevel("MainMenu");
 		}
 	}
 }
