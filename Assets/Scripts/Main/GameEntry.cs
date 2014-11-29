@@ -1,16 +1,14 @@
-using TrappedGame.Control.Hero;
-using TrappedGame.Main;
-using UnityEngine;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TrappedGame.Control.Hero;
+using UnityEngine;
 
-namespace TrappedGame {
+namespace TrappedGame.Main {
     public class GameEntry : MonoBehaviour {
 
         public CellGOFactory cellGameObjectFactory;
-        public LaserLineGOFactory laserLineGOFactory;
-        public PathGOFactory pathGOFactory;
+        public LaserLineGOFactory laserLineGoFactory;
+        public PathGOFactory pathGoFactory;
 
         private LevelLoader loader = new LevelLoader();
         private HeroInput heroInput;
@@ -19,7 +17,7 @@ namespace TrappedGame {
 
         private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
         private IDictionary<LaserCell.Laser, IList<GameObject>> lasers = new Dictionary<LaserCell.Laser, IList<GameObject>>();
-        //private IDictionary<SpearCell, GameObject> spearsCells = new Dictionary<SpearCell, GameObject>();
+        private IDictionary<SpearCell, GameObject> spearsCells = new Dictionary<SpearCell, GameObject>();
 
         private WinMenu winMenu;
                 
@@ -34,7 +32,7 @@ namespace TrappedGame {
         private HeroController heroController;
 
         void Start() {        
-            string levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
+            var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
             level = loader.LoadLevel(levelName);
             game = new Game(level);
             
@@ -55,29 +53,29 @@ namespace TrappedGame {
             cellGameObjectFactory.CreateWallCells(level);
 
             cellGameObjectFactory.CreateLaserCells(level);
-            lasers = laserLineGOFactory.CreateLasersForLevel(level);
+            lasers = laserLineGoFactory.CreateLasersForLevel(level);
 
-            cellGameObjectFactory.CreateSpearCells(level);
+            spearsCells = cellGameObjectFactory.CreateSpearCells(level);
                         
-            GameObject hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
+            var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
             heroController = hero.GetComponent<HeroController>();
             heroController.SetGame(game);
 
             GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY(), level), gameObject);
-            foreach (IntVector2 coord in level.GetBonuses()) {
+            foreach (var coord in level.GetBonuses()) {
                 GameUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
-            foreach (IntVector2 coord in level.GetTimeBonuses().Keys) {
+            foreach (var coord in level.GetTimeBonuses().Keys) {
                 GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
             
-            GameObject winWindow = GameUtils.InstantiateChild(winPrefab, new Vector2(0, 0), gameObject);
+            var winWindow = GameUtils.InstantiateChild(winPrefab, new Vector2(0, 0), gameObject);
             winMenu = winWindow.GetComponent<WinMenu>();
             winMenu.SetGame(game);
             winMenu.SetActive(false);
         }
 
-        private void Update() {
+        void Update() {
     		if (!game.IsWin()) {
                 UpdateInput();
                 UpdateGraphics();
@@ -88,11 +86,10 @@ namespace TrappedGame {
     	}
 
         private void UpdateInput() {
-            if (!heroController.IsMoving()) { 
-                HeroMovement heroMovement = heroInput.GetMovement();
-                heroMovement.MoveHeroInGame(game);
-            }
-    	}
+            if (heroController.IsMoving()) return;
+            var heroMovement = heroInput.GetMovement();
+            heroMovement.MoveHeroInGame(game);
+        }
 
         private void UpdateGraphics() {
             UpdatePath();
@@ -100,20 +97,20 @@ namespace TrappedGame {
         }
 
         private void UpdatePath() {
-            Path path = game.GetHero().GetPath();
-            IEnumerable<Path.PathLink> existLinks = path.GetLinks();
-            IEnumerable<Path.PathLink> showedLinks = pathObjects.Keys;
-            HashSet<Path.PathLink> differens = new HashSet<Path.PathLink>(existLinks);
+            var path = game.GetHero().GetPath();
+            var existLinks = path.GetLinks();
+            var showedLinks = pathObjects.Keys;
+            var differens = new HashSet<Path.PathLink>(existLinks);
             differens.SymmetricExceptWith(showedLinks);
-            foreach (Path.PathLink link in differens) {
+            foreach (var link in differens) {
                 if (showedLinks.Contains(link)) {
-                    GameObject linkGameObject = pathObjects[link];
+                    var linkGameObject = pathObjects[link];
                     pathObjects.Remove(link);
                     Destroy(linkGameObject);
                 } else {
                     if (link.IsAdjacent()) {
-                        Vector2 coord = GameUtils.ConvertToGameCoord(link.GetFromX(), link.GetFromY(), level);
-                        GameObject pathGameObject = pathGOFactory.CreatePathSegment(link, coord);
+                        var coord = GameUtils.ConvertToGameCoord(link.GetFromX(), link.GetFromY(), level);
+                        var pathGameObject = pathGoFactory.CreatePathSegment(link, coord);
                         pathObjects[link] = pathGameObject;
                     }
                 }
@@ -122,9 +119,9 @@ namespace TrappedGame {
 
         // TODO Move to laser controller
         private void UpdateLasers() {
-            foreach (KeyValuePair<LaserCell.Laser, IList<GameObject>> pair in lasers) {
-                LaserCell.Laser line = pair.Key;
-                foreach (GameObject laserObject in pair.Value) {
+            foreach (var pair in lasers) {
+                var line = pair.Key;
+                foreach (var laserObject in pair.Value) {
                     laserObject.SetActive(line.IsDanger());                        
                 }
             }    
@@ -132,18 +129,17 @@ namespace TrappedGame {
 
         // TODO Find good way for scaling camera
         private void UpdateCamera() {
-            if (gameCamera != null) {
-                float screenXf = Screen.width;
-                float screenYf = Screen.height;
-                float screenScale = screenXf/screenYf;
-                float levelXf = level.GetSizeX();
-                float levelYf = level.GetSizeY();
-                float levelScale = levelXf/levelYf;
+            if (gameCamera == null) return;
+            
+            var screenXf = Screen.width;
+            var screenYf = Screen.height;
+            var screenScale = screenXf/screenYf;
+            var levelXf = level.GetSizeX();
+            var levelYf = level.GetSizeY();
+            var levelScale = levelXf/levelYf;
 
-                float scale = (screenScale > levelScale) ? levelXf : levelYf/screenScale;
-
-                gameCamera.orthographicSize = scale/2;
-            }
+            var scale = (screenScale > levelScale) ? levelXf : levelYf/screenScale;
+            gameCamera.orthographicSize = scale/2f;
         }
     
         private void ShowWinWindow() {      
