@@ -37,18 +37,10 @@ namespace TrappedGame {
                 // TODO maybe store LaserCell in specias list and don't use cast?
                 if(cell.GetCellType() == CellType.LASER) {
                     LaserCell laser = (LaserCell) cell;
-
-                    var up = laserHelper.CreateUpLaser(laser, this);
-                    addLaser(up);
-
-                    var right = laserHelper.CreateRightLaser(laser, this);
-                    addLaser(right);
-
-                    var down = laserHelper.CreateDownLaser(laser, this);
-                    addLaser(down);
-
-                    var left = laserHelper.CreateLeftLaser(laser, this);
-                    addLaser(left);
+                    addLaser(laserHelper.CreateUpLaser(laser, this));
+                    addLaser(laserHelper.CreateRightLaser(laser, this));
+                    addLaser(laserHelper.CreateDownLaser(laser, this));
+                    addLaser(laserHelper.CreateLeftLaser(laser, this));
                 }
             }
         }
@@ -69,6 +61,10 @@ namespace TrappedGame {
             foreach (Cell cell in cells) {
                 cell.BackTick();
             }
+        }
+
+        public LevelTick GetLevelTick(int x, int y) {
+            return LevelTick.DEFAULT_LEVEL_TICK;
         }
 
         public bool IsDangerCell(int x, int y) {            
@@ -128,5 +124,8 @@ namespace TrappedGame {
         public bool Contains(int x, int y) {
             return x >= 0 && x <= size.x - 1 && y >= 0 && y <= size.y - 1; 
         }
+    
+
+
     }
 }

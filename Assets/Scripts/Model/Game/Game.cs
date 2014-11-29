@@ -60,14 +60,16 @@ namespace TrappedGame {
         private void MoveHeroTo(int x, int y) {
             if (!HeroOnMap(x, y)) return;
             if (!IsAvailableForMovementCell(x, y)) return;
+
+            LevelTick levelTick = level.GetLevelTick(x, y);
             if (IsBackTurn(x, y)) {
                 hero.MoveBack();
-                level.BackTick();
+                levelTick.BackTick(level);
             } else {
                 if (hero.IsDead()) return;
                 if (HeroWasHere(x, y)) return;
                 hero.MoveTo(x, y);
-                level.NextTick();
+                levelTick.NextTick(level);
             }
             NotifyHeroMovementListener();
             CheckCell();
