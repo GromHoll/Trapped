@@ -1,9 +1,8 @@
 using TrappedGame.Model;
 using TrappedGame.Utils;
 using UnityEngine;
-using System.Collections.Generic;
 
-namespace TrappedGame {
+namespace TrappedGame.View.Graphic {
     public class PathGOFactory : MonoBehaviour {
         
         public GameObject pathFolder;
@@ -14,14 +13,13 @@ namespace TrappedGame {
             if (link.IsWentRight()) { coord.x += 0.5f; }
             if (link.IsWentDown())  { coord.y -= 0.5f; }
             if (link.IsWentLeft())  { coord.x -= 0.5f; }
-            GameObject pathGameObject = GameUtils.InstantiateChild(pathSegment, coord, pathFolder);
+            
+            var pathGameObject = GameUtils.InstantiateChild(pathSegment, coord, pathFolder);
             if (link.IsVertical()) {
                 pathGameObject.transform.Rotate(0, 0, 90);
             }
 
             return pathGameObject;
         }
-
     }
 }
-

@@ -1,12 +1,12 @@
+using System.Collections.Generic;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
 using UnityEngine;
-using System.Collections.Generic;
 
-namespace TrappedGame {
+namespace TrappedGame.View.Graphic {
     public class CellGOFactory : MonoBehaviour {
 
         public GameObject emptyCellsFolder;
@@ -27,15 +27,11 @@ namespace TrappedGame {
         }
 
         private GameObject CreateCellGameObject(IntVector2 cellCoord, CellType cellType, Level level, GameObject folder) {
-            GameObject prefab = GetCellPrefab(cellType);
-            Vector2 coord = GameUtils.ConvertToGameCoord(cellCoord.x, cellCoord.y, level);
+            var prefab = GetCellPrefab(cellType);
+            var coord = GameUtils.ConvertToGameCoord(cellCoord.x, cellCoord.y, level);
             return GameUtils.InstantiateChild(prefab, coord, folder);
         }
-
-        private GameObject GetCellPrefab(Cell cell) {
-            return GetCellPrefab(cell.GetCellType());
-        }
-
+        
         private GameObject GetCellPrefab(CellType type) {
             switch (type) {
             case CellType.EMPTY: 
@@ -65,10 +61,10 @@ namespace TrappedGame {
             IDictionary<SpearCell, GameObject> spearsCells = new Dictionary<SpearCell, GameObject>();
             foreach (Cell cell in level.GetCells()) {
                 if (cell.GetCellType() == CellType.SPEAR) {
-                    GameObject spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
-                    SpearController controller = (SpearController) spearObject.GetComponent<SpearController>();
+                    var spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
+                    var controller = (SpearController) spearObject.GetComponent<SpearController>();
                     //TODO Add to level different cell accesses
-                    SpearCell spear = (SpearCell) cell;
+                    var spear = (SpearCell) cell;
                     controller.SetCell(spear);
                     spearsCells[spear] = spearObject;
                 }
@@ -93,4 +89,3 @@ namespace TrappedGame {
         }
     }
 }
-
