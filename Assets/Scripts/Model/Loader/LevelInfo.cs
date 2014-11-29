@@ -13,6 +13,9 @@ namespace TrappedGame {
         public static readonly char DEFAULT_BONUS = 'b';
         public static readonly char DEFAULT_FINISH = 'f';
         
+        public static readonly char DEFAULT_TIME_0 = '0';
+        public static readonly char DEFAULT_TIME_2 = '2';
+        
         private string levelName;
         private int xSize;
         private int ySize;
@@ -60,6 +63,10 @@ namespace TrappedGame {
                         LevelBuilder.SetFinish(x, y);
                     } else if (symbol == DEFAULT_BONUS) {
                         LevelBuilder.AddBonus(new IntVector2(x, y));
+                    } else if (symbol == DEFAULT_TIME_0) {
+                        LevelBuilder.AddTimeBonus(new IntVector2(x, y), LevelTick.FREEZE_LEVEL_TICK);
+                    } else if (symbol == DEFAULT_TIME_2) {
+                        LevelBuilder.AddTimeBonus(new IntVector2(x, y), new LevelTick(2));
                     }
                     
                     Cell cell;

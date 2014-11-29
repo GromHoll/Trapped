@@ -1,6 +1,6 @@
 HelloWorldLevel
 3 3
-s..
+s.0
 SSS
 ..f
 0

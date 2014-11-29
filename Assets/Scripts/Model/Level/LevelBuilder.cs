@@ -15,7 +15,7 @@ namespace TrappedGame {
         private IntVector2 start;
         private IntVector2 finish;
         private IList<IntVector2> bonuses = new List<IntVector2>();
-        private IDictionary<IntVector2, LevelTick> timeBonuses;
+        private IDictionary<IntVector2, LevelTick> timeBonuses = new Dictionary<IntVector2, LevelTick>();
 
         public LevelBuilder(string name, int xSize, int ySize) {
             if (xSize <= 0) throw new ArgumentException("Size should be positive", "xSize");

@@ -60,6 +60,8 @@ namespace TrappedGame {
                 case 's' : return new Cell(x, y);
                 case 'f' : return new Cell(x, y);
                 case 'b' : return new Cell(x, y);
+                case '0' : return new Cell(x, y);
+                case '2' : return new Cell(x, y);
             }
             return new Cell(x, y, CellType.UNKNOWN);
         }

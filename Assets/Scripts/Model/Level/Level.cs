@@ -66,7 +66,8 @@ namespace TrappedGame {
         }
 
         public LevelTick GetLevelTick(int x, int y) {
-            return LevelTick.DEFAULT_LEVEL_TICK;
+            IntVector2 coord = new IntVector2(x, y);
+            return timeBonuses.ContainsKey(coord) ? timeBonuses[coord] : LevelTick.DEFAULT_LEVEL_TICK;
         }
 
         public bool IsDangerCell(int x, int y) {            
