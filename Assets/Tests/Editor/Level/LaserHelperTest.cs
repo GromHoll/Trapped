@@ -1,8 +1,7 @@
 using NUnit.Framework;
 using System;
-using TrappedGame;
 
-namespace TrappedUnitTests {
+namespace TrappedGame.UnitTests {
     [TestFixture]
     public class LaserHelperTest {
         

@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using TrappedGame;
 using System;
 
-namespace TrappedUnitTests {
+namespace TrappedGame.UnitTests {
     [TestFixture()]
     public class IntRectTest {
         [Test()]

@@ -2,8 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System;
 
-
-namespace TrappedUnitTests {
+namespace TrappedGame.UnitTests {
     [TestFixture]
     public class CountCellTest {
         [Test]

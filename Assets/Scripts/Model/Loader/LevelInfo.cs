@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace TrappedGame {
-
     public class LevelInfo {
 
         public static readonly string DEFAULT_LEVEL_NAME = "Unknown";

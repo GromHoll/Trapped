@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class GuiLevelMenu : MonoBehaviour {
+namespace TrappedGame {
+    public class GuiLevelMenu : MonoBehaviour {
 
-	public void LoadLevel(string levelName) {
-		PlayerPrefs.SetString("CurrentLevel", levelName);
-		Application.LoadLevel("Level");
-	}
+    	public void LoadLevel(string levelName) {
+            PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, levelName);
+    		Application.LoadLevel("Level");
+    	}
+    }
 }

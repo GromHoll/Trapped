@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace TrappedGame {
-
     public class LevelBuilder {
 
         private string name;

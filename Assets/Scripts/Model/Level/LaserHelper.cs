@@ -1,6 +1,6 @@
 using System;
-namespace TrappedGame {
 
+namespace TrappedGame {
     public class LaserHelper {
 
         public LaserCell.Laser CreateUpLaser(LaserCell laser, Level level) {

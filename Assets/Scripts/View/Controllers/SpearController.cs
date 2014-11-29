@@ -1,26 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpearController : MonoBehaviour {
 
-    public static readonly string STATUS_KEY = "Status";
+namespace TrappedGame {
+    public class SpearController : MonoBehaviour {
 
-    private Animator aminator;
-    private SpearCell cell;
+        public static readonly string STATUS_KEY = "Status";
 
-    void Start() {
-        aminator = GetComponent<Animator>();
-    }
+        private Animator aminator;
+        private SpearCell cell;
 
-    void Update() {
-        aminator.SetBool(STATUS_KEY, GetStatus());
-    }
+        void Start() {
+            aminator = GetComponent<Animator>();
+        }
 
-    public void SetCell(SpearCell cell) {
-        this.cell = cell;
-    }
+        void Update() {
+            aminator.SetBool(STATUS_KEY, GetStatus());
+        }
 
-    private bool GetStatus() {
-        return cell != null ? cell.IsDeadly() : false;
+        public void SetCell(SpearCell cell) {
+            this.cell = cell;
+        }
+
+        private bool GetStatus() {
+            return cell != null ? cell.IsDeadly() : false;
+        }
     }
 }

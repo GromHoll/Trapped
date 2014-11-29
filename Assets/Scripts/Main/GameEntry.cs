@@ -19,7 +19,7 @@ namespace TrappedGame {
         private IDictionary<LaserCell.Laser, IList<GameObject>> lasers = new Dictionary<LaserCell.Laser, IList<GameObject>>();
         private IDictionary<SpearCell, GameObject> spearsCells = new Dictionary<SpearCell, GameObject>();
 
-        private GameObject winWindow = null;
+        private WinMenu winMenu;
                 
         public Camera gameCamera;
 
@@ -32,7 +32,7 @@ namespace TrappedGame {
         private HeroController heroController;
 
         void Start() {        
-            string levelName = PlayerPrefs.GetString("CurrentLevel");
+            string levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
             level = loader.LoadLevel(levelName);
             game = new Game(level);
             
@@ -68,7 +68,12 @@ namespace TrappedGame {
             foreach (IntVector2 coord in level.GetTimeBonuses().Keys) {
                 GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
-    	}
+            
+            GameObject winWindow = GameUtils.InstantiateChild(winPrefab, new Vector2(0, 0), gameObject);
+            winMenu = winWindow.GetComponent<WinMenu>();
+            winMenu.SetGame(game);
+            winMenu.SetActive(false);
+        }
 
         private void Update() {
     		if (!game.IsWin()) {
@@ -88,7 +93,6 @@ namespace TrappedGame {
     	}
 
         private void UpdateGraphics() {
-            UpdateHero();
             UpdatePath();
             UpdateLasers();
         }
@@ -112,12 +116,16 @@ namespace TrappedGame {
                     }
                 }
             }
-        }
+        }        
 
-        private void UpdateHero() {
-            //int x = game.GetHero().GetX();
-            //int y = game.GetHero().GetY();
-            //hero.transform.position = GameUtils.ConvertToGameCoord(x, y, level);
+        // TODO Move to laser controller
+        private void UpdateLasers() {
+            foreach (KeyValuePair<LaserCell.Laser, IList<GameObject>> pair in lasers) {
+                LaserCell.Laser line = pair.Key;
+                foreach (GameObject laserObject in pair.Value) {
+                    laserObject.SetActive(line.IsDanger());                        
+                }
+            }    
         }
 
         // TODO Find good way for scaling camera
@@ -135,22 +143,9 @@ namespace TrappedGame {
                 gameCamera.orthographicSize = scale/2;
             }
         }
-        
-        private void UpdateLasers() {
-            foreach (KeyValuePair<LaserCell.Laser, IList<GameObject>> pair in lasers) {
-                LaserCell.Laser line = pair.Key;
-                foreach (GameObject laserObject in pair.Value) {
-                    laserObject.SetActive(line.IsDanger());                        
-                }
-            }    
-        }
     
-        private void ShowWinWindow() {
-            if (winWindow == null) {        
-                PlayerPrefs.SetInt("Score", game.GetScore());
-                PlayerPrefs.SetInt("Death", game.GetHero().GetDeaths());
-                winWindow = GameUtils.InstantiateChild(winPrefab, new Vector2(0, 0), gameObject);
-            }
+        private void ShowWinWindow() {      
+            winMenu.SetActive(true);
         }
     }
 }
