@@ -25,15 +25,11 @@ namespace TrappedGame {
 
         public GameObject winPrefab;
     	public GameObject heroPrefab;
-    	public GameObject bonusPrefab;
+        public GameObject bonusPrefab;
+        public GameObject timeBonusPrefab;
     	public GameObject finishPrefab;
 
         private HeroController heroController;
-    	private GameObject hero;
-
-    	private GameObject finish;
-        private IList<GameObject> bonuses = new List<GameObject>();
-        
 
         void Start() {        
             string levelName = PlayerPrefs.GetString("CurrentLevel");
@@ -61,13 +57,16 @@ namespace TrappedGame {
 
             spearsCells = cellGameObjectFactory.CreateSpearCells(level);
                         
-            hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
+            GameObject hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
             heroController = hero.GetComponent<HeroController>();
             heroController.SetGame(game);
 
-            finish = GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY(), level), gameObject);
+            GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY(), level), gameObject);
             foreach (IntVector2 coord in level.GetBonuses()) {
-                bonuses.Add(GameUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject)); 
+                GameUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
+            }
+            foreach (IntVector2 coord in level.GetTimeBonuses().Keys) {
+                GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
     	}
 
