@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TrappedGame.Model.Listeners;
 
 namespace TrappedGame.Model {
     public class Game {
@@ -8,7 +9,7 @@ namespace TrappedGame.Model {
         private readonly Level level;
         private readonly Hero hero;
 
-        private readonly IList<HeroMovementListener> heroMovementListeners = new List<HeroMovementListener>();
+        private readonly IList<IHeroMovementListener> heroMovementListeners = new List<IHeroMovementListener>();
 
         public Game(Level level) {
             if (level == null) throw new ArgumentNullException("level"); 
@@ -94,11 +95,11 @@ namespace TrappedGame.Model {
             return hero.WasHere(x, y);
         }
 
-        public void AddHeroMovementListener(HeroMovementListener listener) {
+        public void AddHeroMovementListener(IHeroMovementListener listener) {
             heroMovementListeners.Add(listener);
         }        
         
-        public void RemoveHeroMovementListener(HeroMovementListener listener) {
+        public void RemoveHeroMovementListener(IHeroMovementListener listener) {
             heroMovementListeners.Remove(listener);
         }        
         

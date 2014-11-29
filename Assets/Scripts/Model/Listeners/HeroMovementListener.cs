@@ -1,8 +1,5 @@
-using System;
-using TrappedGame.Model;
-
-namespace TrappedGame {
-    public interface HeroMovementListener {
+namespace TrappedGame.Model.Listeners {
+    public interface IHeroMovementListener {
         void HeroMoved(Hero hero);
     }
 }

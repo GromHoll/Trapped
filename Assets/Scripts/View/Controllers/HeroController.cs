@@ -1,9 +1,10 @@
 ﻿using TrappedGame.Model;
+using TrappedGame.Model.Listeners;
 using UnityEngine;
 using System.Collections;
 
 namespace TrappedGame {
-    public class HeroController : MonoBehaviour, HeroMovementListener {
+    public class HeroController : MonoBehaviour, IHeroMovementListener {
         
         public static readonly string IS_DEAD_KEY = "IsDead";
         
