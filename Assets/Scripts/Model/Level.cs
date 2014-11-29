@@ -1,11 +1,10 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
-using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
 
-namespace TrappedGame {
+namespace TrappedGame.Model {
     public class Level : ITickable {
         
         private string name;

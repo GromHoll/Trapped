@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TrappedGame.Model.Cells;
-using TrappedGame.Model.Common;
 
-namespace TrappedGame.Model.Game {
+namespace TrappedGame.Model {
     public class Game {
 
         private readonly Level level;

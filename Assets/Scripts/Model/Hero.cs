@@ -1,7 +1,7 @@
 using System.Linq;
 using TrappedGame.Model.Common;
 
-namespace TrappedGame.Model.Game {
+namespace TrappedGame.Model {
     public class Hero {
 
         private IntVector2 position;

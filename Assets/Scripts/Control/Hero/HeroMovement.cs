@@ -1,4 +1,4 @@
-using TrappedGame.Model.Game;
+using TrappedGame.Model;
 
 namespace TrappedGame.Control.Hero {
 

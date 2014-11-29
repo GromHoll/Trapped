@@ -1,5 +1,5 @@
 using System;
-using TrappedGame.Model.Game;
+using TrappedGame.Model;
 
 namespace TrappedGame {
     public interface HeroMovementListener {

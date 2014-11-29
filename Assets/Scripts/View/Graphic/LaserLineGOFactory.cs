@@ -1,3 +1,4 @@
+using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
 using UnityEngine;

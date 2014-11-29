@@ -1,4 +1,5 @@
 using System;
+using TrappedGame.Model;
 
 namespace TrappedGame {
     public class LevelTick {

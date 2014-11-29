@@ -1,3 +1,4 @@
+using TrappedGame.Model;
 using UnityEngine;
 using System.IO;
 using System.Text;

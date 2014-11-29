@@ -1,4 +1,4 @@
-﻿using TrappedGame.Model.Game;
+﻿using TrappedGame.Model;
 using UnityEngine;
 
 namespace TrappedGame {

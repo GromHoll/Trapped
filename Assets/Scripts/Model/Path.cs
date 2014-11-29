@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using TrappedGame.Model.Common;
 
-namespace TrappedGame.Model.Game {
+namespace TrappedGame.Model {
     public class Path {
 
         public class PathLink {
