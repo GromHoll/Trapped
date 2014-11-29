@@ -1,7 +1,6 @@
-using UnityEngine;
 using System;
 
-namespace TrappedGame {
+namespace TrappedGame.Model.Common {
     public class IntRect {
 
         private IntVector2 point1;

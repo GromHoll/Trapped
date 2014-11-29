@@ -1,6 +1,4 @@
-using System;
-
-namespace TrappedGame {
+namespace TrappedGame.Model.Common {
     public struct IntVector2 {
         public int y;
         public int x;
@@ -10,9 +8,9 @@ namespace TrappedGame {
             this.y = y;
         }
 
-        public void Set(int x, int y) {
-            this.x = x;
-            this.y = y;
+        public void Set(int newX, int newY) {
+            x = newX;
+            y = newY;
         }
 
         public static bool operator == (IntVector2 left, IntVector2 right) {
@@ -27,12 +25,13 @@ namespace TrappedGame {
             if (!(other is IntVector2)) {
                 return false;
             }
-            IntVector2 vector = (IntVector2) other;
-            return this.x.Equals(vector.x) && this.y.Equals(vector.y);
+            var vector = (IntVector2) other;
+            return x.Equals(vector.x) && y.Equals(vector.y);
         }
         
+        // TODO non read only value in HashCode
         public override int GetHashCode() {
-            return this.x.GetHashCode () ^ this.y.GetHashCode () << 2;
+            return x.GetHashCode () ^ y.GetHashCode () << 2;
         }
     }
 }

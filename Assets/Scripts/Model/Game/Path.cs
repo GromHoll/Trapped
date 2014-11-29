@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TrappedGame.Model.Common;
 
 namespace TrappedGame {
     public class Path {

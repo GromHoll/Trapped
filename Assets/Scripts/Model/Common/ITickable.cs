@@ -1,6 +1,4 @@
-using System;
-
-namespace TrappedGame {   
+namespace TrappedGame.Model.Common {   
     public interface ITickable {
         void NextTick();
         void BackTick();

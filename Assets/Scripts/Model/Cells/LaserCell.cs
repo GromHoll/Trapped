@@ -1,4 +1,6 @@
-﻿namespace TrappedGame.Model.Cells {
+﻿using TrappedGame.Model.Common;
+
+namespace TrappedGame.Model.Cells {
     public class LaserCell : CountCell {
 
         public class Laser {

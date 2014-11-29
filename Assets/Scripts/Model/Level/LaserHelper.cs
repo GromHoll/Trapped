@@ -1,5 +1,6 @@
 using System;
 using TrappedGame.Model.Cells;
+using TrappedGame.Model.Common;
 
 namespace TrappedGame {
     public class LaserHelper {

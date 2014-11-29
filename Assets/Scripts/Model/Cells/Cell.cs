@@ -1,4 +1,6 @@
-﻿namespace TrappedGame.Model.Cells {
+﻿using TrappedGame.Model.Common;
+
+namespace TrappedGame.Model.Cells {
     public class Cell : ITickable {
 
         protected IntVector2 coordinate;
