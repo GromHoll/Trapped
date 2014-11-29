@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using TrappedGame.Model.Common;
 
-namespace TrappedGame {
+namespace TrappedGame.Model.Game {
     public class Path {
 
         public class PathLink {
@@ -72,17 +72,17 @@ namespace TrappedGame {
             }
         }
 
-        private Stack<PathLink> links = new Stack<PathLink>();
+        private readonly Stack<PathLink> links = new Stack<PathLink>();
 
         public void AddLink(int fromX, int fromY, int toX, int toY) {
             links.Push(new PathLink(fromX, fromY, toX, toY));
         }
 
-        public Path.PathLink RemoveLink() {
+        public PathLink RemoveLink() {
             return links.Pop();
         }
 
-        public Path.PathLink GetPreviousTurn() {
+        public PathLink GetPreviousTurn() {
             return !IsEmpty() ? links.Peek() : null;
         }
 

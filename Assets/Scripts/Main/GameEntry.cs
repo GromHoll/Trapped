@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model.Cells;
+using TrappedGame.Model.Game;
 using UnityEngine;
 
 namespace TrappedGame.Main {

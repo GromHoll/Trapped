@@ -1,17 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
-using UnityEngine;
-using System.Collections.Generic;
 
-
-namespace TrappedGame {
+namespace TrappedGame.Model.Game {
     public class Game {
 
-        private Level level;
-        private Hero hero;
+        private readonly Level level;
+        private readonly Hero hero;
 
-        private IList<HeroMovementListener> heroMovementListeners = new List<HeroMovementListener>();
+        private readonly IList<HeroMovementListener> heroMovementListeners = new List<HeroMovementListener>();
 
         public Game(Level level) {
             if (level == null) throw new ArgumentNullException("level"); 
@@ -24,15 +23,9 @@ namespace TrappedGame {
         }
 
         public int GetScore() {
-            int score = 0;
-            IList<IntVector2> bonuses = level.GetBonuses();
-            Path path = hero.GetPath();
-            foreach(Path.PathLink link in path.GetLinks()) {
-                if (bonuses.Contains(link.GetFrom())) {
-                    score++;
-                }
-            }
-            return score;
+            var bonuses = level.GetBonuses();
+            var path = hero.GetPath();
+            return path.GetLinks().Count(link => bonuses.Contains(link.GetFrom()));
         }
 
         public Hero GetHero() {
@@ -64,13 +57,13 @@ namespace TrappedGame {
             if (!IsAvailableForMovementCell(x, y)) return;
 
             if (IsBackTurn(x, y)) {
-                LevelTick levelTick = level.GetLevelTick(hero.GetX(), hero.GetY());
+                var levelTick = level.GetLevelTick(hero.GetX(), hero.GetY());
                 levelTick.BackTick(level);
                 hero.MoveBack();
             } else {
                 if (hero.IsDead()) return;
                 if (HeroWasHere(x, y)) return;                
-                LevelTick levelTick = level.GetLevelTick(x, y);
+                var levelTick = level.GetLevelTick(x, y);
                 levelTick.NextTick(level);
                 hero.MoveTo(x, y);
             }
@@ -79,9 +72,9 @@ namespace TrappedGame {
         }
 
         private void CheckCell() {
-            int x = hero.GetX();
-            int y = hero.GetY();
-            bool isDanger = level.IsDangerCell(x, y);
+            var x = hero.GetX();
+            var y = hero.GetY();
+            var isDanger = level.IsDangerCell(x, y);
             hero.SetDead(isDanger);
         }
 
@@ -90,13 +83,13 @@ namespace TrappedGame {
         }
 
         private bool IsAvailableForMovementCell(int x, int y) {
-            Cell cell = level.GetCell(x, y);
+            var cell = level.GetCell(x, y);
             return !cell.IsBocked();
         }
 
         private bool IsBackTurn(int x, int y) {
             var lastTurn = hero.GetPreviousTurn();
-            return lastTurn != null ? lastTurn.IsFrom(x, y) : false;
+            return lastTurn != null && lastTurn.IsFrom(x, y);
         }
 
         private bool HeroWasHere(int x, int y) {
@@ -112,7 +105,7 @@ namespace TrappedGame {
         }        
         
         private void NotifyHeroMovementListener() {
-            foreach(HeroMovementListener listener in heroMovementListeners) {
+            foreach(var listener in heroMovementListeners) {
                 listener.HeroMoved(hero);
             }
         }

@@ -1,3 +1,4 @@
+using TrappedGame.Model.Game;
 using UnityEngine;
 using System.Collections.Generic;
 

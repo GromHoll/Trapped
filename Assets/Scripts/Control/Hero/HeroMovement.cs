@@ -1,3 +1,5 @@
+using TrappedGame.Model.Game;
+
 namespace TrappedGame.Control.Hero {
 
     public class HeroMovement {

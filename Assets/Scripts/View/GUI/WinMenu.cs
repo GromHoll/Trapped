@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TrappedGame.Model.Game;
+using UnityEngine;
 
 namespace TrappedGame {
     public class WinMenu : MonoBehaviour {

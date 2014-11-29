@@ -1,16 +1,14 @@
-using System;
+using System.Linq;
 using TrappedGame.Model.Common;
-using UnityEngine;
 
-
-namespace TrappedGame {
+namespace TrappedGame.Model.Game {
     public class Hero {
 
         private IntVector2 position;
-        private Path path = new Path();
+        private readonly Path path = new Path();
 
-        private bool isDead = false;
-        private int deadCounter = 0;
+        private bool isDead;
+        private int deadCounter;
 
         public Hero(int x, int y) {
             position = new IntVector2(x, y);
@@ -62,14 +60,7 @@ namespace TrappedGame {
         }
 
         public bool WasHere(int x, int y) {
-            foreach (var link in path.GetLinks()) {
-                if (link.GetFromX() == x && link.GetFromY() == y) {
-                    return true;
-                }
-            }
-            return false;
+            return path.GetLinks().Any(link => link.GetFromX() == x && link.GetFromY() == y);
         }
-
-
     }
 }
