@@ -1,7 +1,4 @@
-using UnityEngine;
-
-
-namespace TrappedGame {
+namespace TrappedGame.Model.Cells {
     public class SpearCell : CountCell {
 
         public SpearCell(int x, int y, int onPeriod, int offPeriod, int currentTick, bool isOn)

@@ -1,6 +1,4 @@
-using System;
-
-namespace TrappedGame {
+namespace TrappedGame.Model.Cells {
     public enum CellType {
         EMPTY,
         WALL,

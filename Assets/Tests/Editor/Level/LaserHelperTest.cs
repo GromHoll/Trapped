@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using TrappedGame.Model.Cells;
 
 namespace TrappedGame.UnitTests {
     [TestFixture]

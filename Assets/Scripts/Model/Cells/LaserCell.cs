@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-
-namespace TrappedGame {
+﻿namespace TrappedGame.Model.Cells {
     public class LaserCell : CountCell {
 
         public class Laser {
-            private LaserCell owner;
-            private IntRect line;
+            private readonly LaserCell owner;
+            private readonly IntRect line;
 
             public Laser(LaserCell owner, IntRect line) {
                 this.owner = owner;

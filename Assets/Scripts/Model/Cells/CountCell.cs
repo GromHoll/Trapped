@@ -1,8 +1,6 @@
 using System;
-using UnityEngine;
 
-
-namespace TrappedGame {
+namespace TrappedGame.Model.Cells {
     public class CountCell : Cell {
 
         public static readonly int DEFAULT_PERIOD = 1;

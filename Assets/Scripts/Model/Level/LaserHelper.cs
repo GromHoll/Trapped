@@ -1,4 +1,5 @@
 using System;
+using TrappedGame.Model.Cells;
 
 namespace TrappedGame {
     public class LaserHelper {

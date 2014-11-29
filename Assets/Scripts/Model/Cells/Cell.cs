@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace TrappedGame {
+﻿namespace TrappedGame.Model.Cells {
     public class Cell : ITickable {
 
         protected IntVector2 coordinate;

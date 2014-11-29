@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TrappedGame.Model.Cells;
+using UnityEngine;
 using System.Collections;
 
 

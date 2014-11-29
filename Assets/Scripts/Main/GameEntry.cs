@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TrappedGame.Control.Hero;
+using TrappedGame.Model.Cells;
 using UnityEngine;
 
 namespace TrappedGame.Main {

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using TrappedGame.Model.Cells;
 using UnityEngine;
 using System;
 
