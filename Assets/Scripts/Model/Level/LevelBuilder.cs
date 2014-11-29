@@ -15,6 +15,7 @@ namespace TrappedGame {
         private IntVector2 start;
         private IntVector2 finish;
         private IList<IntVector2> bonuses = new List<IntVector2>();
+        private IDictionary<IntVector2, LevelTick> timeBonuses;
 
         public LevelBuilder(string name, int xSize, int ySize) {
             if (xSize <= 0) throw new ArgumentException("Size should be positive", "xSize");
@@ -37,6 +38,10 @@ namespace TrappedGame {
 
         public void AddBonus(IntVector2 coordinate) {
             bonuses.Add(coordinate);
+        }
+        
+        public void AddTimeBonus(IntVector2 coordinate, LevelTick levelTick) {
+            timeBonuses.Add(coordinate, levelTick);
         }
 
         public void SetStart(int x, int y) {
@@ -65,6 +70,10 @@ namespace TrappedGame {
 
         public IList<IntVector2> GetBonuses() {
             return bonuses;
+        }
+
+        public IDictionary<IntVector2, LevelTick> GetTimeBonuses() {
+            return timeBonuses;
         }
 
         public Level Build() {

@@ -16,6 +16,7 @@ namespace TrappedGame {
         private IntVector2 start;
         private IntVector2 finish;
         private IList<IntVector2> bonuses;
+        private IDictionary<IntVector2, LevelTick> timeBonuses;
 
         public Level(LevelBuilder builder) {
             size = builder.GetSize();
@@ -23,6 +24,7 @@ namespace TrappedGame {
             finish = builder.GetFinish();
             cells = builder.GetCells();
             bonuses = builder.GetBonuses();
+            timeBonuses = builder.GetTimeBonuses();
             CreateDangerZones();
         }
 
@@ -117,6 +119,10 @@ namespace TrappedGame {
             return bonuses;
         }
 
+        public IDictionary<IntVector2, LevelTick> GetTimeBonuses() {
+            return timeBonuses;
+        }
+
         public IList<LaserCell.Laser> GetLaserLines() {
             return lasers;
         }
@@ -124,8 +130,6 @@ namespace TrappedGame {
         public bool Contains(int x, int y) {
             return x >= 0 && x <= size.x - 1 && y >= 0 && y <= size.y - 1; 
         }
-    
-
 
     }
 }
