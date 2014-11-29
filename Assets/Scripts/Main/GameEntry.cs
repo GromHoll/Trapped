@@ -5,6 +5,7 @@ using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Loader;
 using TrappedGame.Utils;
+using TrappedGame.View.Controllers;
 using UnityEngine;
 
 namespace TrappedGame.Main {

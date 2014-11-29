@@ -2,9 +2,8 @@
 using TrappedGame.Model.Listeners;
 using TrappedGame.Utils;
 using UnityEngine;
-using System.Collections;
 
-namespace TrappedGame {
+namespace TrappedGame.View.Controllers {
     public class HeroController : MonoBehaviour, IHeroMovementListener {
         
         public static readonly string IS_DEAD_KEY = "IsDead";
@@ -27,8 +26,8 @@ namespace TrappedGame {
     	}
 
         public void SetGame(Game game) {
-            this.level = game.GetLevel();
-            this.hero = game.GetHero();
+            level = game.GetLevel();
+            hero = game.GetHero();
             game.AddHeroMovementListener(this);
         }
 
@@ -42,12 +41,12 @@ namespace TrappedGame {
 
         private void UpdatePosition() {
             if (IsMoving()) {
-                Vector3 currentPosition = gameObject.transform.position;
-                Vector3 direction = targetPosition - currentPosition;
+                var currentPosition = gameObject.transform.position;
+                var direction = targetPosition - currentPosition;
                 direction.Normalize();
                 direction *= speed*Time.deltaTime; 
 
-                Vector3 newPosition = gameObject.transform.position + direction;                
+                var newPosition = gameObject.transform.position + direction;                
                 if (Vector3.Distance(targetPosition, newPosition) >= Vector3.Distance(targetPosition, currentPosition)) {
                     newPosition = targetPosition;
                 }
@@ -55,8 +54,8 @@ namespace TrappedGame {
             }
         }
         
-        public void HeroMoved(Hero hero) {
-            targetPosition = GameUtils.ConvertToGameCoord(hero.GetX(), hero.GetY(), level);
+        public void HeroMoved(Hero eventHero) {
+            targetPosition = GameUtils.ConvertToGameCoord(eventHero.GetX(), eventHero.GetY(), level);
         }
 
     }

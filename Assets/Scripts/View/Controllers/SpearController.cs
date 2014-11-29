@@ -1,9 +1,7 @@
 ﻿using TrappedGame.Model.Cells;
 using UnityEngine;
-using System.Collections;
 
-
-namespace TrappedGame {
+namespace TrappedGame.View.Controllers {
     public class SpearController : MonoBehaviour {
 
         public static readonly string STATUS_KEY = "Status";
@@ -24,7 +22,7 @@ namespace TrappedGame {
         }
 
         private bool GetStatus() {
-            return cell != null ? cell.IsDeadly() : false;
+            return cell != null && cell.IsDeadly();
         }
     }
 }

@@ -2,6 +2,7 @@ using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
 using TrappedGame.Utils;
+using TrappedGame.View.Controllers;
 using UnityEngine;
 using System.Collections.Generic;
 

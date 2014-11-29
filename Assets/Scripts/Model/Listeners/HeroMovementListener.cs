@@ -1,6 +1,6 @@
 namespace TrappedGame.Model.Listeners {
     public interface IHeroMovementListener {
-        void HeroMoved(Hero hero);
+        void HeroMoved(Hero eventHero);
     }
 }
 
