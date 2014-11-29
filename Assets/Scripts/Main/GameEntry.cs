@@ -7,6 +7,7 @@ using TrappedGame.Model.Loader;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
 using TrappedGame.View.Graphic;
+using TrappedGame.View.GUI;
 using UnityEngine;
 
 namespace TrappedGame.Main {

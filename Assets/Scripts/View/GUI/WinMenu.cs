@@ -1,22 +1,22 @@
 ﻿using TrappedGame.Model;
 using UnityEngine;
 
-namespace TrappedGame {
+namespace TrappedGame.View.GUI {
     public class WinMenu : MonoBehaviour {
 
         private Game game;
 
     	void OnGUI() {
-            GUI.Box (new Rect(10, 10, 100, 150), "WIN!\n Score = " + game.GetScore()
+            UnityEngine.GUI.Box (new Rect(10, 10, 100, 150), "WIN!\n Score = " + game.GetScore()
                      + "\nYou die " + game.GetHero().GetDeaths() + " count");
     		
-    		if (GUI.Button(new Rect(20, 80, 80, 20), "Back!")) {
+    		if (UnityEngine.GUI.Button(new Rect(20, 80, 80, 20), "Back!")) {
     			Application.LoadLevel("MainMenu");
     		}
     	}
 
-        public void SetGame(Game game) {
-            this.game = game;
+        public void SetGame(Game newGame) {
+            game = newGame;
         }
 
         public void SetActive(bool isShow) {
