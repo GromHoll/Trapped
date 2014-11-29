@@ -27,7 +27,7 @@ namespace TrappedGame {
             Vector2 coord = GameUtils.ConvertToGameCoord(x, y, level);
             GameObject laserObject = GameUtils.InstantiateChild(laserLine, coord, laserLineFolder);
             laserObject.SetActive(line.IsDanger());    
-            if (line.IsVertical()) {
+            if (line.IsHorizontal()) {
                 laserObject.transform.Rotate(0, 0, 90);
             }
             return laserObject;
