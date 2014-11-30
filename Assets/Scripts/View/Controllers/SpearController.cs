@@ -17,8 +17,8 @@ namespace TrappedGame.View.Controllers {
             aminator.SetBool(STATUS_KEY, GetStatus());
         }
 
-        public void SetCell(SpearCell cell) {
-            this.cell = cell;
+        public void SetCell(SpearCell newCell) {
+            this.cell = newCell;
         }
 
         private bool GetStatus() {

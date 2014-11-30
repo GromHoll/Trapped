@@ -31,7 +31,7 @@ namespace TrappedGame.View.Graphic {
             var coord = GameUtils.ConvertToGameCoord(x, y, level);
             var laserObject = GameUtils.InstantiateChild(laserLine, coord, laserLineFolder);
             laserObject.SetActive(line.IsDanger());    
-            if (line.IsHorizontal()) {
+            if (line.IsVertical()) {
                 laserObject.transform.Rotate(0, 0, 90);
             }
             return laserObject;

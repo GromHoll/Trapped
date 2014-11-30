@@ -36,7 +36,7 @@ namespace TrappedGame.View.Controllers {
         }
 
         private bool IsDead() {
-            return hero.IsDead();
+            return hero != null && hero.IsDead();
         }
 
         private void UpdatePosition() {
