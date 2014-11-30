@@ -23,7 +23,7 @@ namespace TrappedGame.Main {
         private Level level;
 
         private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
-        private IDictionary<LaserCell.Laser, IList<GameObject>> lasers = new Dictionary<LaserCell.Laser, IList<GameObject>>();
+        private IDictionary<LaserCell.Laser, GameObject> lasers = new Dictionary<LaserCell.Laser, GameObject>();
         private IDictionary<SpearCell, GameObject> spearsCells = new Dictionary<SpearCell, GameObject>();
 
         private WinMenu winMenu;
@@ -128,9 +128,8 @@ namespace TrappedGame.Main {
         private void UpdateLasers() {
             foreach (var pair in lasers) {
                 var line = pair.Key;
-                foreach (var laserObject in pair.Value) {
-                    laserObject.SetActive(line.IsDanger());                        
-                }
+                var laserObject = pair.Value;
+                laserObject.SetActive(line.IsDanger());  
             }    
         }
 
