@@ -3,6 +3,7 @@ using System.Xml;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Utils;
+using TrappedGame.View.Controllers;
 using UnityEngine;
 
 namespace TrappedGame.View.Graphic {
@@ -24,45 +25,9 @@ namespace TrappedGame.View.Graphic {
             var cover = line.GetCover();
             var coord = GameUtils.ConvertToGameCoord(cover.GetMinX(), cover.GetMinY(), level);
             var laserObject = GameUtils.InstantiateChild(laserLine, coord, laserLineFolder);
-
-            // TODO Move this logic to LaserLine controller
-            var lenght = GetLenght(line);
-            ScaleLaser(laserObject, lenght);
-            MoveLaser(laserObject, line, lenght);
-            RotateLaser(laserObject, line);
-            laserObject.SetActive(line.IsDanger());   
+            var controller = laserObject.GetComponent<LaserLineController>();
+            controller.SetLaserLine(line); 
             return laserObject;
         }
-
-        private float GetLenght(LaserCell.Laser line) {
-            var cover = line.GetCover();
-            if (line.IsVertical()) {
-                return cover.GetMaxY() - cover.GetMinY() + 1;
-            }
-            return cover.GetMaxX() - cover.GetMinX() + 1;
-        }
-
-        private float GetSafeShift(float lenght) {
-            return lenght == 1 ? 0 : (lenght - 1)/2;
-        }
-
-        private void ScaleLaser(GameObject laser, float lenght) {
-            var localScaleX = laser.transform.localScale.x;
-            laser.transform.localScale = new Vector3(lenght*localScaleX, 1, 1); 
-        }
-
-        private void MoveLaser(GameObject laser, LaserCell.Laser line, float lenght) {
-            laser.transform.position += new Vector3(
-                    line.IsHorizontal() ? GetSafeShift(lenght) : 0,
-                    line.IsVertical() ? GetSafeShift(lenght) : 0,
-                    0);
-        }
-
-        private void RotateLaser(GameObject laser, LaserCell.Laser line) {
-            if (line.IsVertical()) {
-                laser.transform.Rotate(0, 0, 90);
-            }
-        }
     }
-
 }

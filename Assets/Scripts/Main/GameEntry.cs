@@ -100,7 +100,6 @@ namespace TrappedGame.Main {
 
         private void UpdateGraphics() {
             UpdatePath();
-            UpdateLasers();
         }
 
         private void UpdatePath() {
@@ -122,16 +121,7 @@ namespace TrappedGame.Main {
                     }
                 }
             }
-        }        
-
-        // TODO Move to laser controller
-        private void UpdateLasers() {
-            foreach (var pair in lasers) {
-                var line = pair.Key;
-                var laserObject = pair.Value;
-                laserObject.SetActive(line.IsDanger());  
-            }    
-        }
+        } 
 
         // TODO Find good way for scaling camera
         private void UpdateCamera() {
