@@ -23,8 +23,6 @@ namespace TrappedGame.Main {
         private Level level;
 
         private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
-        private IDictionary<LaserCell.Laser, GameObject> lasers = new Dictionary<LaserCell.Laser, GameObject>();
-        private IDictionary<SpearCell, GameObject> spearsCells = new Dictionary<SpearCell, GameObject>();
 
         private WinMenu winMenu;
                 
@@ -60,9 +58,9 @@ namespace TrappedGame.Main {
             cellGameObjectFactory.CreateWallCells(level);
 
             cellGameObjectFactory.CreateLaserCells(level);
-            lasers = laserLineGoFactory.CreateLasersForLevel(level);
+            laserLineGoFactory.CreateLasersForLevel(level);
 
-            spearsCells = cellGameObjectFactory.CreateSpearCells(level);
+            cellGameObjectFactory.CreateSpearCells(level);
                         
             var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
             heroController = hero.GetComponent<HeroController>();
