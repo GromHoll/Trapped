@@ -1,7 +1,9 @@
 fileFormatVersion: 2
-guid: 0cf71ea39aec00b4eb465ca02a7cddff
+guid: 77f398f084a8e484e826cf7530f92f7c
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: img_trap_off
+    21300002: img_trap_on
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -31,17 +33,37 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 1024
+  spritePixelsToUnits: 1067
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: img_trap_off
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 1066
+        height: 1066
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: img_trap_on
+      rect:
+        serializedVersion: 2
+        x: 1066
+        y: 1
+        width: 1066
+        height: 1066
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
