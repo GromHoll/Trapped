@@ -25,10 +25,10 @@ namespace TrappedGame.Main {
         private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
 
         private WinMenu winMenu;
+		public GameObject winMenuObject;
                 
         public Camera gameCamera;
-
-        public GameObject winPrefab;
+	
     	public GameObject heroPrefab;
         public GameObject bonusPrefab;
         public GameObject timeBonusPrefab;
@@ -74,10 +74,9 @@ namespace TrappedGame.Main {
                 GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
             
-            var winWindow = GameUtils.InstantiateChild(winPrefab, new Vector2(0, 0), gameObject);
-            winMenu = winWindow.GetComponent<WinMenu>();
+            winMenu = winMenuObject.GetComponent<WinMenu>();
             winMenu.SetGame(game);
-            winMenu.SetActive(false);
+            winMenu.Hide();
         }
 
         void Update() {
@@ -137,7 +136,7 @@ namespace TrappedGame.Main {
         }
     
         private void ShowWinWindow() {      
-            winMenu.SetActive(true);
+            winMenu.Show();
         }
     }
 }
