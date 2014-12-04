@@ -18,7 +18,6 @@ namespace TrappedGame.View.Graphic {
         public GameObject unknownPrefab;
         public GameObject laserPrefab;
         public GameObject wallPrefab;
-        
         public GameObject spearPrefab;
 
 
@@ -62,7 +61,7 @@ namespace TrappedGame.View.Graphic {
             foreach (Cell cell in level.GetCells()) {
                 if (cell.GetCellType() == CellType.SPEAR) {
                     var spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
-                    var controller = (SpearController) spearObject.GetComponent<SpearController>();
+                    var controller = spearObject.GetComponent<SpearController>();
                     //TODO Add to level different cell accesses
                     var spear = (SpearCell) cell;
                     controller.SetCell(spear);

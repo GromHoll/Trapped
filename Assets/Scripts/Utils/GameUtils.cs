@@ -18,7 +18,7 @@ namespace TrappedGame.Utils {
         public static GameObject InstantiateChild(GameObject gameObject, Vector2 vector, GameObject parent) {
             var child = Object.Instantiate(gameObject, vector, Quaternion.identity) as GameObject;
             if (child != null && parent != null) {
-                child.transform.SetParent(parent.transform, false);
+                child.transform.SetParent(parent.transform, false);   
             }
             return child;
         }
