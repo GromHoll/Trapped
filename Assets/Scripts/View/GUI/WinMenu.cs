@@ -11,7 +11,7 @@ namespace TrappedGame.View.GUI {
                      + "\nYou die " + game.GetHero().GetDeaths() + " count");
     		
     		if (UnityEngine.GUI.Button(new Rect(20, 80, 80, 20), "Back!")) {
-    			Application.LoadLevel("MainMenu");
+				ReturnToMenu();
     		}
     	}
 
@@ -22,5 +22,9 @@ namespace TrappedGame.View.GUI {
         public void SetActive(bool isShow) {
             gameObject.SetActive(isShow);
         }
+
+		public void ReturnToMenu() {
+			Application.LoadLevel("MainMenu");
+		}
     }
 }
