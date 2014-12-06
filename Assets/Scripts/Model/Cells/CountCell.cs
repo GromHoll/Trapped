@@ -46,6 +46,10 @@ namespace TrappedGame.Model.Cells {
             return isOn;
         }
 
+        public bool IsOnOnNextTick() {
+            return (isOn && currentTick < onPeriod - 1) || (!isOn && currentTick + 1 == offPeriod);
+        }
+
         private int GetCurrentPeriod() {
             return isOn ? onPeriod : offPeriod;
         }

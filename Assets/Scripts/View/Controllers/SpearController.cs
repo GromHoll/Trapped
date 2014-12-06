@@ -18,7 +18,10 @@ namespace TrappedGame.View.Controllers {
         }
 
         public void SetCell(SpearCell newCell) {
-            this.cell = newCell;
+            cell = newCell;
+            foreach (var indicators in GetComponentsInChildren<IndicatorController>()) {
+                indicators.SetCell(cell);       
+            }
         }
 
         private bool GetStatus() {
