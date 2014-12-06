@@ -56,19 +56,16 @@ namespace TrappedGame.View.Graphic {
             }
         }
 
-        public IDictionary<SpearCell, GameObject> CreateSpearCells(Level level) {
-            IDictionary<SpearCell, GameObject> spearsCells = new Dictionary<SpearCell, GameObject>();
+        public void CreateSpearCells(Level level) {
             foreach (Cell cell in level.GetCells()) {
+                //TODO Add to level different cell accesses
                 if (cell.GetCellType() == CellType.SPEAR) {
                     var spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
                     var controller = spearObject.GetComponent<SpearController>();
-                    //TODO Add to level different cell accesses
                     var spear = (SpearCell) cell;
                     controller.SetCell(spear);
-                    spearsCells[spear] = spearObject;
                 }
             }
-            return spearsCells;
         }
 
         public void CreateWallCells(Level level) {
@@ -82,7 +79,10 @@ namespace TrappedGame.View.Graphic {
         public void CreateLaserCells(Level level) {
             foreach (Cell cell in level.GetCells()) {
                 if (cell.GetCellType() == CellType.LASER) {
-                    CreateCellGameObject(cell, level, laserCellsFolder);
+                    var laserObject = CreateCellGameObject(cell, level, laserCellsFolder);
+                    var controller = laserObject.GetComponent<LaserController>();
+                    var laser = (LaserCell) cell;
+                    controller.SetCell(laser);
                 }
             }
         }
