@@ -17,7 +17,9 @@ namespace TrappedGame.View.Controllers {
         }
 
         private void Update() {
-            renderer.enabled = line.IsDanger();
+            foreach (Transform child in transform) {
+                child.gameObject.SetActive(line.IsDanger());
+            }
         }
 
         public void SetLaserLine(LaserCell.Laser newLine) {
