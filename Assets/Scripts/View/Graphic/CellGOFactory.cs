@@ -89,7 +89,7 @@ namespace TrappedGame.View.Graphic {
 
         private void CreateLaserLinesForLaser(Level level, LaserCell.Line line, GameObject laser) {
             var cover = line.Cover;
-            var coord = GameUtils.ConvertToGameCoord(cover.GetMinX(), cover.GetMinY(), level);
+            var coord = GameUtils.ConvertToGameCoord(cover.MinX, cover.MinY, level);
             var laserObject = GameUtils.InstantiateChild(laserLinePrefab, coord, laser);
             var controller = laserObject.GetComponent<LaserLineController>();
             controller.SetLaserLine(line);

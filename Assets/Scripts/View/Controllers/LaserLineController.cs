@@ -29,9 +29,9 @@ namespace TrappedGame.View.Controllers {
         private float GetLenght() {
             var cover = line.Cover;
             if (line.IsVertical()) {
-                return cover.GetMaxY() - cover.GetMinY() + 1;
+                return cover.MaxY - cover.MinY + 1;
             }
-            return cover.GetMaxX() - cover.GetMinX() + 1;
+            return cover.MaxX - cover.MinX + 1;
         }
 
         private float GetSafeShift() {

@@ -24,11 +24,11 @@ namespace TrappedGame.Model.Cells {
             }
 
             public bool IsHorizontal() {
-                return Cover.GetMaxY() == Cover.GetMinY() && Cover.GetMaxY() == Owner.Y;
+                return Cover.MaxY == Cover.MinY && Cover.MaxY == Owner.Y;
             }
 
             public bool IsVertical() {
-                return Cover.GetMaxX() == Cover.GetMinX() && Cover.GetMaxX() == Owner.X;
+                return Cover.MaxX == Cover.MinX && Cover.MaxX == Owner.X;
             }
         }
 
@@ -65,7 +65,7 @@ namespace TrappedGame.Model.Cells {
         }
 
         public override bool IsDeadlyFor(int x, int y) {
-            return LaserLines.Any(laser => laser.IsDangerFor(x, y)); ;
+            return LaserLines.Any(laser => laser.IsDangerFor(x, y));
         }
         
         public void CreateLaserLines(LaserHelper helper, Level level) {
