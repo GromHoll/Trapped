@@ -69,6 +69,5 @@ namespace TrappedGame.Model.LevelUtils {
             }
         }
 
-
     }
 }

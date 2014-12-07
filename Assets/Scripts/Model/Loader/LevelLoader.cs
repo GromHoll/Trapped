@@ -26,8 +26,8 @@ namespace TrappedGame.Model.Loader {
         }
 
         private void ReadMap(StreamReader reader, LevelInfo levelInfo) {
-            var xSize = levelInfo.GetXSize();
-            var ySize = levelInfo.GetYSize();     
+            var xSize = levelInfo.XSize;
+            var ySize = levelInfo.YSize;     
             for (var y = ySize - 1; y >= 0; y--) {
                 var row = reader.ReadLine();
                 for(var x = 0; x < xSize; x++) {
