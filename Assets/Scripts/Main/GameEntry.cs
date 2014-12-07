@@ -14,7 +14,6 @@ namespace TrappedGame.Main {
     public class GameEntry : MonoBehaviour {
 
         public CellGOFactory cellGameObjectFactory;
-        public LaserLineGOFactory laserLineGoFactory;
         public PathGOFactory pathGoFactory;
 
         private LevelLoader loader = new LevelLoader();
@@ -56,10 +55,7 @@ namespace TrappedGame.Main {
         private void CreateLevelObjects() {
             cellGameObjectFactory.CreateEmptyCells(level);
             cellGameObjectFactory.CreateWallCells(level);
-
             cellGameObjectFactory.CreateLaserCells(level);
-            //laserLineGoFactory.CreateLasersForLevel(level);
-
             cellGameObjectFactory.CreateSpearCells(level);
                         
             var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
