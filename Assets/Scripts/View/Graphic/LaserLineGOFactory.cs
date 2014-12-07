@@ -12,22 +12,23 @@ namespace TrappedGame.View.Graphic {
         public GameObject laserLineFolder;
         public GameObject laserLine;
 
-        public IDictionary<LaserCell.Laser, GameObject> CreateLasersForLevel(Level level) {
-            var lasers = new Dictionary<LaserCell.Laser, GameObject>();
-            foreach (var line    in level.GetLaserLines()) {
-                var laserObject = CreateLaserLine(line, level);
-                lasers.Add(line, laserObject);
+        public void CreateLasersForLevel(Level level) {
+            foreach (Cell cell in level.GetCells()) {
+                if (cell.GetCellType() == CellType.LASER) {
+                    var laser = (LaserCell) cell;
+                    foreach (var line in laser.GetLaserLines()) {
+                        CreateLaserLine(line, level);
+                    }
+                }
             }
-            return lasers;
         }      
         
-        private GameObject CreateLaserLine(LaserCell.Laser line, Level level) {
+        private void CreateLaserLine(LaserCell.Laser line, Level level) {
             var cover = line.GetCover();
             var coord = GameUtils.ConvertToGameCoord(cover.GetMinX(), cover.GetMinY(), level);
             var laserObject = GameUtils.InstantiateChild(laserLine, coord, laserLineFolder);
             var controller = laserObject.GetComponent<LaserLineController>();
-            controller.SetLaserLine(line); 
-            return laserObject;
+            controller.SetLaserLine(line);
         }
     }
 }

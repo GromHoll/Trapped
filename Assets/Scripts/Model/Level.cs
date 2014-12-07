@@ -19,9 +19,7 @@ namespace TrappedGame.Model {
 
         private readonly IList<IntVector2> bonuses;
         private readonly IDictionary<IntVector2, LevelTick> timeBonuses;
-
-        private readonly IList<LaserCell.Laser> lasers = new List<LaserCell.Laser>();
-
+        
         public Level(LevelBuilder builder) {
             size = builder.GetSize();
             start = builder.GetStart();
@@ -43,20 +41,14 @@ namespace TrappedGame.Model {
                 // TODO maybe store LaserCell in specias list and don't use cast?
                 if(cell.GetCellType() == CellType.LASER) {
                     var laser = (LaserCell) cell;
-                    AddLaser(laserHelper.CreateUpLaser(laser, this));
-                    AddLaser(laserHelper.CreateRightLaser(laser, this));
-                    AddLaser(laserHelper.CreateDownLaser(laser, this));
-                    AddLaser(laserHelper.CreateLeftLaser(laser, this));
+                    laser.AddLaserLine(laserHelper.CreateUpLaser(laser, this));
+                    laser.AddLaserLine(laserHelper.CreateRightLaser(laser, this));
+                    laser.AddLaserLine(laserHelper.CreateDownLaser(laser, this));
+                    laser.AddLaserLine(laserHelper.CreateLeftLaser(laser, this));
                 }
             }
         }
-
-        private void AddLaser(LaserCell.Laser laser) {
-            if (laser != null) {
-                lasers.Add(laser);
-            }
-        }
-
+        
         public void NextTick() {
             foreach (var cell in cells) {
                 cell.NextTick();
@@ -79,7 +71,12 @@ namespace TrappedGame.Model {
             if (cell.IsDeadly()) {
                 return true;
             }
-            return lasers.Any(laser => laser.IsDangerFor(x, y));
+            foreach (var cell2 in cells) {
+                if (cell2.IsDeadlyFor(x, y)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public int GetStartX() {
@@ -122,11 +119,7 @@ namespace TrappedGame.Model {
         public IDictionary<IntVector2, LevelTick> GetTimeBonuses() {
             return timeBonuses;
         }
-
-        public IList<LaserCell.Laser> GetLaserLines() {
-            return lasers;
-        }
-
+        
         public bool Contains(int x, int y) {
             return x >= 0 && x <= size.x - 1 && y >= 0 && y <= size.y - 1; 
         }

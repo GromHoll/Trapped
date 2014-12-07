@@ -22,6 +22,10 @@ namespace TrappedGame.Model.Cells {
             return false;
         }
 
+        public virtual bool IsDeadlyFor(int x, int y) {
+            return false;
+        }
+
         public IntVector2 GetCoordinate() {
             return coordinate;
         }

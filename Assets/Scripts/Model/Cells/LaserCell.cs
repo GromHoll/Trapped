@@ -1,4 +1,6 @@
-﻿using TrappedGame.Model.Common;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TrappedGame.Model.Common;
 
 namespace TrappedGame.Model.Cells {
     public class LaserCell : CountCell {
@@ -32,11 +34,13 @@ namespace TrappedGame.Model.Cells {
                 return line.GetMaxX() == line.GetMinX() && line.GetMaxX() == owner.GetX();
             }
         }
-        
-        protected bool up;
-        protected bool right;
-        protected bool down;
-        protected bool left;
+
+        private readonly bool up;
+        private readonly bool right;
+        private readonly bool down;
+        private readonly bool left;
+
+        private readonly IList<Laser> laserLines = new List<Laser>();
 
         public LaserCell(int x, int y, 
                          int onPeriod, int offPeriod, int currentTick, bool isOn,
@@ -64,6 +68,10 @@ namespace TrappedGame.Model.Cells {
             return isOn;
         }
 
+        public override bool IsDeadlyFor(int x, int y) {
+            return laserLines.Any(laser => laser.IsDangerFor(x, y)); ;
+        }
+
         public bool IsUp() { 
             return up;
         }
@@ -79,5 +87,16 @@ namespace TrappedGame.Model.Cells {
         public bool IsLeft() { 
             return left;
         }
+
+        public IList<Laser> GetLaserLines() {
+            return laserLines;
+        }
+
+        public void AddLaserLine(Laser line)  {
+            if (line != null) {
+                laserLines.Add(line);  
+            }  
+        }
+
     }
 }

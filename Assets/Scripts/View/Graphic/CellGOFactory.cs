@@ -17,6 +17,7 @@ namespace TrappedGame.View.Graphic {
         public GameObject tilePrefab;
         public GameObject unknownPrefab;
         public GameObject laserPrefab;
+        public GameObject laserLinePrefab;
         public GameObject wallPrefab;
         public GameObject spearPrefab;
 
@@ -86,5 +87,17 @@ namespace TrappedGame.View.Graphic {
                 }
             }
         }
+
+        /*private void CreateLaserLinesForLaser(Level level, LaserCell laser) {
+            level.
+
+            var cover = line.GetCover();
+            var coord = GameUtils.ConvertToGameCoord(cover.GetMinX(), cover.GetMinY(), level);
+            var laserObject = GameUtils.InstantiateChild(laserLine, coord, laserLineFolder);
+            var controller = laserObject.GetComponent<LaserLineController>();
+            controller.SetLaserLine(line);
+            return laserObject;
+        }*/
+
     }
 }
