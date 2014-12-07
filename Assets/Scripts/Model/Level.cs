@@ -19,12 +19,17 @@ namespace TrappedGame.Model {
 
         private readonly IList<IntVector2> bonuses;
         private readonly IDictionary<IntVector2, LevelTick> timeBonuses;
+
+        private readonly IList<LaserCell> lasers;
         
         public Level(LevelBuilder builder) {
             size = builder.GetSize();
             start = builder.GetStart();
             finish = builder.GetFinish();
+
             cells = builder.GetCells();
+            lasers = builder.GetLaserCells();
+            
             bonuses = builder.GetBonuses();
             timeBonuses = builder.GetTimeBonuses();
             CreateDangerZones();
@@ -71,12 +76,7 @@ namespace TrappedGame.Model {
             if (cell.IsDeadly()) {
                 return true;
             }
-            foreach (var cell2 in cells) {
-                if (cell2.IsDeadlyFor(x, y)) {
-                    return true;
-                }
-            }
-            return false;
+            return lasers.Any(laser => laser.IsDeadlyFor(x, y));
         }
 
         public int GetStartX() {
@@ -110,6 +110,10 @@ namespace TrappedGame.Model {
 
         public IEnumerable GetCells() {
             return cells;
+        }
+
+        public IList<LaserCell> GetLaserCells() {
+            return lasers;
         }
 
         public IList<IntVector2> GetBonuses() {

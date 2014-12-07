@@ -15,7 +15,7 @@ namespace TrappedGame.Model.LevelUtils {
         private IntVector2 finish;
         private readonly IList<IntVector2> bonuses = new List<IntVector2>();
         private readonly IDictionary<IntVector2, LevelTick> timeBonuses = new Dictionary<IntVector2, LevelTick>();
-
+        
         public LevelBuilder(string name, int xSize, int ySize) {
             if (xSize <= 0) throw new ArgumentException("Size should be positive", "xSize");
             if (ySize <= 0) throw new ArgumentException("Size should be positive", "ySize");
@@ -65,6 +65,16 @@ namespace TrappedGame.Model.LevelUtils {
 
         public Cell[,] GetCells() {
             return cells;
+        }
+
+        public IList<LaserCell> GetLaserCells() {
+            IList<LaserCell> lasers = new List<LaserCell>();
+            foreach (Cell cell in cells) {
+                if (cell.GetCellType() == CellType.LASER) {
+                    lasers.Add((LaserCell) cell);
+                }
+            }
+            return lasers;
         }
 
         public IList<IntVector2> GetBonuses() {
