@@ -49,7 +49,7 @@ namespace TrappedGame.View.Graphic {
         }
 
         public void CreateEmptyCells(Level level) {
-            foreach (Cell cell in level.GetCells()) {
+            foreach (Cell cell in level.Cells) {
                 if (cell.GetCellType() != CellType.WALL) {
                     CreateCellGameObject(cell.GetCoordinate(), CellType.EMPTY, level, emptyCellsFolder);
                 }
@@ -57,7 +57,7 @@ namespace TrappedGame.View.Graphic {
         }
 
         public void CreateSpearCells(Level level) {
-            foreach (Cell cell in level.GetCells()) {
+            foreach (Cell cell in level.Cells) {
                 //TODO Add to level different cell accesses
                 if (cell.GetCellType() == CellType.SPEAR) {
                     var spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
@@ -69,7 +69,7 @@ namespace TrappedGame.View.Graphic {
         }
 
         public void CreateWallCells(Level level) {
-            foreach (Cell cell in level.GetCells()) {
+            foreach (Cell cell in level.Cells) {
                 if (cell.GetCellType() == CellType.WALL) {
                     CreateCellGameObject(cell, level, wallCellsFolder);
                 }
@@ -77,7 +77,7 @@ namespace TrappedGame.View.Graphic {
         }
 
         public void CreateLaserCells(Level level) {
-            foreach (var laserCell in level.GetLaserCells()) {
+            foreach (var laserCell in level.LaserCells) {
                 var laserObject = CreateCellGameObject(laserCell, level, laserCellsFolder);
                 var controller = laserObject.GetComponent<LaserController>();
                 controller.SetCell(laserCell);

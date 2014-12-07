@@ -58,15 +58,15 @@ namespace TrappedGame.Main {
             cellGameObjectFactory.CreateLaserCells(level);
             cellGameObjectFactory.CreateSpearCells(level);
                         
-            var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
+            var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.StartX, level.StartY, level), gameObject);
             heroController = hero.GetComponent<HeroController>();
             heroController.SetGame(game);
 
-            GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY(), level), gameObject);
-            foreach (var coord in level.GetBonuses()) {
+            GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.FinishX, level.FinishY, level), gameObject);
+            foreach (var coord in level.Bonuses) {
                 GameUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
-            foreach (var coord in level.GetTimeBonuses().Keys) {
+            foreach (var coord in level.TimeBonuses.Keys) {
                 GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
             
@@ -123,8 +123,8 @@ namespace TrappedGame.Main {
             var screenXf = Screen.width;
             var screenYf = Screen.height;
             var screenScale = screenXf/screenYf;
-            var levelXf = level.GetSizeX();
-            var levelYf = level.GetSizeY();
+            var levelXf = level.SizeX;
+            var levelYf = level.SizeY;
             var levelScale = levelXf/levelYf;
 
             var scale = (screenScale > levelScale) ? levelXf : levelYf/screenScale;

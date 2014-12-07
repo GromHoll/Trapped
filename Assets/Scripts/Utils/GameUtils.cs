@@ -10,8 +10,8 @@ namespace TrappedGame.Utils {
         }
 
         public static Vector2 ConvertToGameCoord(float x, float y, Level level) {
-            var gameX = x - (level.GetSizeX() - 1)/2f;
-            var gameY = y - (level.GetSizeY() - 1)/2f;
+            var gameX = x - (level.SizeX - 1)/2f;
+            var gameY = y - (level.SizeY - 1)/2f;
             return new Vector2(gameX, gameY);
         }
 

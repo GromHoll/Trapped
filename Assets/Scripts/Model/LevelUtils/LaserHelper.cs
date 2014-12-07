@@ -10,7 +10,7 @@ namespace TrappedGame.Model.LevelUtils {
             var laserX = laser.GetX();
             var laserY = laser.GetY();
             var lenght = 0;
-            for (var y = laserY + 1; y < level.GetSizeY(); y++, lenght++) {
+            for (var y = laserY + 1; y < level.SizeY; y++, lenght++) {
                 if (level.GetCell(laserX, y).IsBocked()) { break; }
             }
             return (lenght != 0)
@@ -38,7 +38,7 @@ namespace TrappedGame.Model.LevelUtils {
             var laserX = laser.GetX();
             var laserY = laser.GetY();
             var lenght = 0;
-            for (var x = laserX + 1; x < level.GetSizeX(); x++, lenght++) {
+            for (var x = laserX + 1; x < level.SizeX; x++, lenght++) {
                 if (level.GetCell(x, laserY).IsBocked()) { break; }
             }
             return (lenght != 0)

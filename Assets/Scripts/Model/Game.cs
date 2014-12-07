@@ -14,15 +14,15 @@ namespace TrappedGame.Model {
         public Game(Level level) {
             if (level == null) throw new ArgumentNullException("level"); 
             this.level = level;
-            this.hero = new Hero(level.GetStartX(), level.GetStartY());
+            this.hero = new Hero(level.StartX, level.StartY);
         }
 
         public bool IsWin() {
-            return hero.GetX() == level.GetFinishX() && hero.GetY() == level.GetFinishY();
+            return hero.GetX() == level.FinishX && hero.GetY() == level.FinishY;
         }
 
         public int GetScore() {
-            var bonuses = level.GetBonuses();
+            var bonuses = level.Bonuses;
             var path = hero.GetPath();
             return path.GetLinks().Count(link => bonuses.Contains(link.GetFrom()));
         }

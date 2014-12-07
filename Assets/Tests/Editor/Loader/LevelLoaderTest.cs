@@ -15,16 +15,16 @@ namespace TrappedGame.UnitTests {
             LevelLoader levelLoader = new LevelLoader();
             Level level = levelLoader.LoadLevel(TEST_LEVEL_NAME);
 
-            Assert.AreEqual(5, level.GetSizeX());
-            Assert.AreEqual(4, level.GetSizeY());
+            Assert.AreEqual(5, level.SizeX);
+            Assert.AreEqual(4, level.SizeY);
 
-            Assert.AreEqual(0, level.GetStartX());
-            Assert.AreEqual(3, level.GetStartY());
+            Assert.AreEqual(0, level.StartX);
+            Assert.AreEqual(3, level.StartY);
             
-            Assert.AreEqual(4, level.GetFinishX());
-            Assert.AreEqual(3, level.GetFinishY());
+            Assert.AreEqual(4, level.FinishX);
+            Assert.AreEqual(3, level.FinishY);
 
-            Assert.AreEqual(3, level.GetBonuses().Count);
+            Assert.AreEqual(3, level.Bonuses.Count);
 
             for (int x = 0; x < 4; x++) {
                 Assert.AreEqual(CellType.EMPTY, level.GetCell(x,0).GetCellType());

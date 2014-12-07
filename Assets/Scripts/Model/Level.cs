@@ -21,7 +21,7 @@ namespace TrappedGame.Model {
         private readonly IDictionary<IntVector2, LevelTick> timeBonuses;
 
         private readonly IList<LaserCell> lasers;
-        
+
         public Level(LevelBuilder builder) {
             size = builder.GetSize();
             start = builder.GetStart();
@@ -65,34 +65,7 @@ namespace TrappedGame.Model {
 
         public bool IsDangerCell(int x, int y) {            
             var cell = GetCell(x, y);
-            if (cell.IsDeadly()) {
-                return true;
-            }
-            return lasers.Any(laser => laser.IsDeadlyFor(x, y));
-        }
-
-        public int GetStartX() {
-            return start.x;
-        }
-
-        public int GetStartY() {
-            return start.y;
-        }
-
-        public int GetFinishX() {
-            return finish.x;
-        }
-        
-        public int GetFinishY() {
-            return finish.y;
-        }
-
-        public int GetSizeX() {
-            return size.x;
-        }
-        
-        public int GetSizeY() {
-            return size.y;
+            return cell.IsDeadly() || lasers.Any(laser => laser.IsDeadlyFor(x, y));
         }
 
         public Cell GetCell(int x, int y) {
@@ -100,24 +73,48 @@ namespace TrappedGame.Model {
             return cells[x, y];
         }
 
-        public IEnumerable GetCells() {
-            return cells;
-        }
-
-        public IList<LaserCell> GetLaserCells() {
-            return lasers;
-        }
-
-        public IList<IntVector2> GetBonuses() {
-            return bonuses;
-        }
-
-        public IDictionary<IntVector2, LevelTick> GetTimeBonuses() {
-            return timeBonuses;
-        }
-        
         public bool Contains(int x, int y) {
             return x >= 0 && x <= size.x - 1 && y >= 0 && y <= size.y - 1; 
+        }
+
+        public int StartX {
+            get { return start.x; }
+        }
+
+        public int StartY {
+            get { return start.y; }
+        }
+
+        public int FinishX {
+            get { return finish.x; }
+        }
+
+        public int FinishY {
+            get { return finish.y; }
+        }
+
+        public int SizeX {
+            get { return size.x; }
+        }
+
+        public int SizeY {
+            get { return size.y; }
+        }
+
+        public IEnumerable Cells {
+            get { return cells; }
+        }
+
+        public IList<LaserCell> LaserCells {
+            get { return lasers; }
+        }
+
+        public IList<IntVector2> Bonuses {
+            get { return bonuses; }
+        }
+
+        public IDictionary<IntVector2, LevelTick> TimeBonuses {
+            get { return timeBonuses; }
         }
     }
 }
