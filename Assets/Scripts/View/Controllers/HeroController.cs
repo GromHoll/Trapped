@@ -10,7 +10,7 @@ namespace TrappedGame.View.Controllers {
         
         private Animator aminator;
         private Level level; 
-        private Hero hero; 
+        private Hero hero;
 
         private Vector3 targetPosition;
         public float speed = 10;
@@ -25,10 +25,12 @@ namespace TrappedGame.View.Controllers {
             UpdatePosition();
     	}
 
-        public void SetGame(Game game) {
-            level = game.Level;
-            hero = game.Hero;
-            game.AddHeroMovementListener(this);
+        public Game Game {
+            set {
+                level = value.Level;
+                hero = value.Hero;
+                value.AddHeroMovementListener(this);
+            }
         }
 
         public bool IsMoving() {

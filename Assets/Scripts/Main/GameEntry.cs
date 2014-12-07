@@ -58,7 +58,7 @@ namespace TrappedGame.Main {
                         
             var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.StartX, level.StartY, level), gameObject);
             heroController = hero.GetComponent<HeroController>();
-            heroController.SetGame(game);
+            heroController.Game = game;
 
             GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.FinishX, level.FinishY, level), gameObject);
             foreach (var coord in level.Bonuses) {

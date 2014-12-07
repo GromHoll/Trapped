@@ -7,7 +7,17 @@ namespace TrappedGame.View.Controllers {
         public static readonly string STATUS_KEY = "Status";
 
         private Animator aminator;
+
         private SpearCell cell;
+        public SpearCell Cell {
+            get { return cell; }
+            set {
+                cell = value;
+                foreach (var indicators in GetComponentsInChildren<IndicatorController>()) {
+                    indicators.Cell = value;
+                }    
+            }
+        }
 
         void Start() {
             aminator = GetComponent<Animator>();
@@ -15,13 +25,6 @@ namespace TrappedGame.View.Controllers {
 
         void Update() {
             aminator.SetBool(STATUS_KEY, GetStatus());
-        }
-
-        public void SetCell(SpearCell newCell) {
-            cell = newCell;
-            foreach (var indicators in GetComponentsInChildren<IndicatorController>()) {
-                indicators.SetCell(cell);       
-            }
         }
 
         private bool GetStatus() {

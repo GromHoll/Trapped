@@ -62,8 +62,7 @@ namespace TrappedGame.View.Graphic {
                 if (cell.CellType == CellType.SPEAR) {
                     var spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
                     var controller = spearObject.GetComponent<SpearController>();
-                    var spear = (SpearCell) cell;
-                    controller.SetCell(spear);
+                    controller.Cell = (SpearCell) cell;
                 }
             }
         }
@@ -80,7 +79,7 @@ namespace TrappedGame.View.Graphic {
             foreach (var laserCell in level.LaserCells) {
                 var laserObject = CreateCellGameObject(laserCell, level, laserCellsFolder);
                 var controller = laserObject.GetComponent<LaserController>();
-                controller.SetCell(laserCell);
+                controller.Cell = laserCell;
                 foreach (var line in laserCell.LaserLines) {
                     CreateLaserLinesForLaser(level, line, laserObject);  
                 }
@@ -92,7 +91,7 @@ namespace TrappedGame.View.Graphic {
             var coord = GameUtils.ConvertToGameCoord(cover.MinX, cover.MinY, level);
             var laserObject = GameUtils.InstantiateChild(laserLinePrefab, coord, laser);
             var controller = laserObject.GetComponent<LaserLineController>();
-            controller.SetLaserLine(line);
+            controller.Line = line;
         }
 
     }
