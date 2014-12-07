@@ -94,7 +94,7 @@ namespace TrappedGame.Main {
         }
 
         private void UpdatePath() {
-            var path = game.Hero.GetPath();
+            var path = game.Hero.Path;
             var existLinks = path.GetLinks();
             var showedLinks = pathObjects.Keys;
             var differens = new HashSet<Path.PathLink>(existLinks);

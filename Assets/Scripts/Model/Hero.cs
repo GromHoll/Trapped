@@ -5,21 +5,16 @@ namespace TrappedGame.Model {
     public class Hero {
 
         private IntVector2 position;
-        private readonly Path path = new Path();
+        public int X { get { return position.x; } }
+        public int Y { get { return position.y; } }
+        public bool IsDead { get; private set; }
+        public int DeathCount { get; private set; }
 
-        private bool isDead;
-        private int deadCounter;
+        private readonly Path path = new Path();
+        public Path Path { get { return path; } }
 
         public Hero(int x, int y) {
             position = new IntVector2(x, y);
-        }
-
-        public int GetX() {
-            return position.x;
-        }
-
-        public int GetY() {
-            return position.y;
         }
 
         public void MoveTo(int x, int y) {
@@ -37,22 +32,10 @@ namespace TrappedGame.Model {
         }
         
         public void SetDead(bool isDead) {
-            this.isDead = isDead;
-            if (isDead) {
-                deadCounter++;
+            IsDead = isDead;
+            if (IsDead) {
+                DeathCount++;
             }
-        }
-
-        public bool IsDead() {
-            return isDead;
-        }
-
-        public int GetDeaths() {
-            return deadCounter;
-        }
-
-        public Path GetPath() {
-            return path;
         }
 
         public Path.PathLink GetPreviousTurn() {

@@ -18,29 +18,29 @@ namespace TrappedGame.Model {
         }
 
         public bool IsWin() {
-            return Hero.GetX() == Level.FinishX && Hero.GetY() == Level.FinishY;
+            return Hero.X == Level.FinishX && Hero.Y == Level.FinishY;
         }
 
         public int GetScore() {
             var bonuses = Level.Bonuses;
-            var path = Hero.GetPath();
+            var path = Hero.Path;
             return path.GetLinks().Count(link => bonuses.Contains(link.GetFrom()));
         }
 
         public void MoveHeroUp() {
-            MoveHeroTo(Hero.GetX(), Hero.GetY() + 1);
+            MoveHeroTo(Hero.X, Hero.Y + 1);
         }
 
         public void MoveHeroRight() {
-            MoveHeroTo(Hero.GetX() + 1, Hero.GetY());
+            MoveHeroTo(Hero.X + 1, Hero.Y);
         }
 
         public void MoveHeroDown() {
-            MoveHeroTo(Hero.GetX(), Hero.GetY() - 1);
+            MoveHeroTo(Hero.X, Hero.Y - 1);
         }
 
         public void MoveHeroLeft() {
-            MoveHeroTo(Hero.GetX() - 1, Hero.GetY());
+            MoveHeroTo(Hero.X - 1, Hero.Y);
         }
 
         private void MoveHeroTo(int x, int y) {
@@ -48,11 +48,11 @@ namespace TrappedGame.Model {
             if (!IsAvailableForMovementCell(x, y)) return;
 
             if (IsBackTurn(x, y)) {
-                var levelTick = Level.GetLevelTick(Hero.GetX(), Hero.GetY());
+                var levelTick = Level.GetLevelTick(Hero.X, Hero.Y);
                 levelTick.BackTick(Level);
                 Hero.MoveBack();
             } else {
-                if (Hero.IsDead()) return;
+                if (Hero.IsDead) return;
                 if (HeroWasHere(x, y)) return;
                 var levelTick = Level.GetLevelTick(x, y);
                 levelTick.NextTick(Level);
@@ -63,8 +63,8 @@ namespace TrappedGame.Model {
         }
 
         private void CheckCell() {
-            var x = Hero.GetX();
-            var y = Hero.GetY();
+            var x = Hero.X;
+            var y = Hero.Y;
             var isDanger = Level.IsDangerCell(x, y);
             Hero.SetDead(isDanger);
         }

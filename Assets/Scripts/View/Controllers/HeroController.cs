@@ -36,7 +36,7 @@ namespace TrappedGame.View.Controllers {
         }
 
         private bool IsDead() {
-            return hero != null && hero.IsDead();
+            return hero != null && hero.IsDead;
         }
 
         private void UpdatePosition() {
@@ -55,7 +55,7 @@ namespace TrappedGame.View.Controllers {
         }
         
         public void HeroMoved(Hero eventHero) {
-            targetPosition = GameUtils.ConvertToGameCoord(eventHero.GetX(), eventHero.GetY(), level);
+            targetPosition = GameUtils.ConvertToGameCoord(eventHero.X, eventHero.Y, level);
         }
 
     }
