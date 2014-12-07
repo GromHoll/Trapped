@@ -39,18 +39,10 @@ namespace TrappedGame.Model {
             CreateLasers();
         }
 
-        // TODO Refactor
         private void CreateLasers() {
             var laserHelper = new LaserHelper();
-            foreach (var cell in cells) {
-                // TODO maybe store LaserCell in specias list and don't use cast?
-                if(cell.GetCellType() == CellType.LASER) {
-                    var laser = (LaserCell) cell;
-                    laser.AddLaserLine(laserHelper.CreateUpLaser(laser, this));
-                    laser.AddLaserLine(laserHelper.CreateRightLaser(laser, this));
-                    laser.AddLaserLine(laserHelper.CreateDownLaser(laser, this));
-                    laser.AddLaserLine(laserHelper.CreateLeftLaser(laser, this));
-                }
+            foreach (var laser in lasers) {
+                laser.CreateLaserLines(laserHelper, this);
             }
         }
         

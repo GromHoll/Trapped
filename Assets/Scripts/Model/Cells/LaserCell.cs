@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TrappedGame.Model.Common;
+using TrappedGame.Model.LevelUtils;
 
 namespace TrappedGame.Model.Cells {
     public class LaserCell : CountCell {
@@ -92,10 +93,18 @@ namespace TrappedGame.Model.Cells {
             return laserLines;
         }
 
-        public void AddLaserLine(Laser line)  {
+        private void AddLaserLine(Laser line)  {
             if (line != null) {
                 laserLines.Add(line);  
             }  
+        }
+
+        public void CreateLaserLines(LaserHelper helper, Level level) {
+            // TODO move all 4 calls to helper
+            AddLaserLine(helper.CreateUpLaser(this, level));
+            AddLaserLine(helper.CreateRightLaser(this, level));
+            AddLaserLine(helper.CreateDownLaser(this, level));
+            AddLaserLine(helper.CreateLeftLaser(this, level));    
         }
 
     }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
