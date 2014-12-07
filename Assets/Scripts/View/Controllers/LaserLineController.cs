@@ -6,7 +6,7 @@ using System.Collections;
 namespace TrappedGame.View.Controllers {
     public class LaserLineController : MonoBehaviour {
 
-        private LaserCell.Laser line;
+        private LaserCell.Line line;
         private float lenght;
 
         private void Start() {
@@ -22,12 +22,12 @@ namespace TrappedGame.View.Controllers {
             }
         }
 
-        public void SetLaserLine(LaserCell.Laser newLine) {
+        public void SetLaserLine(LaserCell.Line newLine) {
             line = newLine;
         }
 
         private float GetLenght() {
-            var cover = line.GetCover();
+            var cover = line.Cover;
             if (line.IsVertical()) {
                 return cover.GetMaxY() - cover.GetMinY() + 1;
             }

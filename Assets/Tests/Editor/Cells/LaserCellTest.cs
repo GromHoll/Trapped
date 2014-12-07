@@ -21,10 +21,10 @@ namespace TrappedGame.UnitTests {
 
             Assert.AreEqual(x, laser.X);
             Assert.AreEqual(y, laser.Y);
-            Assert.AreEqual(up, laser.IsUp());
-            Assert.AreEqual(right, laser.IsRight());
-            Assert.AreEqual(down, laser.IsDown());
-            Assert.AreEqual(left, laser.IsLeft());
+            Assert.AreEqual(up, laser.Up);
+            Assert.AreEqual(right, laser.Right);
+            Assert.AreEqual(down, laser.Down);
+            Assert.AreEqual(left, laser.Left);
             Assert.AreEqual(CellType.LASER, laser.CellType);
             
             Assert.IsTrue(laser.IsBocked());

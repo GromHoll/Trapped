@@ -6,59 +6,54 @@ using TrappedGame.Model.LevelUtils;
 namespace TrappedGame.Model.Cells {
     public class LaserCell : CountCell {
 
-        public class Laser {
-            private readonly LaserCell owner;
-            private readonly IntRect line;
+        public class Line {
+            public LaserCell Owner { get; protected set; }
+            public IntRect Cover { get; protected set; }
 
-            public Laser(LaserCell owner, IntRect line) {
-                this.owner = owner;
-                this.line = line;
+            public Line(LaserCell owner, IntRect line) {
+                Owner = owner;
+                Cover = line;
             }
 
             public bool IsDangerFor(int x, int y) {
-                return line.Contains(x, y) && IsDanger();
+                return Cover.Contains(x, y) && IsDanger();
             }
             
             public bool IsDanger() {
-                return owner.IsDeadly();
-            }
-
-            public IntRect GetCover() {
-                return line;
+                return Owner.IsDeadly();
             }
 
             public bool IsHorizontal() {
-                return line.GetMaxY() == line.GetMinY() && line.GetMaxY() == owner.Y;
+                return Cover.GetMaxY() == Cover.GetMinY() && Cover.GetMaxY() == Owner.Y;
             }
 
             public bool IsVertical() {
-                return line.GetMaxX() == line.GetMinX() && line.GetMaxX() == owner.X;
+                return Cover.GetMaxX() == Cover.GetMinX() && Cover.GetMaxX() == Owner.X;
             }
         }
 
-        private readonly bool up;
-        private readonly bool right;
-        private readonly bool down;
-        private readonly bool left;
-
-        private readonly IList<Laser> laserLines = new List<Laser>();
+        public bool Up    { get; protected set; }
+        public bool Right { get; protected set; }
+        public bool Down  { get; protected set; }
+        public bool Left  { get; protected set; }
+        public IList<Line> LaserLines { get; protected set; }
 
         public LaserCell(int x, int y, 
                          int onPeriod, int offPeriod, int currentTick, bool isOn,
                          bool up, bool right, bool down, bool left) 
             : base(x, y, CellType.LASER, onPeriod, offPeriod, currentTick, isOn) {
-            this.up = up;
-            this.right = right;
-            this.down = down;
-            this.left = left;
+            Up = up;
+            Right = right;
+            Down = down;
+            Left = left;
         }
 
         public LaserCell(int x, int y, bool up, bool right, bool down, bool left)
             : base(x, y, CellType.LASER) {
-            this.up = up;
-            this.right = right;
-            this.down = down;
-            this.left = left;
+            Up = up;
+            Right = right;
+            Down = down;
+            Left = left;
         }
 
         public override bool IsBocked() {
@@ -70,42 +65,11 @@ namespace TrappedGame.Model.Cells {
         }
 
         public override bool IsDeadlyFor(int x, int y) {
-            return laserLines.Any(laser => laser.IsDangerFor(x, y)); ;
-        }
-
-        public bool IsUp() { 
-            return up;
+            return LaserLines.Any(laser => laser.IsDangerFor(x, y)); ;
         }
         
-        public bool IsRight() { 
-            return right;
-        }
-
-        public bool IsDown() { 
-            return down;
-        }
-
-        public bool IsLeft() { 
-            return left;
-        }
-
-        public IList<Laser> GetLaserLines() {
-            return laserLines;
-        }
-
-        private void AddLaserLine(Laser line)  {
-            if (line != null) {
-                laserLines.Add(line);  
-            }  
-        }
-
         public void CreateLaserLines(LaserHelper helper, Level level) {
-            // TODO move all 4 calls to helper
-            AddLaserLine(helper.CreateUpLaser(this, level));
-            AddLaserLine(helper.CreateRightLaser(this, level));
-            AddLaserLine(helper.CreateDownLaser(this, level));
-            AddLaserLine(helper.CreateLeftLaser(this, level));    
+            LaserLines = helper.CreateLaserLines(this, level);
         }
-
     }
 }
