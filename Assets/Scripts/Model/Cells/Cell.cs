@@ -16,7 +16,7 @@ namespace TrappedGame.Model.Cells {
             CellType = type;
         }
 
-        public virtual bool IsBocked() {
+        public virtual bool IsBlocked() {
             return false;
         }
 

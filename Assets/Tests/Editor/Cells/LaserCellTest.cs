@@ -27,7 +27,7 @@ namespace TrappedGame.UnitTests {
             Assert.AreEqual(left, laser.Left);
             Assert.AreEqual(CellType.LASER, laser.CellType);
             
-            Assert.IsTrue(laser.IsBocked());
+            Assert.IsTrue(laser.IsBlocked());
             Assert.IsFalse(laser.IsDeadly());
         }
 

@@ -26,8 +26,8 @@ namespace TrappedGame.View.Controllers {
     	}
 
         public void SetGame(Game game) {
-            level = game.GetLevel();
-            hero = game.GetHero();
+            level = game.Level;
+            hero = game.Hero;
             game.AddHeroMovementListener(this);
         }
 

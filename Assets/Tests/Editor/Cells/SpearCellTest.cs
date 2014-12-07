@@ -14,7 +14,7 @@ namespace TrappedGame.UnitTests {
             Assert.AreEqual(3, spear.Y);
             Assert.AreEqual(CellType.SPEAR, spear.CellType);
             
-            Assert.IsFalse(spear.IsBocked());
+            Assert.IsFalse(spear.IsBlocked());
             Assert.IsFalse(false);
         }
 
@@ -39,7 +39,7 @@ namespace TrappedGame.UnitTests {
             Assert.AreEqual(CellType.SPEAR, spear.CellType);            
             Assert.AreEqual(state, spear.IsOn);
             Assert.AreEqual(state, spear.IsDeadly());
-            Assert.IsFalse(spear.IsBocked());
+            Assert.IsFalse(spear.IsBlocked());
         }
 
         [Test]

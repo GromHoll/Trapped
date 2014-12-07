@@ -3,7 +3,7 @@ namespace TrappedGame.Model.Cells {
      
         public WallCell(int x, int y) : base(x, y, CellType.WALL) {}
 
-        public override bool IsBocked() {
+        public override bool IsBlocked() {
             return true;
         }
     }

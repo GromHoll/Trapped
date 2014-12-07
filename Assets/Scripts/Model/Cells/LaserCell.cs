@@ -56,7 +56,7 @@ namespace TrappedGame.Model.Cells {
             Left = left;
         }
 
-        public override bool IsBocked() {
+        public override bool IsBlocked() {
             return true;
         }
 

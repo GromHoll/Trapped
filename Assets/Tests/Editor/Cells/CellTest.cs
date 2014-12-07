@@ -14,7 +14,7 @@ namespace TrappedGame.UnitTests {
 			Assert.AreEqual(6, cell.Y);
 			Assert.AreEqual(CellType.EMPTY, cell.CellType);
 
-			Assert.IsFalse(cell.IsBocked());
+			Assert.IsFalse(cell.IsBlocked());
 			Assert.IsFalse(cell.IsDeadly());
         }
     }

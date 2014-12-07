@@ -10,7 +10,7 @@ namespace TrappedGame.Model.LevelUtils {
             
             var lenght = 0;
             for (var y = laser.Y + 1; y < level.SizeY; y++, lenght++) {
-                if (level.GetCell(laser.X, y).IsBocked()) { break; }
+                if (level.GetCell(laser.X, y).IsBlocked()) { break; }
             }
             return (lenght != 0)
                 ? new LaserCell.Line(laser, new IntRect(laser.X, laser.Y + 1, laser.X, laser.Y + lenght))
@@ -22,7 +22,7 @@ namespace TrappedGame.Model.LevelUtils {
             
             var lenght = 0;
             for (var y = laser.Y - 1; y >= 0; y--, lenght++) {
-                if (level.GetCell(laser.X, y).IsBocked()) { break; }
+                if (level.GetCell(laser.X, y).IsBlocked()) { break; }
             }
             return (lenght != 0)
                 ? new LaserCell.Line(laser, new IntRect(laser.X, laser.Y - 1, laser.X, laser.Y - lenght))
@@ -34,7 +34,7 @@ namespace TrappedGame.Model.LevelUtils {
 
             var lenght = 0;
             for (var x = laser.X + 1; x < level.SizeX; x++, lenght++) {
-                if (level.GetCell(x, laser.Y).IsBocked()) { break; }
+                if (level.GetCell(x, laser.Y).IsBlocked()) { break; }
             }
             return (lenght != 0)
                 ? new LaserCell.Line(laser,new IntRect(laser.X + 1, laser.Y, laser.X + lenght, laser.Y))
@@ -46,7 +46,7 @@ namespace TrappedGame.Model.LevelUtils {
             
             var lenght = 0;
             for (var x = laser.X - 1; x >= 0; x--, lenght++) {
-                if (level.GetCell(x, laser.Y).IsBocked()) { break; }
+                if (level.GetCell(x, laser.Y).IsBlocked()) { break; }
             }
             return (lenght != 0)
                 ? new LaserCell.Line(laser,new IntRect(laser.X - 1, laser.Y, laser.X - lenght, laser.Y))
