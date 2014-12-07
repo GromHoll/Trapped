@@ -22,7 +22,7 @@ namespace TrappedGame.View.Graphic {
 
 
         private GameObject CreateCellGameObject(Cell cell, Level level, GameObject folder) {
-            return CreateCellGameObject(cell.GetCoordinate(), cell.GetCellType(), level, folder);
+            return CreateCellGameObject(cell.Coordinate, cell.CellType, level, folder);
         }
 
         private GameObject CreateCellGameObject(IntVector2 cellCoord, CellType cellType, Level level, GameObject folder) {
@@ -50,8 +50,8 @@ namespace TrappedGame.View.Graphic {
 
         public void CreateEmptyCells(Level level) {
             foreach (Cell cell in level.Cells) {
-                if (cell.GetCellType() != CellType.WALL) {
-                    CreateCellGameObject(cell.GetCoordinate(), CellType.EMPTY, level, emptyCellsFolder);
+                if (cell.CellType != CellType.WALL) {
+                    CreateCellGameObject(cell.Coordinate, CellType.EMPTY, level, emptyCellsFolder);
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace TrappedGame.View.Graphic {
         public void CreateSpearCells(Level level) {
             foreach (Cell cell in level.Cells) {
                 //TODO Add to level different cell accesses
-                if (cell.GetCellType() == CellType.SPEAR) {
+                if (cell.CellType == CellType.SPEAR) {
                     var spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
                     var controller = spearObject.GetComponent<SpearController>();
                     var spear = (SpearCell) cell;
@@ -70,7 +70,7 @@ namespace TrappedGame.View.Graphic {
 
         public void CreateWallCells(Level level) {
             foreach (Cell cell in level.Cells) {
-                if (cell.GetCellType() == CellType.WALL) {
+                if (cell.CellType == CellType.WALL) {
                     CreateCellGameObject(cell, level, wallCellsFolder);
                 }
             }

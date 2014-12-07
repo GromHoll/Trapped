@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
-using TrappedGame.Model.Cells;
 using TrappedGame.Model.Loader;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
@@ -16,12 +14,12 @@ namespace TrappedGame.Main {
         public CellGOFactory cellGameObjectFactory;
         public PathGOFactory pathGoFactory;
 
-        private LevelLoader loader = new LevelLoader();
+        private readonly LevelLoader loader = new LevelLoader();
         private HeroInput heroInput;
         private Game game;
         private Level level;
 
-        private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
+        private readonly IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
 
         private WinMenu winMenu;
 		public GameObject winMenuObject;

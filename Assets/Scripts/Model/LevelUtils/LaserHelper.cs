@@ -7,56 +7,48 @@ namespace TrappedGame.Model.LevelUtils {
         public LaserCell.Laser CreateUpLaser(LaserCell laser, Level level) {
             if(!laser.IsUp()) return null;
             
-            var laserX = laser.GetX();
-            var laserY = laser.GetY();
             var lenght = 0;
-            for (var y = laserY + 1; y < level.SizeY; y++, lenght++) {
-                if (level.GetCell(laserX, y).IsBocked()) { break; }
+            for (var y = laser.Y + 1; y < level.SizeY; y++, lenght++) {
+                if (level.GetCell(laser.X, y).IsBocked()) { break; }
             }
             return (lenght != 0)
-                ? new LaserCell.Laser(laser, new IntRect(laserX, laserY + 1, laserX, laserY + lenght))
+                ? new LaserCell.Laser(laser, new IntRect(laser.X, laser.Y + 1, laser.X, laser.Y + lenght))
                 : null;
         }
 
         public LaserCell.Laser CreateDownLaser(LaserCell laser, Level level) {
             if(!laser.IsDown()) return null;
             
-            var laserX = laser.GetX();
-            var laserY = laser.GetY();
             var lenght = 0;
-            for (var y = laserY - 1; y >= 0; y--, lenght++) {
-                if (level.GetCell(laserX, y).IsBocked()) { break; }
+            for (var y = laser.Y - 1; y >= 0; y--, lenght++) {
+                if (level.GetCell(laser.X, y).IsBocked()) { break; }
             }
             return (lenght != 0)
-                ? new LaserCell.Laser(laser, new IntRect(laserX, laserY - 1, laserX, laserY - lenght))
+                ? new LaserCell.Laser(laser, new IntRect(laser.X, laser.Y - 1, laser.X, laser.Y - lenght))
                 : null;
         }
 
         public LaserCell.Laser CreateRightLaser(LaserCell laser, Level level) {
             if(!laser.IsRight()) return null;
 
-            var laserX = laser.GetX();
-            var laserY = laser.GetY();
             var lenght = 0;
-            for (var x = laserX + 1; x < level.SizeX; x++, lenght++) {
-                if (level.GetCell(x, laserY).IsBocked()) { break; }
+            for (var x = laser.X + 1; x < level.SizeX; x++, lenght++) {
+                if (level.GetCell(x, laser.Y).IsBocked()) { break; }
             }
             return (lenght != 0)
-                ? new LaserCell.Laser(laser,new IntRect(laserX + 1, laserY, laserX + lenght, laserY))
+                ? new LaserCell.Laser(laser,new IntRect(laser.X + 1, laser.Y, laser.X + lenght, laser.Y))
                 : null;
         }
 
         public LaserCell.Laser CreateLeftLaser(LaserCell laser, Level level) {
             if(!laser.IsLeft()) return null;
             
-            var laserX = laser.GetX();
-            var laserY = laser.GetY();
             var lenght = 0;
-            for (var x = laserX - 1; x >= 0; x--, lenght++) {
-                if (level.GetCell(x, laserY).IsBocked()) { break; }
+            for (var x = laser.X - 1; x >= 0; x--, lenght++) {
+                if (level.GetCell(x, laser.Y).IsBocked()) { break; }
             }
             return (lenght != 0)
-                ? new LaserCell.Laser(laser,new IntRect(laserX - 1, laserY, laserX - lenght, laserY))
+                ? new LaserCell.Laser(laser,new IntRect(laser.X - 1, laser.Y, laser.X - lenght, laser.Y))
                 : null;   
         }
     }

@@ -10,9 +10,9 @@ namespace TrappedGame.UnitTests {
         public void CreateTest() {
             var cell = new CountCell(1, 2, CellType.UNKNOWN);
 
-            Assert.AreEqual(1, cell.GetX());
-            Assert.AreEqual(2, cell.GetY());
-            Assert.AreEqual(CellType.UNKNOWN, cell.GetCellType());
+            Assert.AreEqual(1, cell.X);
+            Assert.AreEqual(2, cell.Y);
+            Assert.AreEqual(CellType.UNKNOWN, cell.CellType);
             
             Assert.IsFalse(cell.IsOn());   
             Assert.IsFalse(cell.IsBocked());

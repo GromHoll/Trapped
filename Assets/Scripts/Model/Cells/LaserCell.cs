@@ -28,11 +28,11 @@ namespace TrappedGame.Model.Cells {
             }
 
             public bool IsHorizontal() {
-                return line.GetMaxY() == line.GetMinY() && line.GetMaxY() == owner.GetY();
+                return line.GetMaxY() == line.GetMinY() && line.GetMaxY() == owner.Y;
             }
 
             public bool IsVertical() {
-                return line.GetMaxX() == line.GetMinX() && line.GetMaxX() == owner.GetX();
+                return line.GetMaxX() == line.GetMinX() && line.GetMaxX() == owner.X;
             }
         }
 

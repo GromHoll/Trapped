@@ -30,8 +30,8 @@ namespace TrappedGame.Model.LevelUtils {
         }
 
         public void AddCell(Cell cell) {
-            var x = cell.GetX();
-            var y = cell.GetY();
+            var x = cell.X;
+            var y = cell.Y;
             cells[x, y] = cell;
         }
 
@@ -70,7 +70,7 @@ namespace TrappedGame.Model.LevelUtils {
         public IList<LaserCell> GetLaserCells() {
             IList<LaserCell> lasers = new List<LaserCell>();
             foreach (Cell cell in cells) {
-                if (cell.GetCellType() == CellType.LASER) {
+                if (cell.CellType == CellType.LASER) {
                     lasers.Add((LaserCell) cell);
                 }
             }

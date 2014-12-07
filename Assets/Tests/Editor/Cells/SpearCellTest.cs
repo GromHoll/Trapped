@@ -10,9 +10,9 @@ namespace TrappedGame.UnitTests {
         public void SimpleCreateTest() {
             var spear = new SpearCell(2, 3); 
             
-            Assert.AreEqual(2, spear.GetX());
-            Assert.AreEqual(3, spear.GetY());
-            Assert.AreEqual(CellType.SPEAR, spear.GetCellType());
+            Assert.AreEqual(2, spear.X);
+            Assert.AreEqual(3, spear.Y);
+            Assert.AreEqual(CellType.SPEAR, spear.CellType);
             
             Assert.IsFalse(spear.IsBocked());
             Assert.IsFalse(false);
@@ -30,13 +30,13 @@ namespace TrappedGame.UnitTests {
         }
 
         private void AssertSpear(SpearCell spear, int x, int y, bool state) {            
-            Assert.AreEqual(x, spear.GetX());
-            Assert.AreEqual(y, spear.GetY());
+            Assert.AreEqual(x, spear.X);
+            Assert.AreEqual(y, spear.Y);
             AssertSpear(spear, state);
         }
 
         private void AssertSpear(SpearCell spear, bool state) {
-            Assert.AreEqual(CellType.SPEAR, spear.GetCellType());            
+            Assert.AreEqual(CellType.SPEAR, spear.CellType);            
             Assert.AreEqual(state, spear.IsOn());
             Assert.AreEqual(state, spear.IsDeadly());
             Assert.IsFalse(spear.IsBocked());
