@@ -84,20 +84,20 @@ namespace TrappedGame.View.Graphic {
                     var controller = laserObject.GetComponent<LaserController>();
                     var laser = (LaserCell) cell;
                     controller.SetCell(laser);
+                    foreach (var line in laser.GetLaserLines()) {
+                        CreateLaserLinesForLaser(level, line, laserObject);  
+                    }
                 }
             }
         }
 
-        /*private void CreateLaserLinesForLaser(Level level, LaserCell laser) {
-            level.
-
+        private void CreateLaserLinesForLaser(Level level, LaserCell.Laser line, GameObject laser) {
             var cover = line.GetCover();
             var coord = GameUtils.ConvertToGameCoord(cover.GetMinX(), cover.GetMinY(), level);
-            var laserObject = GameUtils.InstantiateChild(laserLine, coord, laserLineFolder);
+            var laserObject = GameUtils.InstantiateChild(laserLinePrefab, coord, laser);
             var controller = laserObject.GetComponent<LaserLineController>();
             controller.SetLaserLine(line);
-            return laserObject;
-        }*/
+        }
 
     }
 }

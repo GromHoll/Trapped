@@ -58,7 +58,7 @@ namespace TrappedGame.Main {
             cellGameObjectFactory.CreateWallCells(level);
 
             cellGameObjectFactory.CreateLaserCells(level);
-            laserLineGoFactory.CreateLasersForLevel(level);
+            //laserLineGoFactory.CreateLasersForLevel(level);
 
             cellGameObjectFactory.CreateSpearCells(level);
                         

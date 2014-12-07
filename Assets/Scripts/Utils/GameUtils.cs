@@ -16,12 +16,17 @@ namespace TrappedGame.Utils {
         }
 
         public static GameObject InstantiateChild(GameObject gameObject, Vector2 vector, GameObject parent) {
+            return InstantiateChildForWorld(gameObject, vector, parent, true);
+        }
+
+        public static GameObject InstantiateChildForWorld(GameObject gameObject, Vector2 vector, GameObject parent, bool worldStay) {
             var child = Object.Instantiate(gameObject, vector, Quaternion.identity) as GameObject;
             if (child != null && parent != null) {
-                child.transform.SetParent(parent.transform, false);   
+                child.transform.SetParent(parent.transform, worldStay);
             }
             return child;
         }
+
     }
 }
 
