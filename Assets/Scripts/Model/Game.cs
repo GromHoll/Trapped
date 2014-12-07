@@ -24,7 +24,7 @@ namespace TrappedGame.Model {
         public int GetScore() {
             var bonuses = Level.Bonuses;
             var path = Hero.Path;
-            return path.GetLinks().Count(link => bonuses.Contains(link.GetFrom()));
+            return path.Links.Count(link => bonuses.Contains(link.From));
         }
 
         public void MoveHeroUp() {

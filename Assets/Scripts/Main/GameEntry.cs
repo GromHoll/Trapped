@@ -95,7 +95,7 @@ namespace TrappedGame.Main {
 
         private void UpdatePath() {
             var path = game.Hero.Path;
-            var existLinks = path.GetLinks();
+            var existLinks = path.Links;
             var showedLinks = pathObjects.Keys;
             var differens = new HashSet<Path.PathLink>(existLinks);
             differens.SymmetricExceptWith(showedLinks);
@@ -106,7 +106,7 @@ namespace TrappedGame.Main {
                     Destroy(linkGameObject);
                 } else {
                     if (link.IsAdjacent()) {
-                        var coord = GameUtils.ConvertToGameCoord(link.GetFromX(), link.GetFromY(), level);
+                        var coord = GameUtils.ConvertToGameCoord(link.FromX, link.FromY, level);
                         var pathGameObject = pathGoFactory.CreatePathSegment(link, coord);
                         pathObjects[link] = pathGameObject;
                     }

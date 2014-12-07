@@ -26,8 +26,8 @@ namespace TrappedGame.Model {
         public void MoveBack() {
             if (!path.IsEmpty()) {
                 var link = path.RemoveLink();
-                position.x = link.GetFromX();
-                position.y = link.GetFromY();
+                position.x = link.FromX;
+                position.y = link.FromY;
             }
         }
         
@@ -43,7 +43,7 @@ namespace TrappedGame.Model {
         }
 
         public bool WasHere(int x, int y) {
-            return path.GetLinks().Any(link => link.GetFromX() == x && link.GetFromY() == y);
+            return path.Links.Any(link => link.FromX == x && link.FromY == y);
         }
     }
 }
