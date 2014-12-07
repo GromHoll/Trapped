@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using TrappedGame.Model.Cells;
-using UnityEngine;
 using System;
 
 namespace TrappedGame.UnitTests {
@@ -14,7 +13,7 @@ namespace TrappedGame.UnitTests {
             Assert.AreEqual(2, cell.Y);
             Assert.AreEqual(CellType.UNKNOWN, cell.CellType);
             
-            Assert.IsFalse(cell.IsOn());   
+            Assert.IsFalse(cell.IsOn);   
             Assert.IsFalse(cell.IsBocked());
             Assert.IsFalse(cell.IsDeadly());
         }
@@ -27,31 +26,31 @@ namespace TrappedGame.UnitTests {
            
             var cell = new CountCell(0, 0, CellType.UNKNOWN, on, off, current, false);
 
-            Assert.IsFalse(cell.IsOn());
+            Assert.IsFalse(cell.IsOn);
             Assert.IsTrue(cell.IsOnOnNextTick());
 
             cell.NextTick();
-            Assert.IsTrue(cell.IsOn());
+            Assert.IsTrue(cell.IsOn);
             Assert.IsTrue(cell.IsOnOnNextTick());
             
             cell.NextTick();
-            Assert.IsTrue(cell.IsOn());
+            Assert.IsTrue(cell.IsOn);
             Assert.IsTrue(cell.IsOnOnNextTick());
             
             cell.NextTick();
-            Assert.IsTrue(cell.IsOn());
+            Assert.IsTrue(cell.IsOn);
             Assert.IsFalse(cell.IsOnOnNextTick());
             
             cell.NextTick();
-            Assert.IsFalse(cell.IsOn());
+            Assert.IsFalse(cell.IsOn);
             Assert.IsFalse(cell.IsOnOnNextTick());
             
             cell.NextTick();
-            Assert.IsFalse(cell.IsOn());
+            Assert.IsFalse(cell.IsOn);
             Assert.IsTrue(cell.IsOnOnNextTick());
             
             cell.NextTick();
-            Assert.IsTrue(cell.IsOn());
+            Assert.IsTrue(cell.IsOn);
         }
 
         [Test]
@@ -62,22 +61,22 @@ namespace TrappedGame.UnitTests {
             
             var cell = new CountCell(0, 0, CellType.UNKNOWN, on, off, current, true);
             
-            Assert.IsTrue(cell.IsOn());
+            Assert.IsTrue(cell.IsOn);
             
             cell.BackTick();
-            Assert.IsFalse(cell.IsOn());
+            Assert.IsFalse(cell.IsOn);
             
             cell.BackTick();
-            Assert.IsFalse(cell.IsOn());
+            Assert.IsFalse(cell.IsOn);
             
             cell.BackTick();
-            Assert.IsTrue(cell.IsOn());
+            Assert.IsTrue(cell.IsOn);
             
             cell.BackTick();
-            Assert.IsFalse(cell.IsOn());
+            Assert.IsFalse(cell.IsOn);
             
             cell.BackTick();
-            Assert.IsFalse(cell.IsOn());
+            Assert.IsFalse(cell.IsOn);
         }
 		
 		[Test]

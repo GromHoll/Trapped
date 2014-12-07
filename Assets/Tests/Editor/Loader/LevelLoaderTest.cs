@@ -50,11 +50,11 @@ namespace TrappedGame.UnitTests {
             Assert.AreEqual(true, laser_1_1.IsRight());
             Assert.AreEqual(true, laser_1_1.IsDown());
             Assert.AreEqual(true, laser_1_1.IsLeft());
-            Assert.AreEqual(false, laser_1_1.IsOn());
+            Assert.AreEqual(false, laser_1_1.IsOn);
             
             Assert.AreEqual(CellType.SPEAR, level.GetCell(2,1).CellType);
             SpearCell spear_2_1 = (SpearCell) level.GetCell(2,1); 
-            Assert.AreEqual(true, spear_2_1.IsOn());
+            Assert.AreEqual(true, spear_2_1.IsOn);
 
             Assert.AreEqual(CellType.LASER, level.GetCell(3,1).CellType);
             LaserCell laser_3_1 = (LaserCell) level.GetCell(3,1); 
@@ -62,7 +62,7 @@ namespace TrappedGame.UnitTests {
             Assert.AreEqual(true, laser_3_1.IsRight());
             Assert.AreEqual(true, laser_3_1.IsDown());
             Assert.AreEqual(false, laser_3_1.IsLeft());
-            Assert.AreEqual(true, laser_3_1.IsOn());
+            Assert.AreEqual(true, laser_3_1.IsOn);
         }
     }
 }

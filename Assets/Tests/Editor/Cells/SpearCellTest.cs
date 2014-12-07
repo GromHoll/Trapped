@@ -37,7 +37,7 @@ namespace TrappedGame.UnitTests {
 
         private void AssertSpear(SpearCell spear, bool state) {
             Assert.AreEqual(CellType.SPEAR, spear.CellType);            
-            Assert.AreEqual(state, spear.IsOn());
+            Assert.AreEqual(state, spear.IsOn);
             Assert.AreEqual(state, spear.IsDeadly());
             Assert.IsFalse(spear.IsBocked());
         }

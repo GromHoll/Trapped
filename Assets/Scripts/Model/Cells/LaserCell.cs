@@ -66,7 +66,7 @@ namespace TrappedGame.Model.Cells {
         }
 
         public override bool IsDeadly() {
-            return isOn;
+            return IsOn;
         }
 
         public override bool IsDeadlyFor(int x, int y) {

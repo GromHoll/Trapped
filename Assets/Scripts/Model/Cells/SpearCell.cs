@@ -8,7 +8,7 @@ namespace TrappedGame.Model.Cells {
             : base(x, y, CellType.SPEAR) {}
 
         public override bool IsDeadly() {
-            return isOn;
+            return IsOn;
         }
     }
 }
