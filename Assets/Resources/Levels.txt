@@ -1,17 +1,31 @@
 {
 	"Packs" : [
 		{
-			"PackName" : "Tutorial",
+			"Name" : "Tutorial",
+			"Folder" : "Levels/",
 			"Levels" : [
-				"Levels/Level1",
-				"Levels/Level2",
-				"Levels/Level3"
+				{
+					"Name" : "Wall",
+					"Source" : "Level1"
+				},
+				{
+					"Name" : "Spear",
+					"Source" : "Level2"
+				},
+				{
+					"Name" : "Laser",
+					"Source" : "Level3"
+				}
 			]
 		},
 		{
-			"PackName" : "Elementary",
+			"Name" : "Elementary",
+			"Folder" : "Levels/",
 			"Levels" : [
-				"Levels/Level4"
+				{
+					"Name" : "Realy? O_o",
+					"Source" : "Level4"
+				}
 			]
 		}
 	]

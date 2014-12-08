@@ -42,8 +42,8 @@ namespace TrappedGame.View.GUI {
 			//TODO Destroy Children
 			Levels.transform.DetachChildren();
 
-			foreach (string levelName in levelInfo.GetLevelPaths(packName)) {
-				CreateLevelButton(levelName);
+			foreach (LevelT level in levelInfo.GetLevelPaths(packName)) {
+				CreateLevelButton(level);
 			}
 
 			Levels.SetActive(true);
@@ -58,12 +58,13 @@ namespace TrappedGame.View.GUI {
 			button.transform.GetChild(0).GetComponent<Text>().text = packName;
 		}
 
-		private void CreateLevelButton(string levelName) {
+		private void CreateLevelButton(LevelT level) {
 			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Levels, false);
 			button.GetComponent<Button>().onClick.AddListener(() => {
-				PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, levelName);
+				PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, level.path);
 				Application.LoadLevel("Level");
 			});
+			button.transform.GetChild(0).GetComponent<Text>().text = level.name;
 		}
 
 		public void Back() {

@@ -5,19 +5,30 @@ using System.Collections;
 using SimpleJSON;
 
 namespace TrappedGame.View.GUI {
+	public class LevelT {
+		public LevelT(string _name, string _path) {
+			name = _name;
+			path = _path;
+		}
+
+		public string name;
+		public string path;
+	}
+
 	public class LevelInfoLoader  {
-		private IDictionary<string, ArrayList> levelsInfo;
+		private IDictionary<string, List<LevelT>> levelsInfo;
 
 		public LevelInfoLoader() {
-			levelsInfo = new Dictionary<string, ArrayList>();
+			levelsInfo = new Dictionary<string, List<LevelT>>();
 			LoadLevels();
+			Print ();
 		}
 
 		public ICollection<string> GetPackNames() {
 			return levelsInfo.Keys;
 		}
 
-		public ArrayList GetLevelPaths(string packName) {
+		public List<LevelT> GetLevelPaths(string packName) {
 			if(levelsInfo.ContainsKey(packName)) {
 				return levelsInfo[packName];
 			} else {
@@ -32,25 +43,28 @@ namespace TrappedGame.View.GUI {
 			var json = JSON.Parse (levelList.text);
 
 			string packName;
+			string packFolder;
+
 			foreach (JSONNode pack in json["Packs"].AsArray) {
-				packName = pack["PackName"].Value;
+				packName   = pack["Name"].Value;
+				packFolder = pack["Folder"].Value;
 
 				if(!levelsInfo.ContainsKey(packName)) {
-					levelsInfo[packName] = new ArrayList();
+					levelsInfo[packName] = new List<LevelT>();
 				} else {
 					//TODO Packs with same name EXCEPTION
 				}
 
-				foreach(JSONNode levelName in pack["Levels"].AsArray) {
-					levelsInfo[packName].Add(levelName.Value);
+				foreach(JSONNode level in pack["Levels"].AsArray) {
+					levelsInfo[packName].Add(new LevelT(level["Name"].Value, packFolder + level["Source"].Value));
 				}
 			}
 		}
 
 		private void Print() {
 			foreach(string packName in levelsInfo.Keys) {
-				foreach(string levelName in levelsInfo[packName]){
-					Debug.Log(packName + " : " + levelName);
+				foreach(LevelT level in levelsInfo[packName]){
+					Debug.Log(packName + " : " + level.name);
 				}
 			}
 		}
