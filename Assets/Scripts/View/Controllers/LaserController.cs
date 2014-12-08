@@ -7,7 +7,10 @@ namespace TrappedGame.View.Controllers {
             set {
                 foreach (var indicators in GetComponentsInChildren<IndicatorController>()) {
                     indicators.Cell = value;
-                }    
+                }
+                foreach (var gun in GetComponentsInChildren<LaserGunController>()) {
+                    gun.Cell = value;
+                }   
             }
         }
     }
