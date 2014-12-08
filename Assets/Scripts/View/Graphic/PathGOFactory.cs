@@ -9,16 +9,12 @@ namespace TrappedGame.View.Graphic {
         public GameObject pathSegment;
 
         public GameObject CreatePathSegment(Path.PathLink link, Vector2 coord) {
-            if (link.IsWentUp())    { coord.y += 0.5f; }
-            if (link.IsWentRight()) { coord.x += 0.5f; }
-            if (link.IsWentDown())  { coord.y -= 0.5f; }
-            if (link.IsWentLeft())  { coord.x -= 0.5f; }
-            
             var pathGameObject = GameUtils.InstantiateChild(pathSegment, coord, pathFolder);
-            if (link.IsVertical()) {
-                pathGameObject.transform.Rotate(0, 0, 90);
-            }
-
+            var rotation = link.IsWentUp() ? 180
+                : link.IsWentRight() ? 90
+                    : link.IsWentDown() ? 0
+                        : -90;
+            pathGameObject.transform.Rotate(0, 0, rotation);
             return pathGameObject;
         }
     }
