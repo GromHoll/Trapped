@@ -1,4 +1,4 @@
-﻿using SimpleJSON;
+using SimpleJSON;
 using TrappedGame.Main;
 using TrappedGame.Utils;
 using UnityEngine;
@@ -10,6 +10,8 @@ namespace TrappedGame.View.GUI {
 		public GameObject buttonPrefab;
 
 		void Start() {
+
+
 			var levelList = Resources.Load<TextAsset>("LevelList");
 			var json = JSON.Parse (levelList.text);
 
@@ -23,7 +25,11 @@ namespace TrappedGame.View.GUI {
 			button.GetComponent<Button>().onClick.AddListener(() => {
 				PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, levelName);
 				Application.LoadLevel("Level");
-			}); 
+			});
+
+			//TODO Add level Name
+			//button.GetComponent<Text>().text = levelName;
+
 			button.transform.SetParent(gameObject.transform, false);
 		}
 	}

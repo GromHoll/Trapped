@@ -1,0 +1,18 @@
+{
+	"Packs" : [
+		{
+			"PackName" : "Tutorial",
+			"Levels" : [
+				"Levels/Level1",
+				"Levels/Level2",
+				"Levels/Level3"
+			]
+		},
+		{
+			"PackName" : "Elementary",
+			"Levels" : [
+				"Levels/Level4"
+			]
+		}
+	]
+}
