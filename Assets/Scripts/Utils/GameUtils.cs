@@ -1,6 +1,9 @@
 using TrappedGame.Model;
 using TrappedGame.Model.Common;
+
 using UnityEngine;
+using System.Collections.Generic;
+
 
 namespace TrappedGame.Utils {
     public static class GameUtils {
@@ -27,6 +30,13 @@ namespace TrappedGame.Utils {
             return child;
         }
 
+		public static void DestroyAllChild(GameObject parent) {
+			var children = new List<GameObject>();
+			foreach (Transform child in parent.transform) {
+					children.Add(child.gameObject);
+			}
+			children.ForEach(child => Object.Destroy(child));
+		}
     }
 }
 

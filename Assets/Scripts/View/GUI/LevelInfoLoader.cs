@@ -21,7 +21,6 @@ namespace TrappedGame.View.GUI {
 		public LevelInfoLoader() {
 			levelsInfo = new Dictionary<string, List<LevelT>>();
 			LoadLevels();
-			Print ();
 		}
 
 		public ICollection<string> GetPackNames() {
@@ -64,7 +63,7 @@ namespace TrappedGame.View.GUI {
 		private void Print() {
 			foreach(string packName in levelsInfo.Keys) {
 				foreach(LevelT level in levelsInfo[packName]){
-					Debug.Log(packName + " : " + level.name);
+					Debug.Log(packName + " : " + level.name + "  ::  " + level.path);
 				}
 			}
 		}

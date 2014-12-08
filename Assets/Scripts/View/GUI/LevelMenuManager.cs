@@ -27,55 +27,32 @@ namespace TrappedGame.View.GUI {
 		}
 
 		public void OpenPacks() {
-			//TODO Destroy Children
-			Packs.transform.DetachChildren ();
+			GameUtils.DestroyAllChild(Packs);
 
 			foreach (string packName in levelInfo.GetPackNames()) {
 				CreatePackButton(packName);
 			}
 
-			Levels.SetActive (false);
-			Packs.SetActive (true);
+			Show(Packs);
 		}
 
 		public void OpenLevels(string packName) {
-			//TODO Destroy Children
-			Levels.transform.DetachChildren();
+			GameUtils.DestroyAllChild(Levels);
 
 			foreach (LevelT level in levelInfo.GetLevelPaths(packName)) {
 				CreateLevelButton(level);
 			}
 
-			Levels.SetActive(true);
-			Packs.SetActive(false);
-		}
-
-		private void CreatePackButton(string packName) {
-			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Packs, false);
-			button.GetComponent<Button>().onClick.AddListener(() => {
-				OpenLevels(packName);
-			});
-			button.transform.GetChild(0).GetComponent<Text>().text = packName;
-		}
-
-		private void CreateLevelButton(LevelT level) {
-			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Levels, false);
-			button.GetComponent<Button>().onClick.AddListener(() => {
-				PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, level.path);
-				Application.LoadLevel("Level");
-			});
-			button.transform.GetChild(0).GetComponent<Text>().text = level.name;
+			Show(Levels);
 		}
 
 		public void Back() {
 			if (Levels.activeSelf) {
-				Levels.SetActive (false);
-				Packs.SetActive (false);
 				OpenPacks ();
+			} else if (Packs.activeSelf) {
+				Show (MainMenu);
 			} else {
-				Levels.SetActive (false);
-				Packs.SetActive (false);
-				MainMenu.SetActive(true);
+				Quit();
 			}
 		}
 
@@ -87,8 +64,29 @@ namespace TrappedGame.View.GUI {
 			#endif
 		}
 
-		private void LoadLevelsInfo() {
+		private void CreatePackButton(string packName) {
+			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Packs, false);
+			button.GetComponent<Button>().onClick.AddListener(() => {
+				OpenLevels(packName);
+			});
+			button.transform.GetChild(0).GetComponent<Text>().text = packName;
+		}
+		
+		private void CreateLevelButton(LevelT level) {
+			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Levels, false);
+			button.GetComponent<Button>().onClick.AddListener(() => {
+				PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, level.path);
+				Application.LoadLevel("Level");
+			});
+			button.transform.GetChild(0).GetComponent<Text>().text = level.name;
+		}
 
+		private void Show(GameObject toShow) {
+			Levels.SetActive (false);
+			Packs.SetActive (false);
+			MainMenu.SetActive(false);
+
+			toShow.SetActive(true);
 		}
 	}
 }
