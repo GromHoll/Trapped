@@ -27,55 +27,55 @@ namespace TrappedGame.UnitTests {
 
             LaserCell infinityLaser = (LaserCell) level.GetCell(2, 3);
 
-            LaserCell.Laser infinityUp = helper.CreateUpLaser(infinityLaser, level);
-            Assert.AreEqual(2, infinityUp.GetCover().GetMinX());
-            Assert.AreEqual(4, infinityUp.GetCover().GetMinY());
-            Assert.AreEqual(2, infinityUp.GetCover().GetMaxX());
-            Assert.AreEqual(5, infinityUp.GetCover().GetMaxY());
+            LaserCell.Line infinityUp = helper.CreateUpLaser(infinityLaser, level);
+            Assert.AreEqual(2, infinityUp.Cover.MinX);
+            Assert.AreEqual(4, infinityUp.Cover.MinY);
+            Assert.AreEqual(2, infinityUp.Cover.MaxX);
+            Assert.AreEqual(5, infinityUp.Cover.MaxY);
                         
-            LaserCell.Laser infinityRight = helper.CreateRightLaser(infinityLaser, level);
-            Assert.AreEqual(3, infinityRight.GetCover().GetMinX());
-            Assert.AreEqual(3, infinityRight.GetCover().GetMinY());
-            Assert.AreEqual(5, infinityRight.GetCover().GetMaxX());
-            Assert.AreEqual(3, infinityRight.GetCover().GetMaxY());            
+            LaserCell.Line infinityRight = helper.CreateRightLaser(infinityLaser, level);
+            Assert.AreEqual(3, infinityRight.Cover.MinX);
+            Assert.AreEqual(3, infinityRight.Cover.MinY);
+            Assert.AreEqual(5, infinityRight.Cover.MaxX);
+            Assert.AreEqual(3, infinityRight.Cover.MaxY);            
 
-            LaserCell.Laser infinityDown = helper.CreateDownLaser(infinityLaser, level);
-            Assert.AreEqual(2, infinityDown.GetCover().GetMinX());
-            Assert.AreEqual(0, infinityDown.GetCover().GetMinY());
-            Assert.AreEqual(2, infinityDown.GetCover().GetMaxX());
-            Assert.AreEqual(2, infinityDown.GetCover().GetMaxY());            
+            LaserCell.Line infinityDown = helper.CreateDownLaser(infinityLaser, level);
+            Assert.AreEqual(2, infinityDown.Cover.MinX);
+            Assert.AreEqual(0, infinityDown.Cover.MinY);
+            Assert.AreEqual(2, infinityDown.Cover.MaxX);
+            Assert.AreEqual(2, infinityDown.Cover.MaxY);            
 
-            LaserCell.Laser infinityLeft = helper.CreateLeftLaser(infinityLaser, level);
-            Assert.AreEqual(0, infinityLeft.GetCover().GetMinX());
-            Assert.AreEqual(3, infinityLeft.GetCover().GetMinY());
-            Assert.AreEqual(1, infinityLeft.GetCover().GetMaxX());
-            Assert.AreEqual(3, infinityLeft.GetCover().GetMaxY());
+            LaserCell.Line infinityLeft = helper.CreateLeftLaser(infinityLaser, level);
+            Assert.AreEqual(0, infinityLeft.Cover.MinX);
+            Assert.AreEqual(3, infinityLeft.Cover.MinY);
+            Assert.AreEqual(1, infinityLeft.Cover.MaxX);
+            Assert.AreEqual(3, infinityLeft.Cover.MaxY);
             
             LaserCell blockedLaser = (LaserCell) level.GetCell(3, 2);
 
-            LaserCell.Laser blockedUp = helper.CreateUpLaser(blockedLaser, level);
-            Assert.AreEqual(3, blockedUp.GetCover().GetMinX());
-            Assert.AreEqual(3, blockedUp.GetCover().GetMinY());
-            Assert.AreEqual(3, blockedUp.GetCover().GetMaxX());
-            Assert.AreEqual(4, blockedUp.GetCover().GetMaxY());
+            LaserCell.Line blockedUp = helper.CreateUpLaser(blockedLaser, level);
+            Assert.AreEqual(3, blockedUp.Cover.MinX);
+            Assert.AreEqual(3, blockedUp.Cover.MinY);
+            Assert.AreEqual(3, blockedUp.Cover.MaxX);
+            Assert.AreEqual(4, blockedUp.Cover.MaxY);
 
-            LaserCell.Laser blockedRight = helper.CreateRightLaser(blockedLaser, level);
-            Assert.AreEqual(4, blockedRight.GetCover().GetMinX());
-            Assert.AreEqual(2, blockedRight.GetCover().GetMinY());
-            Assert.AreEqual(4, blockedRight.GetCover().GetMaxX());
-            Assert.AreEqual(2, blockedRight.GetCover().GetMaxY());
+            LaserCell.Line blockedRight = helper.CreateRightLaser(blockedLaser, level);
+            Assert.AreEqual(4, blockedRight.Cover.MinX);
+            Assert.AreEqual(2, blockedRight.Cover.MinY);
+            Assert.AreEqual(4, blockedRight.Cover.MaxX);
+            Assert.AreEqual(2, blockedRight.Cover.MaxY);
 
-            LaserCell.Laser blockedDown = helper.CreateDownLaser(blockedLaser, level);
-            Assert.AreEqual(3, blockedDown.GetCover().GetMinX());
-            Assert.AreEqual(1, blockedDown.GetCover().GetMinY());
-            Assert.AreEqual(3, blockedDown.GetCover().GetMaxX());
-            Assert.AreEqual(1, blockedDown.GetCover().GetMaxY());
+            LaserCell.Line blockedDown = helper.CreateDownLaser(blockedLaser, level);
+            Assert.AreEqual(3, blockedDown.Cover.MinX);
+            Assert.AreEqual(1, blockedDown.Cover.MinY);
+            Assert.AreEqual(3, blockedDown.Cover.MaxX);
+            Assert.AreEqual(1, blockedDown.Cover.MaxY);
 
-            LaserCell.Laser blockedLeft = helper.CreateLeftLaser(blockedLaser, level);
-            Assert.AreEqual(1, blockedLeft.GetCover().GetMinX());
-            Assert.AreEqual(2, blockedLeft.GetCover().GetMinY());
-            Assert.AreEqual(2, blockedLeft.GetCover().GetMaxX());
-            Assert.AreEqual(2, blockedLeft.GetCover().GetMaxY());
+            LaserCell.Line blockedLeft = helper.CreateLeftLaser(blockedLaser, level);
+            Assert.AreEqual(1, blockedLeft.Cover.MinX);
+            Assert.AreEqual(2, blockedLeft.Cover.MinY);
+            Assert.AreEqual(2, blockedLeft.Cover.MaxX);
+            Assert.AreEqual(2, blockedLeft.Cover.MaxY);
         }
     }
 }

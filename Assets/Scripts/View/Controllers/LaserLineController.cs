@@ -6,8 +6,8 @@ using System.Collections;
 namespace TrappedGame.View.Controllers {
     public class LaserLineController : MonoBehaviour {
 
-        private LaserCell.Laser line;
         private float lenght;
+        public LaserCell.Line Line { get; set; }
 
         private void Start() {
             lenght = GetLenght();
@@ -18,20 +18,16 @@ namespace TrappedGame.View.Controllers {
 
         private void Update() {
             foreach (Transform child in transform) {
-                child.gameObject.SetActive(line.IsDanger());
+                child.gameObject.SetActive(Line.IsDanger());
             }
-        }
-
-        public void SetLaserLine(LaserCell.Laser newLine) {
-            line = newLine;
         }
 
         private float GetLenght() {
-            var cover = line.GetCover();
-            if (line.IsVertical()) {
-                return cover.GetMaxY() - cover.GetMinY() + 1;
+            var cover = Line.Cover;
+            if (Line.IsVertical()) {
+                return cover.MaxY - cover.MinY + 1;
             }
-            return cover.GetMaxX() - cover.GetMinX() + 1;
+            return cover.MaxX - cover.MinX + 1;
         }
 
         private float GetSafeShift() {
@@ -45,13 +41,13 @@ namespace TrappedGame.View.Controllers {
 
         private void MoveLaser() {
             gameObject.transform.position += new Vector3(
-                    line.IsHorizontal() ? GetSafeShift() : 0,
-                    line.IsVertical() ? GetSafeShift() : 0,
+                    Line.IsHorizontal() ? GetSafeShift() : 0,
+                    Line.IsVertical() ? GetSafeShift() : 0,
                     0);
         }
 
         private void RotateLaser() {
-            if (line.IsVertical()) {
+            if (Line.IsVertical()) {
                 gameObject.transform.Rotate(0, 0, 90);
             }
         }

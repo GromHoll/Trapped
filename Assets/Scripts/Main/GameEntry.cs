@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
-using TrappedGame.Model.Cells;
 using TrappedGame.Model.Loader;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
@@ -14,15 +12,14 @@ namespace TrappedGame.Main {
     public class GameEntry : MonoBehaviour {
 
         public CellGOFactory cellGameObjectFactory;
-        public LaserLineGOFactory laserLineGoFactory;
         public PathGOFactory pathGoFactory;
 
-        private LevelLoader loader = new LevelLoader();
+        private readonly LevelLoader loader = new LevelLoader();
         private HeroInput heroInput;
         private Game game;
         private Level level;
 
-        private IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
+        private readonly IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
 
         private WinMenu winMenu;
 		public GameObject winMenuObject;
@@ -56,21 +53,18 @@ namespace TrappedGame.Main {
         private void CreateLevelObjects() {
             cellGameObjectFactory.CreateEmptyCells(level);
             cellGameObjectFactory.CreateWallCells(level);
-
             cellGameObjectFactory.CreateLaserCells(level);
-            laserLineGoFactory.CreateLasersForLevel(level);
-
             cellGameObjectFactory.CreateSpearCells(level);
                         
-            var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.GetStartX(), level.GetStartY(), level), gameObject);
+            var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.StartX, level.StartY, level), gameObject);
             heroController = hero.GetComponent<HeroController>();
-            heroController.SetGame(game);
+            heroController.Game = game;
 
-            GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.GetFinishX(), level.GetFinishY(), level), gameObject);
-            foreach (var coord in level.GetBonuses()) {
+            GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.FinishX, level.FinishY, level), gameObject);
+            foreach (var coord in level.Bonuses) {
                 GameUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
-            foreach (var coord in level.GetTimeBonuses().Keys) {
+            foreach (var coord in level.TimeBonuses.Keys) {
                 GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
             
@@ -100,8 +94,8 @@ namespace TrappedGame.Main {
         }
 
         private void UpdatePath() {
-            var path = game.GetHero().GetPath();
-            var existLinks = path.GetLinks();
+            var path = game.Hero.Path;
+            var existLinks = path.Links;
             var showedLinks = pathObjects.Keys;
             var differens = new HashSet<Path.PathLink>(existLinks);
             differens.SymmetricExceptWith(showedLinks);
@@ -112,7 +106,7 @@ namespace TrappedGame.Main {
                     Destroy(linkGameObject);
                 } else {
                     if (link.IsAdjacent()) {
-                        var coord = GameUtils.ConvertToGameCoord(link.GetFromX(), link.GetFromY(), level);
+                        var coord = GameUtils.ConvertToGameCoord(link.FromX, link.FromY, level);
                         var pathGameObject = pathGoFactory.CreatePathSegment(link, coord);
                         pathObjects[link] = pathGameObject;
                     }
@@ -127,8 +121,8 @@ namespace TrappedGame.Main {
             var screenXf = Screen.width;
             var screenYf = Screen.height;
             var screenScale = screenXf/screenYf;
-            var levelXf = level.GetSizeX();
-            var levelYf = level.GetSizeY();
+            var levelXf = level.SizeX;
+            var levelYf = level.SizeY;
             var levelScale = levelXf/levelYf;
 
             var scale = (screenScale > levelScale) ? levelXf : levelYf/screenScale;

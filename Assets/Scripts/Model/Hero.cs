@@ -5,21 +5,16 @@ namespace TrappedGame.Model {
     public class Hero {
 
         private IntVector2 position;
-        private readonly Path path = new Path();
+        public int X { get { return position.x; } }
+        public int Y { get { return position.y; } }
+        public bool IsDead { get; private set; }
+        public int DeathCount { get; private set; }
 
-        private bool isDead;
-        private int deadCounter;
+        private readonly Path path = new Path();
+        public Path Path { get { return path; } }
 
         public Hero(int x, int y) {
             position = new IntVector2(x, y);
-        }
-
-        public int GetX() {
-            return position.x;
-        }
-
-        public int GetY() {
-            return position.y;
         }
 
         public void MoveTo(int x, int y) {
@@ -31,28 +26,16 @@ namespace TrappedGame.Model {
         public void MoveBack() {
             if (!path.IsEmpty()) {
                 var link = path.RemoveLink();
-                position.x = link.GetFromX();
-                position.y = link.GetFromY();
+                position.x = link.FromX;
+                position.y = link.FromY;
             }
         }
         
         public void SetDead(bool isDead) {
-            this.isDead = isDead;
-            if (isDead) {
-                deadCounter++;
+            IsDead = isDead;
+            if (IsDead) {
+                DeathCount++;
             }
-        }
-
-        public bool IsDead() {
-            return isDead;
-        }
-
-        public int GetDeaths() {
-            return deadCounter;
-        }
-
-        public Path GetPath() {
-            return path;
         }
 
         public Path.PathLink GetPreviousTurn() {
@@ -60,7 +43,7 @@ namespace TrappedGame.Model {
         }
 
         public bool WasHere(int x, int y) {
-            return path.GetLinks().Any(link => link.GetFromX() == x && link.GetFromY() == y);
+            return path.Links.Any(link => link.FromX == x && link.FromY == y);
         }
     }
 }

@@ -10,25 +10,36 @@ namespace TrappedGame.Model {
     public class Level : ITickable {
         
         private string name;
+
+        private readonly Cell[,] cells; 
+        public IEnumerable Cells { get { return cells; } }
         
         private IntVector2 size;
-        private readonly Cell[,] cells;
-
+        public int SizeX { get { return size.x; } }
+        public int SizeY { get { return size.y; } }
+        
         private IntVector2 start;
+        public int StartX { get { return start.x; } }
+        public int StartY { get { return start.y; } } 
+
         private IntVector2 finish;
+        public int FinishX { get { return finish.x; } }
+        public int FinishY { get { return finish.y; } }
 
-        private readonly IList<IntVector2> bonuses;
-        private readonly IDictionary<IntVector2, LevelTick> timeBonuses;
-
-        private readonly IList<LaserCell.Laser> lasers = new List<LaserCell.Laser>();
-
+        public IList<IntVector2> Bonuses { get; private set; }
+        public IList<LaserCell> LaserCells { get; private set; }
+        public IDictionary<IntVector2, LevelTick> TimeBonuses { get; private set; }
+        
         public Level(LevelBuilder builder) {
             size = builder.GetSize();
             start = builder.GetStart();
             finish = builder.GetFinish();
             cells = builder.GetCells();
-            bonuses = builder.GetBonuses();
-            timeBonuses = builder.GetTimeBonuses();
+
+            LaserCells = builder.GetLaserCells();
+            Bonuses = builder.GetBonuses();
+            TimeBonuses = builder.GetTimeBonuses();
+
             CreateDangerZones();
         }
 
@@ -36,27 +47,13 @@ namespace TrappedGame.Model {
             CreateLasers();
         }
 
-        // TODO Refactor
         private void CreateLasers() {
             var laserHelper = new LaserHelper();
-            foreach (var cell in cells) {
-                // TODO maybe store LaserCell in specias list and don't use cast?
-                if(cell.GetCellType() == CellType.LASER) {
-                    var laser = (LaserCell) cell;
-                    AddLaser(laserHelper.CreateUpLaser(laser, this));
-                    AddLaser(laserHelper.CreateRightLaser(laser, this));
-                    AddLaser(laserHelper.CreateDownLaser(laser, this));
-                    AddLaser(laserHelper.CreateLeftLaser(laser, this));
-                }
+            foreach (var laser in LaserCells) {
+                laser.CreateLaserLines(laserHelper, this);
             }
         }
-
-        private void AddLaser(LaserCell.Laser laser) {
-            if (laser != null) {
-                lasers.Add(laser);
-            }
-        }
-
+        
         public void NextTick() {
             foreach (var cell in cells) {
                 cell.NextTick();
@@ -71,39 +68,12 @@ namespace TrappedGame.Model {
 
         public LevelTick GetLevelTick(int x, int y) {
             var coord = new IntVector2(x, y);
-            return timeBonuses.ContainsKey(coord) ? timeBonuses[coord] : LevelTick.DEFAULT_LEVEL_TICK;
+            return TimeBonuses.ContainsKey(coord) ? TimeBonuses[coord] : LevelTick.DEFAULT_LEVEL_TICK;
         }
 
         public bool IsDangerCell(int x, int y) {            
             var cell = GetCell(x, y);
-            if (cell.IsDeadly()) {
-                return true;
-            }
-            return lasers.Any(laser => laser.IsDangerFor(x, y));
-        }
-
-        public int GetStartX() {
-            return start.x;
-        }
-
-        public int GetStartY() {
-            return start.y;
-        }
-
-        public int GetFinishX() {
-            return finish.x;
-        }
-        
-        public int GetFinishY() {
-            return finish.y;
-        }
-
-        public int GetSizeX() {
-            return size.x;
-        }
-        
-        public int GetSizeY() {
-            return size.y;
+            return cell.IsDeadly() || LaserCells.Any(laser => laser.IsDeadlyFor(x, y));
         }
 
         public Cell GetCell(int x, int y) {
@@ -111,24 +81,9 @@ namespace TrappedGame.Model {
             return cells[x, y];
         }
 
-        public IEnumerable GetCells() {
-            return cells;
-        }
-
-        public IList<IntVector2> GetBonuses() {
-            return bonuses;
-        }
-
-        public IDictionary<IntVector2, LevelTick> GetTimeBonuses() {
-            return timeBonuses;
-        }
-
-        public IList<LaserCell.Laser> GetLaserLines() {
-            return lasers;
-        }
-
         public bool Contains(int x, int y) {
             return x >= 0 && x <= size.x - 1 && y >= 0 && y <= size.y - 1; 
         }
+        
     }
 }

@@ -51,7 +51,7 @@ namespace TrappedGame.View.GUI {
 		}
 
 		private void CreatePackButton(string packName) {
-			var button = GameUtils.InstantiateChild(buttonPrefab, Vector2.zero, Packs);
+			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Packs, false);
 			button.GetComponent<Button>().onClick.AddListener(() => {
 				OpenLevels(packName);
 			});
@@ -59,7 +59,7 @@ namespace TrappedGame.View.GUI {
 		}
 
 		private void CreateLevelButton(string levelName) {
-			var button = GameUtils.InstantiateChild(buttonPrefab, Vector2.zero, Levels);
+			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Levels, false);
 			button.GetComponent<Button>().onClick.AddListener(() => {
 				PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, levelName);
 				Application.LoadLevel("Level");

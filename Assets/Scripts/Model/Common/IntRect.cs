@@ -6,6 +6,22 @@ namespace TrappedGame.Model.Common {
         private IntVector2 point1;
         private IntVector2 point2;
 
+        public int MinX {
+            get { return Math.Min(point1.x, point2.x); }
+        }
+
+        public int MaxX {
+            get { return Math.Max(point1.x, point2.x); }
+        }
+
+        public int MinY {
+            get { return Math.Min(point1.y, point2.y); }
+        }
+
+        public int MaxY {
+            get { return Math.Max(point1.y, point2.y); }
+        }
+
         public IntRect(int x1, int y1, int x2, int y2) {
             point1 = new IntVector2(x1, y1);
             point2 = new IntVector2(x2, y2);
@@ -20,22 +36,6 @@ namespace TrappedGame.Model.Common {
                 && Math.Max(point1.x, point2.x) >= x
                 && Math.Min(point1.y, point2.y) <= y 
                 && Math.Max(point1.y, point2.y) >= y;
-        }
-
-        public int GetMinX() {
-            return Math.Min(point1.x, point2.x);
-        }
-
-        public int GetMaxX() {
-            return Math.Max(point1.x, point2.x);
-        }
-
-        public int GetMinY() {
-            return Math.Min(point1.y, point2.y);
-        }
-        
-        public int GetMaxY() {
-            return Math.Max(point1.y, point2.y);
         }
     }
 }

@@ -19,15 +19,15 @@ namespace TrappedGame.UnitTests {
         private void TestLaser(int x, int y, bool up, bool right, bool down, bool left) {
             var laser = new LaserCell(x, y, up, right, down, left);
 
-            Assert.AreEqual(x, laser.GetX());
-            Assert.AreEqual(y, laser.GetY());
-            Assert.AreEqual(up, laser.IsUp());
-            Assert.AreEqual(right, laser.IsRight());
-            Assert.AreEqual(down, laser.IsDown());
-            Assert.AreEqual(left, laser.IsLeft());
-            Assert.AreEqual(CellType.LASER, laser.GetCellType());
+            Assert.AreEqual(x, laser.X);
+            Assert.AreEqual(y, laser.Y);
+            Assert.AreEqual(up, laser.Up);
+            Assert.AreEqual(right, laser.Right);
+            Assert.AreEqual(down, laser.Down);
+            Assert.AreEqual(left, laser.Left);
+            Assert.AreEqual(CellType.LASER, laser.CellType);
             
-            Assert.IsTrue(laser.IsBocked());
+            Assert.IsTrue(laser.IsBlocked());
             Assert.IsFalse(laser.IsDeadly());
         }
 

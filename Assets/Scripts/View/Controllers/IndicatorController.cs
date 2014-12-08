@@ -3,18 +3,11 @@ using UnityEngine;
 
 namespace TrappedGame.View.Controllers {
     public class IndicatorController : MonoBehaviour {
-        
         public bool state;
-
-        private CountCell cell;
+        public CountCell Cell { get; set; }
 
         private void Update() {
-            renderer.enabled = cell.IsOnOnNextTick() == state;
+            renderer.enabled = Cell.IsOnOnNextTick() == state;
         }
-
-        public void SetCell(CountCell newCell) {
-            cell = newCell;
-        }
-
     }
 }

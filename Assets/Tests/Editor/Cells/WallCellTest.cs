@@ -10,11 +10,11 @@ namespace TrappedGame.UnitTests {
         public void CreateTest() {
             var wall = new WallCell(1, -1); 
             
-            Assert.AreEqual(1, wall.GetX());
-            Assert.AreEqual(-1, wall.GetY());
-            Assert.AreEqual(CellType.WALL, wall.GetCellType());
+            Assert.AreEqual(1, wall.X);
+            Assert.AreEqual(-1, wall.Y);
+            Assert.AreEqual(CellType.WALL, wall.CellType);
             
-            Assert.IsTrue(wall.IsBocked());
+            Assert.IsTrue(wall.IsBlocked());
             Assert.IsFalse(wall.IsDeadly());
         }
     }

@@ -23,7 +23,7 @@ namespace TrappedGame.View.GUI {
             gameObject.SetActive(true);
 
 			scoreField.GetComponent<Text>().text = game.GetScore().ToString();
-			deathField.GetComponent<Text>().text = game.GetHero().GetDeaths().ToString();
+			deathField.GetComponent<Text>().text = game.Hero.DeathCount.ToString();
         }
 
 		public void ReturnToMenu() {

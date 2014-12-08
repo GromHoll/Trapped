@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
@@ -17,12 +16,13 @@ namespace TrappedGame.View.Graphic {
         public GameObject tilePrefab;
         public GameObject unknownPrefab;
         public GameObject laserPrefab;
+        public GameObject laserLinePrefab;
         public GameObject wallPrefab;
         public GameObject spearPrefab;
 
 
         private GameObject CreateCellGameObject(Cell cell, Level level, GameObject folder) {
-            return CreateCellGameObject(cell.GetCoordinate(), cell.GetCellType(), level, folder);
+            return CreateCellGameObject(cell.Coordinate, cell.CellType, level, folder);
         }
 
         private GameObject CreateCellGameObject(IntVector2 cellCoord, CellType cellType, Level level, GameObject folder) {
@@ -49,42 +49,50 @@ namespace TrappedGame.View.Graphic {
         }
 
         public void CreateEmptyCells(Level level) {
-            foreach (Cell cell in level.GetCells()) {
-                if (cell.GetCellType() != CellType.WALL) {
-                    CreateCellGameObject(cell.GetCoordinate(), CellType.EMPTY, level, emptyCellsFolder);
+            foreach (Cell cell in level.Cells) {
+                if (cell.CellType != CellType.WALL) {
+                    CreateCellGameObject(cell.Coordinate, CellType.EMPTY, level, emptyCellsFolder);
                 }
             }
         }
 
         public void CreateSpearCells(Level level) {
-            foreach (Cell cell in level.GetCells()) {
+            foreach (Cell cell in level.Cells) {
                 //TODO Add to level different cell accesses
-                if (cell.GetCellType() == CellType.SPEAR) {
+                if (cell.CellType == CellType.SPEAR) {
                     var spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
                     var controller = spearObject.GetComponent<SpearController>();
-                    var spear = (SpearCell) cell;
-                    controller.SetCell(spear);
+                    controller.Cell = (SpearCell) cell;
                 }
             }
         }
 
         public void CreateWallCells(Level level) {
-            foreach (Cell cell in level.GetCells()) {
-                if (cell.GetCellType() == CellType.WALL) {
+            foreach (Cell cell in level.Cells) {
+                if (cell.CellType == CellType.WALL) {
                     CreateCellGameObject(cell, level, wallCellsFolder);
                 }
             }
         }
 
         public void CreateLaserCells(Level level) {
-            foreach (Cell cell in level.GetCells()) {
-                if (cell.GetCellType() == CellType.LASER) {
-                    var laserObject = CreateCellGameObject(cell, level, laserCellsFolder);
-                    var controller = laserObject.GetComponent<LaserController>();
-                    var laser = (LaserCell) cell;
-                    controller.SetCell(laser);
+            foreach (var laserCell in level.LaserCells) {
+                var laserObject = CreateCellGameObject(laserCell, level, laserCellsFolder);
+                var controller = laserObject.GetComponent<LaserController>();
+                controller.Cell = laserCell;
+                foreach (var line in laserCell.LaserLines) {
+                    CreateLaserLinesForLaser(level, line, laserObject);  
                 }
             }
         }
+
+        private void CreateLaserLinesForLaser(Level level, LaserCell.Line line, GameObject laser) {
+            var cover = line.Cover;
+            var coord = GameUtils.ConvertToGameCoord(cover.MinX, cover.MinY, level);
+            var laserObject = GameUtils.InstantiateChild(laserLinePrefab, coord, laser);
+            var controller = laserObject.GetComponent<LaserLineController>();
+            controller.Line = line;
+        }
+
     }
 }

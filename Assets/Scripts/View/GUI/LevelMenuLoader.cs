@@ -21,16 +21,12 @@ namespace TrappedGame.View.GUI {
 		}
 
 		private void CreateChildButton(string levelName) {
-			var button = GameUtils.InstantiateChild(buttonPrefab, Vector2.zero, gameObject);
+			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, gameObject, false);
 			button.GetComponent<Button>().onClick.AddListener(() => {
 				PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, levelName);
 				Application.LoadLevel("Level");
 			});
 
-			//TODO Add level Name
-			//button.GetComponent<Text>().text = levelName;
-
-			button.transform.SetParent(gameObject.transform, false);
 		}
 	}
 }

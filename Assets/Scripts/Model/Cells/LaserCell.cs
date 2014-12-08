@@ -1,83 +1,75 @@
-﻿using TrappedGame.Model.Common;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TrappedGame.Model.Common;
+using TrappedGame.Model.LevelUtils;
 
 namespace TrappedGame.Model.Cells {
     public class LaserCell : CountCell {
 
-        public class Laser {
-            private readonly LaserCell owner;
-            private readonly IntRect line;
+        public class Line {
+            public LaserCell Owner { get; protected set; }
+            public IntRect Cover { get; protected set; }
 
-            public Laser(LaserCell owner, IntRect line) {
-                this.owner = owner;
-                this.line = line;
+            public Line(LaserCell owner, IntRect line) {
+                Owner = owner;
+                Cover = line;
             }
 
             public bool IsDangerFor(int x, int y) {
-                return line.Contains(x, y) && IsDanger();
+                return Cover.Contains(x, y) && IsDanger();
             }
             
             public bool IsDanger() {
-                return owner.IsDeadly();
-            }
-
-            public IntRect GetCover() {
-                return line;
+                return Owner.IsDeadly();
             }
 
             public bool IsHorizontal() {
-                return line.GetMaxY() == line.GetMinY() && line.GetMaxY() == owner.GetY();
+                return Cover.MaxY == Cover.MinY && Cover.MaxY == Owner.Y;
             }
 
             public bool IsVertical() {
-                return line.GetMaxX() == line.GetMinX() && line.GetMaxX() == owner.GetX();
+                return Cover.MaxX == Cover.MinX && Cover.MaxX == Owner.X;
             }
         }
-        
-        protected bool up;
-        protected bool right;
-        protected bool down;
-        protected bool left;
+
+        public bool Up    { get; protected set; }
+        public bool Right { get; protected set; }
+        public bool Down  { get; protected set; }
+        public bool Left  { get; protected set; }
+        public IList<Line> LaserLines { get; protected set; }
 
         public LaserCell(int x, int y, 
                          int onPeriod, int offPeriod, int currentTick, bool isOn,
                          bool up, bool right, bool down, bool left) 
             : base(x, y, CellType.LASER, onPeriod, offPeriod, currentTick, isOn) {
-            this.up = up;
-            this.right = right;
-            this.down = down;
-            this.left = left;
+            Up = up;
+            Right = right;
+            Down = down;
+            Left = left;
         }
 
         public LaserCell(int x, int y, bool up, bool right, bool down, bool left)
             : base(x, y, CellType.LASER) {
-            this.up = up;
-            this.right = right;
-            this.down = down;
-            this.left = left;
+            Up = up;
+            Right = right;
+            Down = down;
+            Left = left;
         }
 
-        public override bool IsBocked() {
+        public override bool IsBlocked() {
             return true;
         }
 
         public override bool IsDeadly() {
-            return isOn;
+            return IsOn;
         }
 
-        public bool IsUp() { 
-            return up;
+        public override bool IsDeadlyFor(int x, int y) {
+            return LaserLines.Any(laser => laser.IsDangerFor(x, y));
         }
         
-        public bool IsRight() { 
-            return right;
-        }
-
-        public bool IsDown() { 
-            return down;
-        }
-
-        public bool IsLeft() { 
-            return left;
+        public void CreateLaserLines(LaserHelper helper, Level level) {
+            LaserLines = helper.CreateLaserLines(this, level);
         }
     }
 }

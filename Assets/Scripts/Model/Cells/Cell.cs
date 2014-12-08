@@ -3,18 +3,20 @@
 namespace TrappedGame.Model.Cells {
     public class Cell : ITickable {
 
-        protected IntVector2 coordinate;
-        protected CellType cellType;
+        public IntVector2 Coordinate { get; protected set; }
+        public int X { get { return Coordinate.x; } }
+        public int Y { get { return Coordinate.y; } }
+        public CellType CellType { get; protected set; }
        
         public Cell(int x, int y) 
         : this(x, y, CellType.EMPTY) {}
 
         public Cell(int x, int y, CellType type) {
-            this.coordinate = new IntVector2(x, y);
-            this.cellType = type;
+            Coordinate = new IntVector2(x, y);
+            CellType = type;
         }
 
-        public virtual bool IsBocked() {
+        public virtual bool IsBlocked() {
             return false;
         }
 
@@ -22,20 +24,8 @@ namespace TrappedGame.Model.Cells {
             return false;
         }
 
-        public IntVector2 GetCoordinate() {
-            return coordinate;
-        }
-
-        public int GetX() {
-            return coordinate.x;
-        }
-
-        public int GetY() {
-            return coordinate.y;
-        }
-        
-        public CellType GetCellType() {
-            return cellType;
+        public virtual bool IsDeadlyFor(int x, int y) {
+            return false;
         }
 
         public virtual void NextTick() {}

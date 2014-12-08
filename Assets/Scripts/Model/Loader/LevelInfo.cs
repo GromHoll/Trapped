@@ -15,33 +15,25 @@ namespace TrappedGame.Model.Loader {
         
         public static readonly char DEFAULT_TIME_0 = '0';
         public static readonly char DEFAULT_TIME_2 = '2';
-        
-        private readonly string levelName;
-        private readonly int xSize;
-        private readonly int ySize;
+
+        public int XSize { get; private set; }
+        public int YSize { get; private set; }
+        public string LevelName { get; private set; }
         private readonly char[,] symbols;
         private readonly IDictionary<char, string> descriptions = new Dictionary<char, string>();
         
         public LevelInfo(string levelName, int xSize, int ySize) {
             if (xSize <= 0) throw new ArgumentException("Size should be positive", "xSize");
             if (ySize <= 0) throw new ArgumentException("Size should be positive", "ySize");
-            this.levelName = levelName ?? DEFAULT_LEVEL_NAME;
-            this.symbols = new char[xSize, ySize];
-            this.xSize = xSize;
-            this.ySize = ySize;
-        }
-        
-        public int GetXSize() {
-            return xSize;
-        }
-        
-        public int GetYSize() {
-            return ySize;
+            LevelName = levelName ?? DEFAULT_LEVEL_NAME;
+            symbols = new char[xSize, ySize];
+            XSize = xSize;
+            YSize = ySize;
         }
         
         public void SetSymbol(int x, int y, char symbol) {
-            if (x < 0 || x >= xSize) throw new ArgumentException("Position should be positive and less than xSize", "x");
-            if (y < 0 || y >= ySize) throw new ArgumentException("Position should be positive and less than ySize", "y");
+            if (x < 0 || x >= XSize) throw new ArgumentException("Position should be positive and less than xSize", "x");
+            if (y < 0 || y >= YSize) throw new ArgumentException("Position should be positive and less than ySize", "y");
             symbols[x,y] = symbol;
         }
         
@@ -51,11 +43,11 @@ namespace TrappedGame.Model.Loader {
         
         // TODO refactor
         public Level CreateLevel() {
-            var levelBuilder = new LevelBuilder(levelName, xSize, ySize);
+            var levelBuilder = new LevelBuilder(LevelName, XSize, YSize);
             var cellFacrory = new CellFactory();
             
-            for(var x = 0; x < xSize; x++) {
-                for (var y = 0; y < ySize; y++) {
+            for(var x = 0; x < XSize; x++) {
+                for (var y = 0; y < YSize; y++) {
                     var symbol = symbols[x, y];
                     if (symbol == DEFAULT_START) {
                         levelBuilder.SetStart(x, y);
