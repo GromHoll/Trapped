@@ -43,6 +43,7 @@ namespace TrappedGame.View.GUI {
 
 			string packName;
 			string packFolder;
+			string levelName;
 
 			foreach (JSONNode pack in json["Packs"].AsArray) {
 				packName   = pack["Name"].Value;
@@ -55,7 +56,8 @@ namespace TrappedGame.View.GUI {
 				}
 
 				foreach(JSONNode level in pack["Levels"].AsArray) {
-					levelsInfo[packName].Add(new LevelT(level["Name"].Value, packFolder + level["Source"].Value));
+					levelName = (level["Name"].Value.Length!=0 ? level["Name"].Value : level["Source"].Value);
+					levelsInfo[packName].Add(new LevelT(levelName, packFolder + level["Source"].Value));
 				}
 			}
 		}
