@@ -26,7 +26,7 @@
       ]
     }, {
       "Name": "Generated #1",
-      "Folder": "Levels/GenLevel_Pack#1/",
+      "Folder": "Levels/GenLevel_Pack_001/",
       "Levels": [
         { "Source": "GenLevel_00" },
         { "Source": "GenLevel_01" },
