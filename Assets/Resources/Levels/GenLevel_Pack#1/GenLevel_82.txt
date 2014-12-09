@@ -1,0 +1,13 @@
+GenLevel_82
+5 5
+A..Xf
+s.Y..
+#..Z.
+.....
+..... 
+4 
+Z:spear on 2 1 0 
+A:laser ulr on 2 1 1 
+Y:spear on 1 1 0 
+X:spear off 2 2 1 
+ 

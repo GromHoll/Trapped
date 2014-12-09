@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-using SimpleJSON;
 using TrappedGame.Main;
 using TrappedGame.Utils;
 using UnityEngine.UI;
@@ -13,7 +9,6 @@ namespace TrappedGame.View.GUI {
 		public GameObject MainMenu;
 		public GameObject Levels;
 		public GameObject Packs;
-
 
 		public GameObject buttonPrefab;
 

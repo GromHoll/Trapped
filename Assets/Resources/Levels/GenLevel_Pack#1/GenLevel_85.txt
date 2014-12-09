@@ -1,0 +1,17 @@
+GenLevel_85
+5 5
+Y.f.A
+.Z..#
+....V
+...sX
+..BWU 
+8 
+Z:spear off 3 2 0 
+A:laser drl off 2 2 0 
+Y:spear on 1 2 0 
+X:spear on 2 1 0 
+W:spear off 2 2 1 
+B:laser ldur off 1 2 0 
+V:spear off 1 2 0 
+U:spear on 2 3 1 
+ 

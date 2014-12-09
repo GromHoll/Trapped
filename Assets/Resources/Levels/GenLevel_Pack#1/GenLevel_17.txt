@@ -1,0 +1,12 @@
+GenLevel_17
+5 4
+Z...s
+.B...
+f#...
+..AY. 
+4 
+A:laser ur off 2 2 0 
+Z:spear on 2 1 1 
+B:laser u on 1 1 0 
+Y:spear off 3 2 1 
+ 

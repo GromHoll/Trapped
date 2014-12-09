@@ -1,0 +1,13 @@
+GenLevel_41
+5 5
+B.Y..
+s....
+.#.Z.
+.....
+.f.A. 
+4 
+A:laser ulr on 3 3 0 
+B:laser ludr off 2 3 0 
+Z:spear off 2 3 0 
+Y:spear on 2 1 1 
+ 

@@ -1,0 +1,13 @@
+GenLevel_76
+5 5
+.C..#
+f.D.B
+..As.
+.....
+..... 
+4 
+A:laser rld off 3 3 1 
+B:laser udrl off 3 3 0 
+C:laser ul off 1 2 0 
+D:laser l on 3 2 0 
+ 

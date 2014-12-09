@@ -1,0 +1,13 @@
+GenLevel_30
+4 5
+s...
+#...
+fZ.X
+.#YW
+.... 
+4 
+Z:spear on 3 1 1 
+Y:spear off 1 1 0 
+X:spear on 1 2 0 
+W:spear off 2 2 1 
+ 

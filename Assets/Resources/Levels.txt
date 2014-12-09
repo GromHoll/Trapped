@@ -1,32 +1,134 @@
 {
-	"Packs" : [
-		{
-			"Name" : "Tutorial",
-			"Folder" : "Levels/",
-			"Levels" : [
-				{
-					"Name" : "Wall",
-					"Source" : "Level1"
-				},
-				{
-					"Name" : "Spear",
-					"Source" : "Level2"
-				},
-				{
-					"Name" : "Laser",
-					"Source" : "Level3"
-				}
-			]
-		},
-		{
-			"Name" : "Elementary",
-			"Folder" : "Levels/",
-			"Levels" : [
-				{
-					"Name" : "Realy? O_o",
-					"Source" : "Level4"
-				}
-			]
-		}
-	]
+  "Packs": [ 
+    {
+	  "Name": "Tutorial",
+      "Folder": "Levels/",
+      "Levels": [
+        { 
+		  "Name": "Wall",
+          "Source": "Level1"
+        }, {
+          "Name": "Spear",
+          "Source": "Level2"
+        }, {
+          "Name": "Laser",
+          "Source": "Level3"
+        }
+      ]
+    }, {
+      "Name": "Elementary",
+      "Folder": "Levels/",
+      "Levels": [
+        {
+          "Name" : "Realy? O_o",
+          "Source": "Level4"
+        }
+      ]
+    }, {
+      "Name": "Generated #1",
+      "Folder": "Levels/GenLevel_Pack#1/",
+      "Levels": [
+        { "Source": "GenLevel_00.txt" },
+        { "Source": "GenLevel_01.txt" },
+        { "Source": "GenLevel_02.txt" },
+        { "Source": "GenLevel_03.txt" },
+        { "Source": "GenLevel_04.txt" },
+        { "Source": "GenLevel_05.txt" },
+        { "Source": "GenLevel_06.txt" },
+        { "Source": "GenLevel_07.txt" },
+        { "Source": "GenLevel_08.txt" },
+        { "Source": "GenLevel_09.txt" },
+        { "Source": "GenLevel_10.txt" },
+        { "Source": "GenLevel_11.txt" },
+        { "Source": "GenLevel_12.txt" },
+        { "Source": "GenLevel_13.txt" },
+        { "Source": "GenLevel_14.txt" },
+        { "Source": "GenLevel_15.txt" },
+        { "Source": "GenLevel_16.txt" },
+        { "Source": "GenLevel_17.txt" },
+        { "Source": "GenLevel_18.txt" },
+        { "Source": "GenLevel_19.txt" },
+        { "Source": "GenLevel_20.txt" },
+        { "Source": "GenLevel_21.txt" },
+        { "Source": "GenLevel_22.txt" },
+        { "Source": "GenLevel_23.txt" },
+        { "Source": "GenLevel_24.txt" },
+        { "Source": "GenLevel_25.txt" },
+        { "Source": "GenLevel_26.txt" },
+        { "Source": "GenLevel_27.txt" },
+        { "Source": "GenLevel_28.txt" },
+        { "Source": "GenLevel_29.txt" },
+        { "Source": "GenLevel_30.txt" },
+        { "Source": "GenLevel_31.txt" },
+        { "Source": "GenLevel_32.txt" },
+        { "Source": "GenLevel_33.txt" },
+        { "Source": "GenLevel_34.txt" },
+        { "Source": "GenLevel_35.txt" },
+        { "Source": "GenLevel_36.txt" },
+        { "Source": "GenLevel_37.txt" },
+        { "Source": "GenLevel_38.txt" },
+        { "Source": "GenLevel_39.txt" },
+        { "Source": "GenLevel_40.txt" },
+        { "Source": "GenLevel_41.txt" },
+        { "Source": "GenLevel_42.txt" },
+        { "Source": "GenLevel_43.txt" },
+        { "Source": "GenLevel_44.txt" },
+        { "Source": "GenLevel_45.txt" },
+        { "Source": "GenLevel_46.txt" },
+        { "Source": "GenLevel_47.txt" },
+        { "Source": "GenLevel_48.txt" },
+        { "Source": "GenLevel_49.txt" },
+        { "Source": "GenLevel_50.txt" },
+        { "Source": "GenLevel_51.txt" },
+        { "Source": "GenLevel_52.txt" },
+        { "Source": "GenLevel_53.txt" },
+        { "Source": "GenLevel_54.txt" },
+        { "Source": "GenLevel_55.txt" },
+        { "Source": "GenLevel_56.txt" },
+        { "Source": "GenLevel_57.txt" },
+        { "Source": "GenLevel_58.txt" },
+        { "Source": "GenLevel_59.txt" },
+        { "Source": "GenLevel_60.txt" },
+        { "Source": "GenLevel_61.txt" },
+        { "Source": "GenLevel_62.txt" },
+        { "Source": "GenLevel_63.txt" },
+        { "Source": "GenLevel_64.txt" },
+        { "Source": "GenLevel_65.txt" },
+        { "Source": "GenLevel_66.txt" },
+        { "Source": "GenLevel_67.txt" },
+        { "Source": "GenLevel_68.txt" },
+        { "Source": "GenLevel_69.txt" },
+        { "Source": "GenLevel_70.txt" },
+        { "Source": "GenLevel_71.txt" },
+        { "Source": "GenLevel_72.txt" },
+        { "Source": "GenLevel_73.txt" },
+        { "Source": "GenLevel_74.txt" },
+        { "Source": "GenLevel_75.txt" },
+        { "Source": "GenLevel_76.txt" },
+        { "Source": "GenLevel_77.txt" },
+        { "Source": "GenLevel_78.txt" },
+        { "Source": "GenLevel_79.txt" },
+        { "Source": "GenLevel_80.txt" },
+        { "Source": "GenLevel_81.txt" },
+        { "Source": "GenLevel_82.txt" },
+        { "Source": "GenLevel_83.txt" },
+        { "Source": "GenLevel_84.txt" },
+        { "Source": "GenLevel_85.txt" },
+        { "Source": "GenLevel_86.txt" },
+        { "Source": "GenLevel_87.txt" },
+        { "Source": "GenLevel_88.txt" },
+        { "Source": "GenLevel_89.txt" },
+        { "Source": "GenLevel_90.txt" },
+        { "Source": "GenLevel_91.txt" },
+        { "Source": "GenLevel_92.txt" },
+        { "Source": "GenLevel_93.txt" },
+        { "Source": "GenLevel_94.txt" },
+        { "Source": "GenLevel_95.txt" },
+        { "Source": "GenLevel_96.txt" },
+        { "Source": "GenLevel_97.txt" },
+        { "Source": "GenLevel_98.txt" },
+        { "Source": "GenLevel_99.txt" }
+      ]
+    }
+  ]
 }

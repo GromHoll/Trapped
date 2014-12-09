@@ -1,0 +1,14 @@
+GenLevel_37
+4 5
+sYA.
+#..#
+C.f.
+..B.
+.Z.. 
+5 
+A:laser ur off 1 2 0 
+B:laser ud off 1 2 0 
+Z:spear on 3 2 2 
+C:laser ul off 1 3 0 
+Y:spear off 1 3 1 
+ 

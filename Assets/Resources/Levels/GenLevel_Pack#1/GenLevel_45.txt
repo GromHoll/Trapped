@@ -1,0 +1,10 @@
+GenLevel_45
+5 4
+s....
+...Z.
+###..
+f.Y.. 
+2 
+Z:spear on 1 1 0 
+Y:spear on 2 3 1 
+ 

@@ -1,0 +1,13 @@
+GenLevel_74
+5 5
+..Ys.
+f.##X
+....Z
+..#..
+A.... 
+4 
+Z:spear on 3 3 0 
+Y:spear on 2 3 1 
+A:laser u off 2 1 0 
+X:spear on 2 1 0 
+ 

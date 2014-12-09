@@ -1,0 +1,13 @@
+GenLevel_92
+4 5
+.Zf.
+..A.
+....
+s...
+Y..X 
+4 
+Z:spear off 3 2 1 
+Y:spear off 3 2 1 
+X:spear off 2 3 1 
+A:laser rudl on 2 3 1 
+ 

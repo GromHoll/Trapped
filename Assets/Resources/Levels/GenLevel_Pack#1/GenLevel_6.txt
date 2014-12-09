@@ -1,0 +1,13 @@
+GenLevel_6
+4 5
+....
+..Z.
+sA..
+Y...
+f.X. 
+4 
+Z:spear on 2 1 1 
+Y:spear on 3 1 1 
+X:spear off 2 1 0 
+A:laser lurd off 1 2 0 
+ 

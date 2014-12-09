@@ -1,0 +1,12 @@
+GenLevel_4
+5 5
+....#
+Zs#..
+.#.A.
+B....
+#.f## 
+3 
+Z:spear on 2 1 1 
+A:laser lu off 2 3 0 
+B:laser ul off 2 3 0 
+ 

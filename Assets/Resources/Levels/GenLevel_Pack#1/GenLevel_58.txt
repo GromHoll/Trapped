@@ -1,0 +1,13 @@
+GenLevel_58
+5 5
+A....
+f.s..
+..B..
+....Y
+Z...# 
+4 
+A:laser lurd off 2 2 0 
+B:laser ur off 2 3 0 
+Z:spear off 2 2 0 
+Y:spear on 2 3 1 
+ 

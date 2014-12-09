@@ -1,0 +1,13 @@
+GenLevel_14
+5 5
+.....
+.Y#..
+...A.
+..B..
+f..Zs 
+4 
+Z:spear on 3 3 0 
+A:laser rud off 1 3 0 
+Y:spear off 1 3 0 
+B:laser ldu off 2 1 0 
+ 

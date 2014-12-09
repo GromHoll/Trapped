@@ -1,0 +1,13 @@
+GenLevel_35
+4 5
+.f..
+#BA.
+....
+....
+.sZY 
+4 
+A:laser lur on 3 3 0 
+Z:spear off 2 3 1 
+Y:spear on 1 2 0 
+B:laser rd off 1 1 0 
+ 

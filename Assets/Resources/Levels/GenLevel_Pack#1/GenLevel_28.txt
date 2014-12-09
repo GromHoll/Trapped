@@ -1,0 +1,12 @@
+GenLevel_28
+4 5
+....
+..Zs
+.Y..
+#..#
+f..A 
+3 
+Z:spear on 1 2 0 
+A:laser udl off 1 3 0 
+Y:spear off 1 1 0 
+ 

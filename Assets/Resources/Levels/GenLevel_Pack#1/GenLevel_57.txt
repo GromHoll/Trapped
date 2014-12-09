@@ -1,0 +1,15 @@
+GenLevel_57
+5 5
+.....
+...Y.
+.#Z#.
+.fDAs
+.BC.# 
+6 
+Z:spear off 2 3 2 
+Y:spear off 1 2 0 
+A:laser dl on 3 1 0 
+B:laser ur on 1 3 0 
+C:laser lrud on 2 1 0 
+D:laser rdl off 1 2 0 
+ 

@@ -1,0 +1,13 @@
+GenLevel_86
+4 5
+...#
+Z#.X
+.#.s
+.A..
+.f.Y 
+4 
+A:laser d on 3 2 1 
+Z:spear off 1 3 0 
+Y:spear off 2 3 2 
+X:spear on 2 1 0 
+ 

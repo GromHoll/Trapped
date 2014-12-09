@@ -1,0 +1,10 @@
+GenLevel_68
+5 4
+.....
+Z.A..
+..#..
+f#s.. 
+2 
+A:laser url on 2 3 0 
+Z:spear off 3 2 1 
+ 

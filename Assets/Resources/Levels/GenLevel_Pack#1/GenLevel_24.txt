@@ -1,0 +1,16 @@
+GenLevel_24
+5 5
+..f..
+#.AC.
+Y.s..
+X.W.Z
+B.... 
+7 
+Z:spear off 2 3 0 
+Y:spear on 3 1 1 
+A:laser durl off 2 2 0 
+B:laser dul off 2 1 0 
+X:spear off 2 3 0 
+W:spear off 3 1 0 
+C:laser ru off 2 3 1 
+ 

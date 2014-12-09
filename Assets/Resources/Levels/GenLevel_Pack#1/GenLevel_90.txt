@@ -1,0 +1,13 @@
+GenLevel_90
+5 5
+.....
+Z#Bf.
+.#...
+Y..##
+s...A 
+4 
+A:laser rd off 2 1 0 
+Z:spear off 3 2 1 
+B:laser dur off 1 2 0 
+Y:spear off 1 2 1 
+ 

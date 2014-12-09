@@ -1,0 +1,14 @@
+GenLevel_75
+4 5
+f..Z
+##YV
+..X.
+...W
+s... 
+5 
+Z:spear on 2 3 0 
+Y:spear on 2 1 1 
+X:spear on 3 3 2 
+W:spear off 1 3 0 
+V:spear off 2 2 1 
+ 

@@ -1,0 +1,15 @@
+GenLevel_80
+5 5
+AWf.#
+.#.Bs
+...#.
+.YX#Z
+..... 
+6 
+Z:spear off 1 3 0 
+A:laser lu off 2 2 0 
+Y:spear off 2 2 0 
+X:spear off 2 3 2 
+W:spear on 2 2 1 
+B:laser rd off 1 1 0 
+ 

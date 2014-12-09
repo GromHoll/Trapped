@@ -1,0 +1,12 @@
+GenLevel_60
+5 4
+.A..f
+..s..
+.BZ..
+.Y... 
+4 
+A:laser lrd off 2 2 0 
+Z:spear on 3 1 1 
+B:laser rd off 3 2 1 
+Y:spear on 1 2 0 
+ 

@@ -1,0 +1,12 @@
+GenLevel_47
+5 5
+....#
+.B...
+..#..
+.f#..
+.AZ.s 
+3 
+A:laser ld on 3 2 0 
+Z:spear on 3 1 0 
+B:laser lur off 1 2 0 
+ 

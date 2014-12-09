@@ -1,0 +1,15 @@
+GenLevel_63
+5 5
+....f
+.....
+.VYZA
+.W...
+.s.X. 
+6 
+Z:spear on 3 1 2 
+A:laser ur on 3 2 1 
+Y:spear off 1 1 0 
+X:spear off 1 3 2 
+W:spear off 2 2 1 
+V:spear off 2 3 2 
+ 

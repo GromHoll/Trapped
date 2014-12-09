@@ -1,0 +1,12 @@
+GenLevel_5
+4 5
+....
+....
+.BA.
+fZs.
+.#.. 
+3 
+A:laser l on 3 2 0 
+B:laser dl on 2 1 0 
+Z:spear off 1 2 0 
+ 

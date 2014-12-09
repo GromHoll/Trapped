@@ -1,0 +1,9 @@
+GenLevel_7
+5 4
+...#f
+..A..
+s..#.
+#.... 
+1 
+A:laser lrud on 1 2 0 
+ 

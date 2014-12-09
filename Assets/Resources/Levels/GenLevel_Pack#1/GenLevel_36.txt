@@ -1,0 +1,13 @@
+GenLevel_36
+5 5
+#...s
+.Z##.
+.....
+A...B
+f..Y. 
+4 
+Z:spear on 2 1 1 
+A:laser ruld on 2 2 1 
+B:laser r off 2 3 1 
+Y:spear off 1 2 1 
+ 

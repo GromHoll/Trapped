@@ -1,0 +1,11 @@
+GenLevel_53
+4 5
+.s..
+#...
+#A.Z
+.f#.
+.... 
+2 
+A:laser rlud off 1 2 0 
+Z:spear off 2 1 0 
+ 

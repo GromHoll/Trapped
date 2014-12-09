@@ -1,0 +1,11 @@
+GenLevel_0
+4 5
+A.f#
+...B
+....
+#...
+s... 
+2 
+A:laser drul off 3 3 2 
+B:laser lru on 3 1 1 
+ 

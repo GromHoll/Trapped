@@ -1,0 +1,15 @@
+GenLevel_67
+5 5
+.f#.X
+.W...
+YB..s
+ZA...
+.#... 
+6 
+A:laser dlu off 3 2 1 
+B:laser uld off 2 1 0 
+Z:spear on 3 2 0 
+Y:spear on 2 1 1 
+X:spear on 3 3 0 
+W:spear on 3 2 1 
+ 

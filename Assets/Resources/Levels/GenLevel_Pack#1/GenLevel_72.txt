@@ -1,0 +1,12 @@
+GenLevel_72
+5 5
+#.f..
+.....
+..C#B
+..A..
+....s 
+3 
+A:laser lru on 2 3 1 
+B:laser ru on 1 3 0 
+C:laser dulr off 1 2 0 
+ 
