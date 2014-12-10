@@ -4,6 +4,8 @@ using UnityEngine;
 namespace TrappedGame.Control.Hero {
     public class HeroSwipeInput : HeroInput {
 
+        public static readonly float MIN_SWIPE_DISTANCE = 75;
+
         private Vector2 startPosition;
         private bool isStarted = false;
 
@@ -20,9 +22,14 @@ namespace TrappedGame.Control.Hero {
                 if (!isStarted) {
                     return NO_MOVEMENT;
                 }
-
+                
                 var finishPosition = touch.position;
                 var delta = finishPosition - startPosition;
+                if (delta.magnitude < MIN_SWIPE_DISTANCE) {
+                    return NO_MOVEMENT;
+                }
+
+
                 var angle = Math.Atan2(delta.y, delta.x) * 57.29578f;
                 
                 if (angle > -30 && angle < 30) {
