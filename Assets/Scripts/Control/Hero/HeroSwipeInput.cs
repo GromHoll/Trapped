@@ -29,7 +29,6 @@ namespace TrappedGame.Control.Hero {
                     return NO_MOVEMENT;
                 }
 
-
                 var angle = Math.Atan2(delta.y, delta.x) * 57.29578f;
                 
                 if (angle > -30 && angle < 30) {

@@ -18,7 +18,7 @@ namespace TrappedGame.Model {
         }
 
         public bool IsWin() {
-            return Hero.X == Level.FinishX && Hero.Y == Level.FinishY;
+            return !Hero.IsDead && Hero.X == Level.FinishX && Hero.Y == Level.FinishY;
         }
 
         public int GetScore() {
