@@ -1,8 +1,9 @@
 ﻿using TrappedGame.Model.Cells;
+using TrappedGame.View.Sync;
 using UnityEngine;
 
 namespace TrappedGame.View.Controllers {
-    public class SpearController : MonoBehaviour {
+    public class SpearController : MonoBehaviour, ISyncGameObject {
 
         public static readonly string STATUS_KEY = "Status";
 
@@ -29,6 +30,11 @@ namespace TrappedGame.View.Controllers {
 
         private bool GetStatus() {
             return cell != null && cell.IsDeadly();
+        }
+
+        public bool IsSync() {
+            var currentState = aminator.GetCurrentAnimatorStateInfo(0);
+            return currentState.IsName("Disabled") || currentState.IsName("Enabled");
         }
     }
 }

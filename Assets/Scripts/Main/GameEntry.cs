@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
 using TrappedGame.Model.Loader;
@@ -6,10 +7,11 @@ using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
 using TrappedGame.View.Graphic;
 using TrappedGame.View.GUI;
+using TrappedGame.View.Sync;
 using UnityEngine;
 
 namespace TrappedGame.Main {
-    public class GameEntry : MonoBehaviour {
+    public class GameEntry : MonoBehaviour, ISyncGameObject {
 
         public CellGOFactory cellGameObjectFactory;
         public PathGOFactory pathGoFactory;
@@ -30,6 +32,8 @@ namespace TrappedGame.Main {
     	public GameObject finishPrefab;
 
         private HeroController heroController;
+
+        private IList<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
 
         void Start() {        
             var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
@@ -52,11 +56,15 @@ namespace TrappedGame.Main {
             cellGameObjectFactory.CreateEmptyCells(level);
             cellGameObjectFactory.CreateWallCells(level);
             cellGameObjectFactory.CreateLaserCells(level);
-            cellGameObjectFactory.CreateSpearCells(level);
+            var spears = cellGameObjectFactory.CreateSpearCells(level);
+            foreach (var spearController in spears) {
+                syncGameObjects.Add(spearController);
+            }
                         
             var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.StartX, level.StartY, level), gameObject);
             heroController = hero.GetComponent<HeroController>();
             heroController.Game = game;
+            syncGameObjects.Add(heroController);
 
             GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.FinishX, level.FinishY, level), gameObject);
             foreach (var coord in level.Bonuses) {
@@ -71,6 +79,10 @@ namespace TrappedGame.Main {
             winMenu.Hide();
         }
 
+        public bool IsSync() {
+            return syncGameObjects.All(sync => sync.IsSync());
+        }
+
         void Update() {
     		if (!game.IsWin()) {
                 UpdateInput();
@@ -82,9 +94,10 @@ namespace TrappedGame.Main {
     	}
 
         private void UpdateInput() {
-            if (heroController.IsMoving()) return;
-            var heroMovement = heroInput.GetMovement();
-            heroMovement.MoveHeroInGame(game);
+            if (IsSync()) {
+                var heroMovement = heroInput.GetMovement();
+                heroMovement.MoveHeroInGame(game);
+            }
         }
 
         private void UpdateGraphics() {
@@ -122,7 +135,6 @@ namespace TrappedGame.Main {
             float levelScale = levelXf / levelYf;
 
             float scale = (screenScale > levelScale) ? levelXf : levelYf / screenScale;
-
             Camera.main.orthographicSize = scale / 2f;
         }
     

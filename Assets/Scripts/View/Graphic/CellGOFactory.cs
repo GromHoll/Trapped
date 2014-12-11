@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
@@ -56,15 +57,18 @@ namespace TrappedGame.View.Graphic {
             }
         }
 
-        public void CreateSpearCells(Level level) {
+        public IList<SpearController> CreateSpearCells(Level level) {
+            IList<SpearController> spears = new List<SpearController>();
             foreach (Cell cell in level.Cells) {
                 //TODO Add to level different cell accesses
                 if (cell.CellType == CellType.SPEAR) {
                     var spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
                     var controller = spearObject.GetComponent<SpearController>();
                     controller.Cell = (SpearCell) cell;
+                    spears.Add(controller);
                 }
             }
+            return spears;
         }
 
         public void CreateWallCells(Level level) {

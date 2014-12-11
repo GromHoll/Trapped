@@ -1,10 +1,11 @@
 ﻿using TrappedGame.Model;
 using TrappedGame.Model.Listeners;
 using TrappedGame.Utils;
+using TrappedGame.View.Sync;
 using UnityEngine;
 
 namespace TrappedGame.View.Controllers {
-    public class HeroController : MonoBehaviour, IHeroMovementListener {
+    public class HeroController : MonoBehaviour, IHeroMovementListener, ISyncGameObject {
         
         public static readonly string IS_DEAD_KEY = "IsDead";
         
@@ -33,8 +34,8 @@ namespace TrappedGame.View.Controllers {
             }
         }
 
-        public bool IsMoving() {
-            return targetPosition != gameObject.transform.position;
+        public bool IsSync() {
+            return targetPosition == gameObject.transform.position;    
         }
 
         private bool IsDead() {
@@ -42,7 +43,7 @@ namespace TrappedGame.View.Controllers {
         }
 
         private void UpdatePosition() {
-            if (IsMoving()) {
+            if (!IsSync()) {
                 var currentPosition = gameObject.transform.position;
                 var direction = targetPosition - currentPosition;
                 direction.Normalize();
