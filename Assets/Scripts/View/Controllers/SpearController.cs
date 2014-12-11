@@ -34,6 +34,7 @@ namespace TrappedGame.View.Controllers {
 
         public bool IsSync() {
             // TODO use constant
+            if (aminator == null) return false;
             var currentState = aminator.GetCurrentAnimatorStateInfo(0);
             return currentState.IsName("Disabled") || currentState.IsName("Enabled");
         }

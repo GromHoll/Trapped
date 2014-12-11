@@ -126,15 +126,17 @@ namespace TrappedGame.Main {
         } 
 
         private void UpdateCameraScale() {
-            float screenXf = Screen.width;
-            float screenYf = Screen.height;
-            float screenScale = screenXf / screenYf;
+            float screenX = Screen.width;
+            float screenY = Screen.height;
+            float screenScale = screenX / screenY;
+  
+            float levelX = level.SizeX;
+            float levelY = level.SizeY;  
 
-            float levelXf = level.SizeX;
-            float levelYf = level.SizeY;
-            float levelScale = levelXf / levelYf;
+            float xScale = screenX/levelX;
+            float yScale = screenY/levelY;
 
-            float scale = (screenScale > levelScale) ? levelXf : levelYf / screenScale;
+            float scale = xScale >= yScale ? levelX : (levelY + 1)/screenScale;
             Camera.main.orthographicSize = scale / 2f;
         }
     
