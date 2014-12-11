@@ -10,6 +10,9 @@ namespace TrappedGame.View.GUI {
 		public GameObject Levels;
 		public GameObject Packs;
 
+		public GameObject HeaderPanel;
+		public GameObject ScrollBar;
+
 		public GameObject buttonPrefab;
 
 		LevelInfoLoader levelInfo;
@@ -29,6 +32,8 @@ namespace TrappedGame.View.GUI {
 			}
 
 			Show(Packs);
+			ScrollBar.SetActive(false);
+			HeaderPanel.SetActive(true);
 		}
 
 		public void OpenLevels(string packName) {
@@ -39,6 +44,8 @@ namespace TrappedGame.View.GUI {
 			}
 
 			Show(Levels);
+			ScrollBar.SetActive(true);
+			HeaderPanel.SetActive(true);
 		}
 
 		public void Back() {
@@ -46,6 +53,8 @@ namespace TrappedGame.View.GUI {
 				OpenPacks ();
 			} else if (Packs.activeSelf) {
 				Show (MainMenu);
+				HeaderPanel.SetActive(false);
+				ScrollBar.SetActive(false);
 			} else {
 				Quit();
 			}
