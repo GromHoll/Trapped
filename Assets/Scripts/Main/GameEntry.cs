@@ -24,8 +24,6 @@ namespace TrappedGame.Main {
         private WinMenu winMenu;
 		public GameObject winMenuObject;
                 
-        public Camera gameCamera;
-	
     	public GameObject heroPrefab;
         public GameObject bonusPrefab;
         public GameObject timeBonusPrefab;
@@ -39,8 +37,8 @@ namespace TrappedGame.Main {
             game = new Game(level);
             
             heroInput = CreateInput();
-    		CreateLevelObjects();
-    	}
+            CreateLevelObjects();
+        }
 
         private HeroInput CreateInput() {
             // TODO Move to factory when we will have more platforms or input styles
@@ -80,7 +78,7 @@ namespace TrappedGame.Main {
             } else {
                 ShowWinWindow();
             }
-            UpdateCamera();
+            UpdateCameraScale();
     	}
 
         private void UpdateInput() {
@@ -114,19 +112,18 @@ namespace TrappedGame.Main {
             }
         } 
 
-        // TODO Find good way for scaling camera
-        private void UpdateCamera() {
-            if (gameCamera == null) return;
-            
-            var screenXf = Screen.width;
-            var screenYf = Screen.height;
-            var screenScale = screenXf/screenYf;
-            var levelXf = level.SizeX;
-            var levelYf = level.SizeY;
-            var levelScale = levelXf/levelYf;
+        private void UpdateCameraScale() {
+            float screenXf = Screen.width;
+            float screenYf = Screen.height;
+            float screenScale = screenXf / screenYf;
 
-            var scale = (screenScale > levelScale) ? levelXf : levelYf/screenScale;
-            gameCamera.orthographicSize = scale/2f;
+            float levelXf = level.SizeX;
+            float levelYf = level.SizeY;
+            float levelScale = levelXf / levelYf;
+
+            float scale = (screenScale > levelScale) ? levelXf : levelYf / screenScale;
+
+            Camera.main.orthographicSize = scale / 2f;
         }
     
         private void ShowWinWindow() {      
