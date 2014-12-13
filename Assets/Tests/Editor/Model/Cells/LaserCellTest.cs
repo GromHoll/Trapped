@@ -1,9 +1,7 @@
 using NUnit.Framework;
 using TrappedGame.Model.Cells;
-using UnityEngine;
-using System;
 
-namespace TrappedGame.UnitTests {
+namespace TrappedGame.UnitTests.Model.Cells {
     [TestFixture]
     public class LaserCellTest {
         [Test]
@@ -30,6 +28,5 @@ namespace TrappedGame.UnitTests {
             Assert.IsTrue(laser.IsBlocked());
             Assert.IsFalse(laser.IsDeadly());
         }
-
     }
 }

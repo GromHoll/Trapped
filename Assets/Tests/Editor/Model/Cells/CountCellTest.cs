@@ -1,8 +1,8 @@
+using System;
 using NUnit.Framework;
 using TrappedGame.Model.Cells;
-using System;
 
-namespace TrappedGame.UnitTests {
+namespace TrappedGame.UnitTests.Model.Cells {
     [TestFixture]
     public class CountCellTest {
         [Test]
