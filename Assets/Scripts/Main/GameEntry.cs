@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
-using TrappedGame.Model.Loader;
+using TrappedGame.Model.LevelLoader;
+using TrappedGame.Model.LevelLoader.Ascii;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
 using TrappedGame.View.Graphic;
@@ -16,7 +17,7 @@ namespace TrappedGame.Main {
         public CellGOFactory cellGameObjectFactory;
         public PathGOFactory pathGoFactory;
 
-        private readonly LevelLoader loader = new LevelLoader();
+        private readonly ILevelLoader loader = new AsciiLevelLoader();
         private HeroInput heroInput;
         private Game game;
         private Level level;

@@ -2,7 +2,8 @@ using NUnit.Framework;
 using System;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
-using TrappedGame.Model.Loader;
+using TrappedGame.Model.LevelLoader;
+using TrappedGame.Model.LevelLoader.Ascii;
 
 namespace TrappedGame.UnitTests {
     [TestFixture]
@@ -12,13 +13,13 @@ namespace TrappedGame.UnitTests {
 
         [Test]
         public void LoadTest() {
-            LevelLoader levelLoader = new LevelLoader();
+			AsciiLevelLoader levelLoader = new AsciiLevelLoader();
             Level level = levelLoader.LoadLevel(TEST_LEVEL_NAME);
 
             Assert.AreEqual(5, level.SizeX);
             Assert.AreEqual(4, level.SizeY);
 
-            Assert.AreEqual(0, level.StartX);
+            Assert.AreEqual(1, level.StartX);
             Assert.AreEqual(3, level.StartY);
             
             Assert.AreEqual(4, level.FinishX);

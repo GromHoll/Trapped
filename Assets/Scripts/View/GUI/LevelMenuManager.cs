@@ -18,6 +18,9 @@ namespace TrappedGame.View.GUI {
 		LevelInfoLoader levelInfo;
 
 		void Start() {
+			TrappedGame.Model.LevelLoader.ILevelLoader loader = new TrappedGame.Model.LevelLoader.Json.JsonLevelLoader();
+			loader.LoadLevel("JsonLevel");
+
 			levelInfo = new LevelInfoLoader();
 
 			Levels.SetActive(false);
