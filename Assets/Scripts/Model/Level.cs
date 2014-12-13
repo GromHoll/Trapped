@@ -27,7 +27,6 @@ namespace TrappedGame.Model {
         public int FinishY { get { return finish.y; } }
 
         public IList<IntVector2> Bonuses { get; private set; }
-        public IList<LaserCell> LaserCells { get; private set; }
         public IDictionary<IntVector2, LevelTick> TimeBonuses { get; private set; }
         
         public Level(LevelBuilder builder) {
@@ -36,7 +35,6 @@ namespace TrappedGame.Model {
             finish = builder.GetFinish();
             cells = builder.GetCells();
 
-            LaserCells = builder.GetLaserCells();
             Bonuses = builder.GetBonuses();
             TimeBonuses = builder.GetTimeBonuses();
 
@@ -49,7 +47,7 @@ namespace TrappedGame.Model {
 
         private void CreateLasers() {
             var laserHelper = new LaserHelper();
-            foreach (var laser in LaserCells) {
+            foreach (var laser in GetCells<LaserCell>()) {
                 laser.CreateLaserLines(laserHelper, this);
             }
         }
@@ -66,6 +64,10 @@ namespace TrappedGame.Model {
             }
         }
 
+        public IList<T> GetCells<T>() where T: Cell {
+            return Cells.OfType<T>().ToList();
+        }
+
         public LevelTick GetLevelTick(int x, int y) {
             var coord = new IntVector2(x, y);
             return TimeBonuses.ContainsKey(coord) ? TimeBonuses[coord] : LevelTick.DEFAULT_LEVEL_TICK;
@@ -73,7 +75,7 @@ namespace TrappedGame.Model {
 
         public bool IsDangerCell(int x, int y) {            
             var cell = GetCell(x, y);
-            return cell.IsDeadly() || LaserCells.Any(laser => laser.IsDeadlyFor(x, y));
+            return cell.IsDeadly() || GetCells<LaserCell>().Any(laser => laser.IsDeadlyFor(x, y));
         }
 
         public Cell GetCell(int x, int y) {

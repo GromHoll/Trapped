@@ -66,17 +66,7 @@ namespace TrappedGame.Model.LevelUtils {
         public Cell[,] GetCells() {
             return cells;
         }
-
-        public IList<LaserCell> GetLaserCells() {
-            IList<LaserCell> lasers = new List<LaserCell>();
-            foreach (Cell cell in cells) {
-                if (cell.CellType == CellType.LASER) {
-                    lasers.Add((LaserCell) cell);
-                }
-            }
-            return lasers;
-        }
-
+        
         public IList<IntVector2> GetBonuses() {
             return bonuses;
         }

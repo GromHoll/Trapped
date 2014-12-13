@@ -59,28 +59,23 @@ namespace TrappedGame.View.Graphic {
 
         public IList<SpearController> CreateSpearCells(Level level) {
             IList<SpearController> spears = new List<SpearController>();
-            foreach (Cell cell in level.Cells) {
-                //TODO Add to level different cell accesses
-                if (cell.CellType == CellType.SPEAR) {
-                    var spearObject = CreateCellGameObject(cell, level, spearCellsFolder);
-                    var controller = spearObject.GetComponent<SpearController>();
-                    controller.Cell = (SpearCell) cell;
-                    spears.Add(controller);
-                }
+            foreach (var spear in level.GetCells<SpearCell>()) {
+                var spearObject = CreateCellGameObject(spear, level, spearCellsFolder);
+                var controller = spearObject.GetComponent<SpearController>();
+                controller.Cell = spear;
+                spears.Add(controller);
             }
             return spears;
         }
 
         public void CreateWallCells(Level level) {
-            foreach (Cell cell in level.Cells) {
-                if (cell.CellType == CellType.WALL) {
-                    CreateCellGameObject(cell, level, wallCellsFolder);
-                }
+            foreach (var wall in level.GetCells<WallCell>()) {
+                CreateCellGameObject(wall, level, wallCellsFolder);
             }
         }
 
         public void CreateLaserCells(Level level) {
-            foreach (var laserCell in level.LaserCells) {
+            foreach (var laserCell in level.GetCells<LaserCell>()) {
                 var laserObject = CreateCellGameObject(laserCell, level, laserCellsFolder);
                 var controller = laserObject.GetComponent<LaserController>();
                 controller.Cell = laserCell;
