@@ -6,9 +6,9 @@ using SimpleJSON;
 namespace TrappedGame.Model.LevelLoader.Json {
 	public class DefaultCellBuilder {
 		public virtual void MakeCell(JSONNode description, LevelBuilder builder, IntVector2 coordinate) {
-			char element = description["element"].Value.ToCharArray()[0];
+			string element = description["element"].Value;
 
-			switch(element) {
+			switch(element[0]) {
 				case '.' : MakeEmpty(builder, coordinate);     break;
 				case '#' : MakeWall(builder, coordinate);      break;
 				case 's' : MakeStart(builder, coordinate);     break;

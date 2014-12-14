@@ -54,7 +54,9 @@ namespace TrappedGame.Model.LevelLoader.Json {
 					if(descriptions.ContainsKey(element)) {
 						cellBuilder.MakeCell(descriptions[element], builder, new IntVector2(x, y));
 					} else {
-						defaultCellBuilder.MakeCell(descriptions[element], builder, new IntVector2(x, y));
+						JSONNode nodeElement = new JSONClass();
+						nodeElement["element"] = element.ToString();
+						defaultCellBuilder.MakeCell(nodeElement, builder, new IntVector2(x, y));
 					}
 				}
 			}

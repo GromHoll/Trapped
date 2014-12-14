@@ -37,7 +37,11 @@ namespace TrappedGame.Model.LevelLoader.Json {
 			int onPeriod = -1, offPeriod = -1, currentPeriod = -1;
 			bool isOn = false;
 			
-			ReadPeriodInfo(onPeriod, offPeriod, currentPeriod, isOn);
+			onPeriod = cellDescription["onPeriod"].AsInt;
+			offPeriod = cellDescription["offPeriod"].AsInt;
+			currentPeriod = cellDescription["currentPeriod"].AsInt;
+			
+			isOn = (cellDescription ["currentState"].Value == "on" ? true : false);
 
 			bool[] sides = new bool[4];
 			int sideNum = 0;
@@ -54,7 +58,11 @@ namespace TrappedGame.Model.LevelLoader.Json {
 			int onPeriod = -1, offPeriod = -1, currentPeriod = -1;
 			bool isOn = false;
 
-			ReadPeriodInfo(onPeriod, offPeriod, currentPeriod, isOn);
+			onPeriod = cellDescription["onPeriod"].AsInt;
+			offPeriod = cellDescription["offPeriod"].AsInt;
+			currentPeriod = cellDescription["currentPeriod"].AsInt;
+			
+			isOn = (cellDescription ["currentState"].Value == "on" ? true : false);
 
 			builder.AddCell(new SpearCell(coordinate.x, coordinate.y, onPeriod, offPeriod, currentPeriod, isOn));
 		}

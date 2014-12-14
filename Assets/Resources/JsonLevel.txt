@@ -2,25 +2,25 @@
     "name" : "levelName",
     "size" : { "x" : "3", "y" : "3" } ,
     "map"  : [
-        "L#t",
-        "fbc",
+        "t#L",
+        "fbs",
         "qrS"
     ],
     "description" : [
         {
             "element"       : "q",
             "type"          : "SPEAR",
-            "onPeriod"      : 2,
-            "offPeriod"     : 2,
-            "currentState"  : on,
-            "currentPeriod" : 1
+            "onPeriod"      : "2",
+            "offPeriod"  : "2",
+            "currentState"  : "on",
+            "currentPeriod" : "1"
         }, {
             "element"       : "t",
             "type"          : "LASER",
-            "onPeriod"      : 2,
-            "offPeriod"     : 2,
-            "currentState"  : on,
-            "currentPeriod" : 1,
+            "onPeriod"      : "2",
+            "offPeriod"     : "2",
+            "currentState"  : "on",
+            "currentPeriod" : "1",
             "dangerousSide" : ["0", "0", "1", "0"]
         }, {
             "element" : "r",
