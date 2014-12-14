@@ -5,7 +5,7 @@ using TrappedGame.Model.Cells;
 using TrappedGame.Model.LevelLoader;
 using TrappedGame.Model.LevelLoader.Ascii;
 
-namespace TrappedGame.UnitTests {
+namespace TrappedGame.UnitTests.Model.Loader {
     [TestFixture]
     public class LevelLoaderTest {
 

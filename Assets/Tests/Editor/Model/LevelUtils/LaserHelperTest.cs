@@ -1,10 +1,9 @@
 using NUnit.Framework;
-using System;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.LevelUtils;
 
-namespace TrappedGame.UnitTests {
+namespace TrappedGame.UnitTests.Model.LevelUtils {
     [TestFixture]
     public class LaserHelperTest {
         
