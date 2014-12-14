@@ -3,7 +3,6 @@ using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
 using TrappedGame.Model.LevelLoader;
-using TrappedGame.Model.LevelLoader.Json;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
 using TrappedGame.View.Graphic;
@@ -17,7 +16,7 @@ namespace TrappedGame.Main {
         public CellGOFactory cellGameObjectFactory;
         public PathGOFactory pathGoFactory;
 
-        private readonly ILevelLoader loader = new JsonLevelLoader();
+        private ILevelLoader loader;
         private HeroInput heroInput;
         private Game game;
         private Level level;
@@ -36,8 +35,9 @@ namespace TrappedGame.Main {
 
         private IList<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
 
-        void Start() {        
+        void Start() {   
 			var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
+			loader = LevelLoaderFactory.GetLoader(levelName);
             level = loader.LoadLevel(levelName);
 
             game = new Game(level);
