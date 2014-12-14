@@ -34,14 +34,10 @@ namespace TrappedGame.Model.LevelLoader.Json {
 		}
 
 		protected override void MakeLaser(LevelBuilder builder, IntVector2 coordinate) {
-			int onPeriod = -1, offPeriod = -1, currentPeriod = -1;
-			bool isOn = false;
+			int onPeriod, offPeriod, currentPeriod;
+			bool isOn;
 			
-			onPeriod = cellDescription["onPeriod"].AsInt;
-			offPeriod = cellDescription["offPeriod"].AsInt;
-			currentPeriod = cellDescription["currentPeriod"].AsInt;
-			
-			isOn = (cellDescription ["currentState"].Value == "on" ? true : false);
+			ReadPeriodInfo(out onPeriod, out offPeriod, out currentPeriod, out isOn);
 
 			bool[] sides = new bool[4];
 			int sideNum = 0;
@@ -55,14 +51,10 @@ namespace TrappedGame.Model.LevelLoader.Json {
 		}
 
 		protected override void MakeSpear(LevelBuilder builder, IntVector2 coordinate) {
-			int onPeriod = -1, offPeriod = -1, currentPeriod = -1;
-			bool isOn = false;
-
-			onPeriod = cellDescription["onPeriod"].AsInt;
-			offPeriod = cellDescription["offPeriod"].AsInt;
-			currentPeriod = cellDescription["currentPeriod"].AsInt;
+			int onPeriod, offPeriod, currentPeriod;
+			bool isOn;
 			
-			isOn = (cellDescription ["currentState"].Value == "on" ? true : false);
+			ReadPeriodInfo(out onPeriod, out offPeriod, out currentPeriod, out isOn);
 
 			builder.AddCell(new SpearCell(coordinate.x, coordinate.y, onPeriod, offPeriod, currentPeriod, isOn));
 		}
@@ -74,7 +66,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
 			builder.AddTimeBonus(coordinate, new LevelTick(levelTickNum));
 		}
 
-		private void ReadPeriodInfo(int onPeriod, int offPeriod, int currentPeriod, bool isOn) {
+		private void ReadPeriodInfo(out int onPeriod, out int offPeriod, out int currentPeriod, out bool isOn) {
 			onPeriod = cellDescription["onPeriod"].AsInt;
 			offPeriod = cellDescription["offPeriod"].AsInt;
 			currentPeriod = cellDescription["currentPeriod"].AsInt;
