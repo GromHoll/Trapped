@@ -8,19 +8,23 @@ using System.IO;
 namespace TrappedGame.Model.LevelLoader {
 	public class LevelLoaderFactory {
 		public static ILevelLoader GetLoader(string fileName) {
-			if (isJson (fileName)) {
+            if (IsJson(fileName)) {
 				return new JsonLevelLoader ();
-			} else {
-				return new AsciiLevelLoader();
 			}
+			return new AsciiLevelLoader();
 		}
 
-		static bool isJson(string fileName) {
+		static bool IsJson(string fileName) {
 			var text = Resources.Load<TextAsset>(fileName);
 			var stream = new MemoryStream(text.bytes);
 			var reader = new StreamReader(stream);
 
-			return (char)reader.Read() == '{';
+		    var firstSymbol = (char) reader.Read();
+
+            reader.Close();
+            stream.Close();
+
+            return firstSymbol == '{';
 		}
 	}
 }

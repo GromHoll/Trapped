@@ -7,8 +7,14 @@ using TrappedGame.Model.Common;
 
 namespace TrappedGame.Model.LevelLoader.Json {
 	public class JsonLevelLoader : ILevelLoader {
+
+        // TODO Remove fields (not thread save)
+        private JSONNode level;
+        private IDictionary<char, JSONNode> descriptions;
+        private LevelBuilder builder;
+
 		public Level LoadLevel(string fileName) {
-			TextAsset levelFile = Resources.Load<TextAsset>(fileName);
+			var levelFile = Resources.Load<TextAsset>(fileName);
 			level = JSON.Parse(levelFile.text);
 
 			descriptions = new Dictionary<char, JSONNode>();
@@ -16,8 +22,8 @@ namespace TrappedGame.Model.LevelLoader.Json {
 			ReadLevelCommonInfo();
 			ReadLevelDescription();
 			ReadLevelMap();
-
-			return new Level(builder);
+            
+            return builder.Build();
 		}
 
 		private void ReadLevelCommonInfo() {
@@ -61,9 +67,5 @@ namespace TrappedGame.Model.LevelLoader.Json {
 				}
 			}
 		}
-
-		private JSONNode level;
-		private IDictionary<char, JSONNode> descriptions;
-		private LevelBuilder builder;
 	}
 }
