@@ -25,7 +25,7 @@
         }, {
             "element" : "r",
             "type"    : "TIME",
-            "tick"    : "3"
+            "tick"    : "0"
         }
     ]
 }
