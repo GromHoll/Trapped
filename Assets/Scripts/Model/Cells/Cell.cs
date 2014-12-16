@@ -1,17 +1,17 @@
 ﻿using TrappedGame.Model.Common;
 
 namespace TrappedGame.Model.Cells {
-    public class Cell : ITickable {
+    public abstract  class Cell : ITickable {
 
         public IntVector2 Coordinate { get; protected set; }
         public int X { get { return Coordinate.x; } }
         public int Y { get { return Coordinate.y; } }
         public CellType CellType { get; protected set; }
        
-        public Cell(int x, int y) 
+        protected Cell(int x, int y) 
         : this(x, y, CellType.EMPTY) {}
 
-        public Cell(int x, int y, CellType type) {
+        protected Cell(int x, int y, CellType type) {
             Coordinate = new IntVector2(x, y);
             CellType = type;
         }

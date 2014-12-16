@@ -1,4 +1,5 @@
-﻿using TrappedGame.Model.LevelUtils;
+﻿using System;
+using TrappedGame.Model.LevelUtils;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
 using SimpleJSON;
@@ -17,12 +18,12 @@ namespace TrappedGame.Model.LevelLoader.Json {
 				case 'S' : MakeSpear(builder, coordinate);     break;
 				case 'L' : MakeLaser(builder, coordinate);     break;
 				case 'T' : MakeTimeBonus(builder, coordinate); break;
-			default : break; //TODO Not support default symbol exception
+			    default : break; //TODO Not support default symbol exception
 			}
 		}
 
 		protected void MakeEmpty(LevelBuilder builder, IntVector2 coordinate) {
-			builder.AddCell(new Cell(coordinate.x, coordinate.y, CellType.EMPTY));
+            builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
 		}
 
 		protected void MakeWall(LevelBuilder builder, IntVector2 coordinate) {
@@ -30,17 +31,17 @@ namespace TrappedGame.Model.LevelLoader.Json {
 		}
 
 		protected void MakeStart(LevelBuilder builder, IntVector2 coordinate) {
-			builder.AddCell(new Cell(coordinate.x, coordinate.y, CellType.EMPTY));
+			builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
 			builder.SetStart(coordinate.x, coordinate.y);
 		}
 
 		protected void MakeFinish(LevelBuilder builder, IntVector2 coordinate) {
-			builder.AddCell(new Cell(coordinate.x, coordinate.y, CellType.EMPTY));
+            builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
 			builder.SetFinish(coordinate.x, coordinate.y);
 		}
 
 		protected void MakeBonus(LevelBuilder builder, IntVector2 coordinate) {
-			builder.AddCell(new Cell(coordinate.x, coordinate.y, CellType.EMPTY));
+            builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
 			builder.AddBonus(coordinate);
 		}
 
@@ -53,7 +54,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
 		}
 
 		protected virtual void MakeTimeBonus(LevelBuilder builder, IntVector2 coordinate) {
-			builder.AddCell(new Cell(coordinate.x, coordinate.y, CellType.EMPTY));
+            builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
 			builder.AddTimeBonus(coordinate, LevelTick.FREEZE_LEVEL_TICK);
 		}
 	}

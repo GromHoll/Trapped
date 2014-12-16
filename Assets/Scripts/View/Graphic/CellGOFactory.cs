@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
-using TrappedGame.Model.Common;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
 using UnityEngine;
@@ -21,39 +21,31 @@ namespace TrappedGame.View.Graphic {
         public GameObject wallPrefab;
         public GameObject spearPrefab;
 
+        private IDictionary<Type, GameObject> cellPrefabs;
 
-        private GameObject CreateCellGameObject(Cell cell, Level level, GameObject folder) {
-            return CreateCellGameObject(cell.Coordinate, cell.CellType, level, folder);
+        void Start() {
+            cellPrefabs = new Dictionary<Type, GameObject> {
+                {typeof(EmptyCell), tilePrefab},   
+                {typeof(WallCell), wallPrefab},   
+                {typeof(SpearCell), spearPrefab},   
+                {typeof(LaserCell), laserPrefab},   
+                {typeof(UnknownCell), unknownPrefab},   
+            };       
         }
 
-        private GameObject CreateCellGameObject(IntVector2 cellCoord, CellType cellType, Level level, GameObject folder) {
-            var prefab = GetCellPrefab(cellType);
-            var coord = GameUtils.ConvertToGameCoord(cellCoord.x, cellCoord.y, level);
+        private GameObject CreateCellGameObject(Cell cell, Level level, GameObject folder) {
+            var prefab = cellPrefabs[cell.GetType()];
+            return CreateCellGameObject(cell, prefab, level, folder);
+        }
+
+        private GameObject CreateCellGameObject(Cell cell, GameObject prefab, Level level, GameObject folder) {
+            var coord = GameUtils.ConvertToGameCoord(cell.Coordinate, level);
             return GameUtils.InstantiateChild(prefab, coord, folder);
         }
         
-        private GameObject GetCellPrefab(CellType type) {
-            switch (type) {
-            case CellType.EMPTY: 
-                return tilePrefab;
-            case CellType.UNKNOWN: 
-                return unknownPrefab;
-            case CellType.LASER: 
-                return laserPrefab;
-            case CellType.SPEAR: 
-                return spearPrefab;
-            case CellType.WALL:  
-                return wallPrefab;
-            default:
-                return unknownPrefab;              
-            }
-        }
-
         public void CreateEmptyCells(Level level) {
             foreach (Cell cell in level.Cells) {
-                if (cell.CellType != CellType.WALL) {
-                    CreateCellGameObject(cell.Coordinate, CellType.EMPTY, level, emptyCellsFolder);
-                }
+                CreateCellGameObject(cell, tilePrefab, level, emptyCellsFolder);
             }
         }
 
@@ -92,6 +84,5 @@ namespace TrappedGame.View.Graphic {
             var controller = laserObject.GetComponent<LaserLineController>();
             controller.Line = line;
         }
-
     }
 }
