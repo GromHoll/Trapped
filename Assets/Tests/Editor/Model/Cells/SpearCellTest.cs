@@ -10,7 +10,6 @@ namespace TrappedGame.UnitTests.Model.Cells {
             
             Assert.AreEqual(2, spear.X);
             Assert.AreEqual(3, spear.Y);
-            Assert.AreEqual(CellType.SPEAR, spear.CellType);
             
             Assert.IsFalse(spear.IsBlocked());
             Assert.IsFalse(false);
@@ -33,8 +32,7 @@ namespace TrappedGame.UnitTests.Model.Cells {
             AssertSpear(spear, state);
         }
 
-        private void AssertSpear(SpearCell spear, bool state) {
-            Assert.AreEqual(CellType.SPEAR, spear.CellType);            
+        private void AssertSpear(SpearCell spear, bool state) {       
             Assert.AreEqual(state, spear.IsOn);
             Assert.AreEqual(state, spear.IsDeadly());
             Assert.IsFalse(spear.IsBlocked());

@@ -23,7 +23,6 @@ namespace TrappedGame.UnitTests.Model.Cells {
             Assert.AreEqual(right, laser.Right);
             Assert.AreEqual(down, laser.Down);
             Assert.AreEqual(left, laser.Left);
-            Assert.AreEqual(CellType.LASER, laser.CellType);
             
             Assert.IsTrue(laser.IsBlocked());
             Assert.IsFalse(laser.IsDeadly());

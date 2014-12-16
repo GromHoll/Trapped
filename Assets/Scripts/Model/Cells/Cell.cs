@@ -6,14 +6,9 @@ namespace TrappedGame.Model.Cells {
         public IntVector2 Coordinate { get; protected set; }
         public int X { get { return Coordinate.x; } }
         public int Y { get { return Coordinate.y; } }
-        public CellType CellType { get; protected set; }
        
-        protected Cell(int x, int y) 
-        : this(x, y, CellType.EMPTY) {}
-
-        protected Cell(int x, int y, CellType type) {
+        protected Cell(int x, int y) {
             Coordinate = new IntVector2(x, y);
-            CellType = type;
         }
 
         public virtual bool IsBlocked() {

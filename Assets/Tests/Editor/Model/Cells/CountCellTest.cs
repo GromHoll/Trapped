@@ -7,11 +7,10 @@ namespace TrappedGame.UnitTests.Model.Cells {
     public class CountCellTest {
         [Test]
         public void CreateTest() {
-            var cell = new CountCell(1, 2, CellType.UNKNOWN);
+            var cell = new CountCell(1, 2);
 
             Assert.AreEqual(1, cell.X);
             Assert.AreEqual(2, cell.Y);
-            Assert.AreEqual(CellType.UNKNOWN, cell.CellType);
             
             Assert.IsFalse(cell.IsOn);   
             Assert.IsFalse(cell.IsBlocked());
@@ -24,7 +23,7 @@ namespace TrappedGame.UnitTests.Model.Cells {
             var off = 2;
             var current = 1;
            
-            var cell = new CountCell(0, 0, CellType.UNKNOWN, on, off, current, false);
+            var cell = new CountCell(0, 0, on, off, current, false);
 
             Assert.IsFalse(cell.IsOn);
             Assert.IsTrue(cell.IsOnOnNextTick());
@@ -59,7 +58,7 @@ namespace TrappedGame.UnitTests.Model.Cells {
             var off = 2;
             var current = 0;
             
-            var cell = new CountCell(0, 0, CellType.UNKNOWN, on, off, current, true);
+            var cell = new CountCell(0, 0, on, off, current, true);
             
             Assert.IsTrue(cell.IsOn);
             
@@ -86,7 +85,7 @@ namespace TrappedGame.UnitTests.Model.Cells {
         }
 
         private void IllegaCurrentPeriod() {
-            new CountCell(1, 1, CellType.UNKNOWN, 1, 1, 2, true);
+            new CountCell(1, 1, 1, 1, 2, true);
         }
         
         [Test]
@@ -96,7 +95,7 @@ namespace TrappedGame.UnitTests.Model.Cells {
         }
         
         private void IllegaOnPeriod() {
-            new CountCell(0, 1, CellType.UNKNOWN, 0, 1, 0, true);
+            new CountCell(0, 1, 0, 1, 0, true);
         }
         
         [Test]
@@ -106,7 +105,7 @@ namespace TrappedGame.UnitTests.Model.Cells {
         }
         
         private void IllegaOffPeriod() {
-            new CountCell(1, -1, CellType.UNKNOWN, 1, -1, 0, true);
+            new CountCell(1, -1, 1, -1, 0, true);
         }
 
 
