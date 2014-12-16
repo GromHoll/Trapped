@@ -1,13 +1,11 @@
 {
   "Packs": [
   {
-	  "Name": "JSON",
-      "Folder": "",
-      "Levels": [
-        { 
-		  "Name": "JsonFormat",
-          "Source": "JsonLevel"
-        }
+	  "Name": "Dev",
+      "Folder": "Levels/Dev/",
+      "Levels": [ 
+	    { "Source": "JsonLevel" },
+		{ "Source": "Pit" }
       ]
     }, {
 	  "Name": "Tutorial",

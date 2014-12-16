@@ -55,8 +55,10 @@ namespace TrappedGame.Main {
         }
 
         private void CreateLevelObjects() {
+            // TODO make generic create method
             cellGameObjectFactory.CreateEmptyCells(level);
             cellGameObjectFactory.CreateWallCells(level);
+            cellGameObjectFactory.CreatePitCells(level);
             cellGameObjectFactory.CreateLaserCells(level);
             var spears = cellGameObjectFactory.CreateSpearCells(level);
             foreach (var spearController in spears) {

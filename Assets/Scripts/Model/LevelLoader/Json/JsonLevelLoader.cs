@@ -27,9 +27,9 @@ namespace TrappedGame.Model.LevelLoader.Json {
 		}
 
 		private void ReadLevelCommonInfo() {
-			string levelName = level["name"].Value;
-			int levelXSize   = level["size"]["x"].AsInt;
-			int levelYSize   = level["size"]["y"].AsInt;
+			var levelName = level["name"].Value;
+			var levelXSize   = level["size"]["x"].AsInt;
+			var levelYSize   = level["size"]["y"].AsInt;
 
 			builder = new LevelBuilder(levelName, levelXSize, levelYSize);
 		}
@@ -46,16 +46,16 @@ namespace TrappedGame.Model.LevelLoader.Json {
 		}
 
 		private void ReadLevelMap() {
-			DefaultCellBuilder defaultCellBuilder = new DefaultCellBuilder();
-			CellBuilder cellBuilder = new CellBuilder();	
+			var defaultCellBuilder = new DefaultCellBuilder();
+			var cellBuilder = new CellBuilder();	
 
-			int rowCount = level["map"].AsArray.Count;
+			var rowCount = level["map"].AsArray.Count;
 
 			for(int y = 0; y < rowCount; y++) {
 				string row = level["map"].AsArray[y];
 
 				for(int x = 0; x < row.Length; x++) {
-					char element = row[x];
+					var element = row[x];
 
 					if(descriptions.ContainsKey(element)) {
 						cellBuilder.MakeCell(descriptions[element], builder, new IntVector2(x, y));

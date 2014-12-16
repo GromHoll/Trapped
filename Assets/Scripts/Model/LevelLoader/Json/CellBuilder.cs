@@ -16,6 +16,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
 			var cellType = cellDescription["type"].Value;
             switch (cellType) {
                 case "LASER"    : MakeLaser(builder, coordinate);       break;
+                case "PIT"      : MakePit(builder, coordinate);         break;
                 case "SPEAR"    : MakeSpear(builder, coordinate);       break;
                 case "TIME"     : MakeTimeBonus(builder, coordinate);   break;
                 case "EMPTY"    : MakeEmpty(builder, coordinate);       break;

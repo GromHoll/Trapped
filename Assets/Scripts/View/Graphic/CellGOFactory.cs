@@ -14,7 +14,8 @@ namespace TrappedGame.View.Graphic {
         public GameObject laserCellsFolder;
         public GameObject wallCellsFolder;
 
-        public GameObject tilePrefab;
+        public GameObject emptyCellPrefab;
+        public GameObject pitCellPrefab;
         public GameObject unknownPrefab;
         public GameObject laserPrefab;
         public GameObject laserLinePrefab;
@@ -25,11 +26,12 @@ namespace TrappedGame.View.Graphic {
 
         void Start() {
             cellPrefabs = new Dictionary<Type, GameObject> {
-                {typeof(EmptyCell), tilePrefab},   
+                {typeof(EmptyCell), emptyCellPrefab},   
                 {typeof(WallCell), wallPrefab},   
                 {typeof(SpearCell), spearPrefab},   
                 {typeof(LaserCell), laserPrefab},   
-                {typeof(UnknownCell), unknownPrefab},   
+                {typeof(PitCell), pitCellPrefab},  
+                {typeof(UnknownCell), unknownPrefab},  
             };       
         }
 
@@ -45,7 +47,7 @@ namespace TrappedGame.View.Graphic {
         
         public void CreateEmptyCells(Level level) {
             foreach (Cell cell in level.Cells) {
-                CreateCellGameObject(cell, tilePrefab, level, emptyCellsFolder);
+                CreateCellGameObject(cell, emptyCellPrefab, level, emptyCellsFolder);
             }
         }
 
@@ -63,6 +65,13 @@ namespace TrappedGame.View.Graphic {
         public void CreateWallCells(Level level) {
             foreach (var wall in level.GetCells<WallCell>()) {
                 CreateCellGameObject(wall, level, wallCellsFolder);
+            }
+        }
+
+        public void CreatePitCells(Level level) {
+            foreach (var pit in level.GetCells<PitCell>()) {
+                // TODO create folder for pits
+                CreateCellGameObject(pit, level, wallCellsFolder);
             }
         }
 
