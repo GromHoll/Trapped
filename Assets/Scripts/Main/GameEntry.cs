@@ -138,7 +138,7 @@ namespace TrappedGame.Main {
             float xScale = screenX/levelX;
             float yScale = screenY/levelY;
 
-            float scale = xScale >= yScale ? levelX : (levelY + 1)/screenScale;
+			float scale = xScale >= yScale ? levelY : levelX/screenScale;
             Camera.main.orthographicSize = scale / 2f;
         }
     

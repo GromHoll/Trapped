@@ -1,10 +1,10 @@
 GenLevel_1
-4 5
-..f#
-sZ..
-#.B.
-A...
-.... 
+3 5
+..f
+sZ.
+#.B
+A..
+... 
 3 
 Z:spear off 2 1 0 
 A:laser l off 1 2 0 
