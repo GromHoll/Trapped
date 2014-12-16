@@ -1,6 +1,5 @@
 using System.IO;
 using UnityEngine;
-using TrappedGame.Model.LevelLoader;
 
 namespace TrappedGame.Model.LevelLoader.Ascii {
 	public class AsciiLevelLoader : ILevelLoader {

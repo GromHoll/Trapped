@@ -24,7 +24,7 @@ namespace TrappedGame.Model.LevelUtils {
             cells = new Cell[size.x, size.y];
             for (var x = 0; x < size.x; x++) {
                 for (var y = 0; y < size.y; y++) {
-                    AddCell(new Cell(x, y, CellType.UNKNOWN));
+                    AddCell(new UnknownCell(x, y));
                 }
             }
         }

@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using SimpleJSON;
+﻿using SimpleJSON;
+using UnityEngine;
 
 using TrappedGame.Model.LevelUtils;
 using TrappedGame.Model.Common;
@@ -7,30 +7,24 @@ using TrappedGame.Model.Cells;
 
 namespace TrappedGame.Model.LevelLoader.Json {
 	public class CellBuilder : DefaultCellBuilder {
+
+        // TODO Delete class field
+        private JSONNode cellDescription;
+
 		public override void MakeCell(JSONNode description, LevelBuilder builder, IntVector2 coordinate) {
 			cellDescription = description;
-
-			string cellType = cellDescription["type"].Value;
-
-			if (cellType == "LASER") {
-				MakeLaser (builder, coordinate); return;
-			} else if (cellType == "SPEAR") {
-				MakeSpear (builder, coordinate); return;
-			} else if (cellType == "TIME") {
-				MakeTimeBonus (builder, coordinate); return;
-			} else if (cellType == "EMPTY") {
-				MakeEmpty(builder, coordinate); return;
-			} else if (cellType == "WALL") {
-				MakeWall(builder, coordinate); return;
-			} else if (cellType == "START") {
-				MakeStart(builder, coordinate); return;
-			} else if (cellType == "FINISH") {
-				MakeFinish(builder, coordinate); return;
-			} else if (cellType == "BONUS") {
-				MakeBonus(builder, coordinate); return;
-			} else {
-				//TODO Not support type exception
-			}
+			var cellType = cellDescription["type"].Value;
+            switch (cellType) {
+                case "LASER"    : MakeLaser(builder, coordinate);       break;
+                case "SPEAR"    : MakeSpear(builder, coordinate);       break;
+                case "TIME"     : MakeTimeBonus(builder, coordinate);   break;
+                case "EMPTY"    : MakeEmpty(builder, coordinate);       break;
+                case "WALL"     : MakeWall(builder, coordinate);        break;
+                case "START"    : MakeStart(builder, coordinate);       break;
+                case "FINISH"   : MakeFinish(builder, coordinate);      break;
+                case "BONUS"    : MakeBonus(builder, coordinate);       break;
+                default         : Debug.Log("Unknown cell type");       break;
+            }
 		}
 
 		protected override void MakeLaser(LevelBuilder builder, IntVector2 coordinate) {
@@ -62,7 +56,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
 		protected override void MakeTimeBonus(LevelBuilder builder, IntVector2 coordinate) {
 			int levelTickNum = cellDescription["tick"].AsInt;
 
-			builder.AddCell(new Cell(coordinate.x, coordinate.y, CellType.EMPTY));
+			builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
 			builder.AddTimeBonus(coordinate, new LevelTick(levelTickNum));
 		}
 
@@ -73,8 +67,6 @@ namespace TrappedGame.Model.LevelLoader.Json {
 			
 			isOn = (cellDescription["currentState"].Value == "on" ? true : false);
 		}
-
-		private JSONNode cellDescription;
-
+        
 	}
 }

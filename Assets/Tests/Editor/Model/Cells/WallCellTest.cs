@@ -10,7 +10,6 @@ namespace TrappedGame.UnitTests.Model.Cells {
             
             Assert.AreEqual(1, wall.X);
             Assert.AreEqual(-1, wall.Y);
-            Assert.AreEqual(CellType.WALL, wall.CellType);
             
             Assert.IsTrue(wall.IsBlocked());
             Assert.IsFalse(wall.IsDeadly());

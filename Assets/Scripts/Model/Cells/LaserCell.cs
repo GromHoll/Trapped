@@ -41,15 +41,14 @@ namespace TrappedGame.Model.Cells {
         public LaserCell(int x, int y, 
                          int onPeriod, int offPeriod, int currentTick, bool isOn,
                          bool up, bool right, bool down, bool left) 
-            : base(x, y, CellType.LASER, onPeriod, offPeriod, currentTick, isOn) {
+            : base(x, y, onPeriod, offPeriod, currentTick, isOn) {
             Up = up;
             Right = right;
             Down = down;
             Left = left;
         }
 
-        public LaserCell(int x, int y, bool up, bool right, bool down, bool left)
-            : base(x, y, CellType.LASER) {
+        public LaserCell(int x, int y, bool up, bool right, bool down, bool left) : base(x, y) {
             Up = up;
             Right = right;
             Down = down;

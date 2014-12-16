@@ -44,7 +44,7 @@ namespace TrappedGame.Model.LevelLoader.Ascii {
 
                 result = new SpearCell(x, y, onPeriod, offPeriod, currentTick, isOn);
             } else {
-                return new Cell(x, y, CellType.UNKNOWN);
+                return new UnknownCell(x, y);
             }
 
             return result;
@@ -52,17 +52,17 @@ namespace TrappedGame.Model.LevelLoader.Ascii {
 
         public Cell GetCellBySymbol(char symbol, int x, int y) {
             switch (symbol) {
-                case '.' : return new Cell(x, y);
+                case '.' : return new EmptyCell(x, y);
                 case '#' : return new WallCell(x, y);
                 case 'S' : return new SpearCell(x, y);
                 case 'L' : return new LaserCell(x, y, true, true, true, true);
-                case 's' : return new Cell(x, y);
-                case 'f' : return new Cell(x, y);
-                case 'b' : return new Cell(x, y);
-                case '0' : return new Cell(x, y);
-                case '2' : return new Cell(x, y);
+                case 's' : return new EmptyCell(x, y);
+                case 'f' : return new EmptyCell(x, y);
+                case 'b' : return new EmptyCell(x, y);
+                case '0' : return new EmptyCell(x, y);
+                case '2' : return new EmptyCell(x, y);
+                default  : return new UnknownCell(x, y);
             }
-            return new Cell(x, y, CellType.UNKNOWN);
         }
     }
 }
