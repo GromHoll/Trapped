@@ -1,31 +1,49 @@
 {
-    "name" : "levelName",
-    "size" : { "x" : "3", "y" : "3" } ,
-    "map"  : [
-        "t#L",
-        "fbs",
-        "qrS"
+    "name": "levelName",
+    "size": [3,3] ,
+    "map": [
+      "t#L",
+      "fbs",
+      "qrS"
     ],
-    "description" : [
-        {
-            "element"       : "q",
-            "type"          : "SPEAR",
-            "onPeriod"      : "2",
-            "offPeriod"  : "2",
-            "currentState"  : "on",
-            "currentPeriod" : "1"
+    "symbols": [
+		{
+            "symbol": "s",
+            "type": "START"
         }, {
-            "element"       : "t",
-            "type"          : "LASER",
-            "onPeriod"      : "2",
-            "offPeriod"     : "2",
-            "currentState"  : "on",
-            "currentPeriod" : "1",
-            "dangerousSide" : ["0", "0", "1", "0"]
+            "symbol": "f",
+            "type": "FINISH"
         }, {
-            "element" : "r",
-            "type"    : "TIME",
-            "tick"    : "0"
+            "symbol": "b",
+            "type": "BONUS"
+        }, {
+            "symbol": "L",
+            "type": "LASER"
+        }, {
+            "symbol": "#",
+            "type": "WALL"
+        }, {
+            "symbol": "S",
+            "type": "SPEAR"
+        }, {
+            "symbol": "r",
+            "type": "TIME",
+            "tick": "0"
+        }, {
+            "symbol": "q",
+            "type": "SPEAR",
+            "onPeriod": "2",
+            "offPeriod": "2",
+            "currentState": "on",
+            "currentPeriod": "1"
+        }, {
+            "symbol": "t",
+            "type": "LASER",
+            "onPeriod": "2",
+            "offPeriod": "2",
+            "currentState": "on",
+            "currentPeriod": "1",
+            "dangerousSide": [0, 0, 1, 0]
         }
     ]
 }

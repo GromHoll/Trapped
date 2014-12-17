@@ -17,6 +17,7 @@ namespace TrappedGame.Model.LevelUtils {
         private readonly IDictionary<IntVector2, LevelTick> timeBonuses = new Dictionary<IntVector2, LevelTick>();
         
         public LevelBuilder(string name, int xSize, int ySize) {
+            // TODO use Validate utils for checks
             if (xSize <= 0) throw new ArgumentException("Size should be positive", "xSize");
             if (ySize <= 0) throw new ArgumentException("Size should be positive", "ySize");
             

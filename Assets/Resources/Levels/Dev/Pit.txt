@@ -1,11 +1,25 @@
 {
   "name": "levelName",
-  "size": { "x" : "5", "y" : "5" } ,
+  "size": [5, 5],
   "map": [
     "...pf",
     ".p.p.",
     ".p.p.",
     ".p.p.",
     "sp...",
-  ]
+  ],
+  "symbols": [
+     {
+       "symbol": "s",
+       "type": "START"
+     }, {
+	   "symbol": "f",
+       "type": "FINISH"
+     }, {
+	   "symbol": ".",
+       "type": "EMPTY"
+     }, {
+	   "symbol": "p",
+       "type": "PIT"
+     }
 }

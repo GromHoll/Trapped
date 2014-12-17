@@ -1,4 +1,6 @@
-﻿using System.Runtime.Remoting.Messaging;
+﻿using System;
+using System.Linq;
+using TrappedGame.Utils;
 using UnityEngine;
 using System.Collections.Generic;
 using SimpleJSON;
@@ -7,58 +9,57 @@ using TrappedGame.Model.Common;
 
 namespace TrappedGame.Model.LevelLoader.Json {
 	public class JsonLevelLoader : ILevelLoader {
+
+	    private const string LEVEL_NAME_KEY = "name";
+        private const string LEVEL_SIZE_KEY = "size";
+        private const string SYMBOLS_KEY = "symbols";
+        private const string SYMBOL_KEY = "symbol";
+        private const string MAP_KEY = "map";
+
+        private const int LEVEL_SIZE_X_INDEX = 0;
+        private const int LEVEL_SIZE_Y_INDEX = 1;
+
+        private JsonCellBuiler cellBuilder = new JsonCellBuiler();
         
 		public Level LoadLevel(string fileName) {
 			var levelFile = Resources.Load<TextAsset>(fileName);
             var jsonLevel = JSON.Parse(levelFile.text);
-            var builder = ReadLevelCommonInfo(jsonLevel);
-            var descriptions = ReadLevelDescription(jsonLevel);
-            ReadLevelMap(jsonLevel, descriptions, builder);
-            
+            var builder = ReadLevel(jsonLevel);
             return builder.Build();
 		}
 
-        private LevelBuilder ReadLevelCommonInfo(JSONNode jsonLevel) {
-            var levelName = jsonLevel["name"].Value;
-            var levelXSize = jsonLevel["size"]["x"].AsInt;
-            var levelYSize = jsonLevel["size"]["y"].AsInt;
+        private LevelBuilder CreateBuilerForLevel(JSONNode jsonLevel) {
+            var levelName  = jsonLevel[LEVEL_NAME_KEY].Value;
+            var levelXSize = jsonLevel[LEVEL_SIZE_KEY][LEVEL_SIZE_X_INDEX].AsInt;
+            var levelYSize = jsonLevel[LEVEL_SIZE_KEY][LEVEL_SIZE_Y_INDEX].AsInt;
 			return new LevelBuilder(levelName, levelXSize, levelYSize);
 		}
 
-        private IDictionary<char, JSONNode> ReadLevelDescription(JSONNode jsonLevel) {
-            IDictionary<char, JSONNode> descriptions = new Dictionary<char, JSONNode>();
-            foreach (JSONNode description in jsonLevel["description"].AsArray) {
-				descriptions.Add(
-					new KeyValuePair<char, JSONNode>(
-						description["element"].Value.ToCharArray()[0],
-						description
-					)
-				);
+        private IDictionary<char, JSONNode> ReadLevelCodeSymbols(JSONNode jsonLevel) {
+            var symbols = new Dictionary<char, JSONNode>();
+            foreach (JSONNode symbolNode in jsonLevel[SYMBOLS_KEY].AsArray) {
+                var symbol = symbolNode[SYMBOL_KEY].Value;
+                Validate.CheckArgument(symbol.Any(), "Symbol info is empty");
+                Validate.CheckArgument(symbol.Count() == 1, "Symbol info is too long");
+                symbols[symbol[0]] = symbolNode;
 			}
-            return descriptions;
+            return symbols;
         }
 
-        private void ReadLevelMap(JSONNode jsonLevel, IDictionary<char, JSONNode> descriptions, LevelBuilder builder) {
-			var defaultCellBuilder = new DefaultCellBuilder();
-			var cellBuilder = new CellBuilder();
-
-            var rowCount = jsonLevel["map"].AsArray.Count;
-
-			for(int y = 0; y < rowCount; y++) {
-                string row = jsonLevel["map"].AsArray[y];
-
-				for(int x = 0; x < row.Length; x++) {
+        private LevelBuilder ReadLevel(JSONNode jsonLevel) {
+            var builder = CreateBuilerForLevel(jsonLevel);
+            var symbols = ReadLevelCodeSymbols(jsonLevel);
+            
+            var rowCount = jsonLevel[MAP_KEY].Count;
+			for (var y = 0; y < rowCount; y++) {
+                string row = jsonLevel[MAP_KEY][y];
+				for (var x = 0; x < row.Length; x++) {
 					var element = row[x];
-
-					if(descriptions.ContainsKey(element)) {
-						cellBuilder.MakeCell(descriptions[element], builder, new IntVector2(x, y));
-					} else {
-						JSONNode nodeElement = new JSONClass();
-						nodeElement["element"] = element.ToString();
-						defaultCellBuilder.MakeCell(nodeElement, builder, new IntVector2(x, y));
-					}
+                    Validate.CheckArgument(symbols.ContainsKey(element), String.Format("Cannot find element '{0}' in symbols", element));
+                    cellBuilder.MakeCell(symbols[element], builder, new IntVector2(x, y));
 				}
 			}
-		}
+            return builder;
+        }
 	}
 }

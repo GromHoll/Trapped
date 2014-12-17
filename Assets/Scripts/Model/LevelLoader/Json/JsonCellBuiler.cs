@@ -6,12 +6,13 @@ using TrappedGame.Model.Common;
 using TrappedGame.Model.Cells;
 
 namespace TrappedGame.Model.LevelLoader.Json {
-	public class CellBuilder : DefaultCellBuilder {
+    // TODO Should be refactored
+	public class JsonCellBuiler {
 
         // TODO Delete class field
         private JSONNode cellDescription;
 
-		public override void MakeCell(JSONNode description, LevelBuilder builder, IntVector2 coordinate) {
+		public void MakeCell(JSONNode description, LevelBuilder builder, IntVector2 coordinate) {
 			cellDescription = description;
 			var cellType = cellDescription["type"].Value;
             switch (cellType) {
@@ -28,7 +29,34 @@ namespace TrappedGame.Model.LevelLoader.Json {
             }
 		}
 
-		protected override void MakeLaser(LevelBuilder builder, IntVector2 coordinate) {
+        private void MakeStart(LevelBuilder builder, IntVector2 coordinate) {
+            builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
+            builder.SetStart(coordinate.x, coordinate.y);
+        }
+
+        private void MakeFinish(LevelBuilder builder, IntVector2 coordinate) {
+            builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
+            builder.SetFinish(coordinate.x, coordinate.y);
+        }
+
+        private void MakeEmpty(LevelBuilder builder, IntVector2 coordinate) {
+            builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
+        }
+
+        private void MakeWall(LevelBuilder builder, IntVector2 coordinate) {
+            builder.AddCell(new WallCell(coordinate.x, coordinate.y));
+        }
+
+        private void MakePit(LevelBuilder builder, IntVector2 coordinate) {
+            builder.AddCell(new PitCell(coordinate.x, coordinate.y));
+        }
+
+        private void MakeBonus(LevelBuilder builder, IntVector2 coordinate) {
+            builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
+            builder.AddBonus(coordinate);
+        }
+
+        private void MakeLaser(LevelBuilder builder, IntVector2 coordinate) {
 			int onPeriod, offPeriod, currentPeriod;
 			bool isOn;
 			
@@ -45,7 +73,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
 			                              isOn, sides[0], sides[1], sides[2], sides[3])); 
 		}
 
-		protected override void MakeSpear(LevelBuilder builder, IntVector2 coordinate) {
+        private void MakeSpear(LevelBuilder builder, IntVector2 coordinate) {
 			int onPeriod, offPeriod, currentPeriod;
 			bool isOn;
 			
@@ -54,19 +82,19 @@ namespace TrappedGame.Model.LevelLoader.Json {
 			builder.AddCell(new SpearCell(coordinate.x, coordinate.y, onPeriod, offPeriod, currentPeriod, isOn));
 		}
 
-		protected override void MakeTimeBonus(LevelBuilder builder, IntVector2 coordinate) {
+        private void MakeTimeBonus(LevelBuilder builder, IntVector2 coordinate) {
 			int levelTickNum = cellDescription["tick"].AsInt;
 
 			builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
 			builder.AddTimeBonus(coordinate, new LevelTick(levelTickNum));
 		}
 
+        // TODO rewrite this
 		private void ReadPeriodInfo(out int onPeriod, out int offPeriod, out int currentPeriod, out bool isOn) {
-			onPeriod = cellDescription["onPeriod"].AsInt;
-			offPeriod = cellDescription["offPeriod"].AsInt;
-			currentPeriod = cellDescription["currentPeriod"].AsInt;
-			
-			isOn = (cellDescription["currentState"].Value == "on" ? true : false);
+            onPeriod = cellDescription["onPeriod"].AsBool ? cellDescription["onPeriod"].AsInt : 1;
+			offPeriod = cellDescription["offPeriod"].AsBool ? cellDescription["offPeriod"].AsInt : 1;
+			currentPeriod = cellDescription["currentPeriod"].AsBool ? cellDescription["currentPeriod"].AsInt : 0;
+			isOn = (cellDescription["currentState"].Value == "on");
 		}
         
 	}
