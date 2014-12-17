@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 
 
+// TODO Delete this hack after deleting Ascii format
 namespace TrappedGame.Model.LevelLoader {
 	public class LevelLoaderFactory {
 		public static ILevelLoader GetLoader(string fileName) {
