@@ -25,6 +25,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
                 case "START"    : MakeStart(builder, coordinate);       break;
                 case "FINISH"   : MakeFinish(builder, coordinate);      break;
                 case "BONUS"    : MakeBonus(builder, coordinate);       break;
+                case "PLATFORM" : MakePlatform(builder, coordinate);    break;
                 default         : Debug.Log("Unknown cell type");       break;
             }
 		}
@@ -49,6 +50,11 @@ namespace TrappedGame.Model.LevelLoader.Json {
 
         private void MakePit(LevelBuilder builder, IntVector2 coordinate) {
             builder.AddCell(new PitCell(coordinate.x, coordinate.y));
+        }
+
+        private void MakePlatform(LevelBuilder builder, IntVector2 coordinate) {
+            builder.AddCell(new PitCell(coordinate.x, coordinate.y));
+            builder.AddPlatform(coordinate);
         }
 
         private void MakeBonus(LevelBuilder builder, IntVector2 coordinate) {

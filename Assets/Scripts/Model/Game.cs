@@ -59,13 +59,13 @@ namespace TrappedGame.Model {
                 Hero.MoveTo(x, y);
             }
             NotifyHeroMovementListener();
-            CheckCell();
+            CheckDeadlyCell();
         }
 
-        private void CheckCell() {
+        private void CheckDeadlyCell() {
             var x = Hero.X;
             var y = Hero.Y;
-            var isDanger = Level.IsDangerCell(x, y);
+            var isDanger = Level.IsDeadlyCell(x, y);
             Hero.SetDead(isDanger);
         }
 

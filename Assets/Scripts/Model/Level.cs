@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
+using TrappedGame.Model.Elements;
 using TrappedGame.Model.LevelUtils;
 
 namespace TrappedGame.Model {
@@ -26,9 +27,11 @@ namespace TrappedGame.Model {
         public int FinishX { get { return finish.x; } }
         public int FinishY { get { return finish.y; } }
 
+        public IList<Platform> Platforms { get; private set; }
         public IList<IntVector2> Bonuses { get; private set; }
         public IDictionary<IntVector2, LevelTick> TimeBonuses { get; private set; }
         
+        // Use LevelBuilder.Build() instead this constructor
         public Level(LevelBuilder builder) {
             size = builder.GetSize();
             start = builder.GetStart();
@@ -36,13 +39,17 @@ namespace TrappedGame.Model {
             cells = builder.GetCells();
 
             Bonuses = builder.GetBonuses();
+            Platforms = builder.GetPlatforms();
             TimeBonuses = builder.GetTimeBonuses();
 
-            CreateDangerZones();
+            CreateLasers();
+            LinkPlatformsWithPits();
         }
 
-        private void CreateDangerZones() {
-            CreateLasers();
+        private void LinkPlatformsWithPits() {
+            foreach (var pit in GetCells<PitCell>()) {
+                pit.AddPlatforms(Platforms);    
+            }
         }
 
         private void CreateLasers() {
@@ -73,7 +80,7 @@ namespace TrappedGame.Model {
             return TimeBonuses.ContainsKey(coord) ? TimeBonuses[coord] : LevelTick.DEFAULT_LEVEL_TICK;
         }
 
-        public bool IsDangerCell(int x, int y) {            
+        public bool IsDeadlyCell(int x, int y) {            
             var cell = GetCell(x, y);
             return cell.IsDeadly() || GetCells<LaserCell>().Any(laser => laser.IsDeadlyFor(x, y));
         }

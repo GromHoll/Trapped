@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
+using TrappedGame.Model.Elements;
+using TrappedGame.Utils;
 
 namespace TrappedGame.Model.LevelUtils {
     public class LevelBuilder {
@@ -13,13 +15,14 @@ namespace TrappedGame.Model.LevelUtils {
         
         private IntVector2 start;
         private IntVector2 finish;
+
+        private readonly IList<Platform> platforms   = new List<Platform>();
         private readonly IList<IntVector2> bonuses = new List<IntVector2>();
         private readonly IDictionary<IntVector2, LevelTick> timeBonuses = new Dictionary<IntVector2, LevelTick>();
         
         public LevelBuilder(string name, int xSize, int ySize) {
-            // TODO use Validate utils for checks
-            if (xSize <= 0) throw new ArgumentException("Size should be positive", "xSize");
-            if (ySize <= 0) throw new ArgumentException("Size should be positive", "ySize");
+            Validate.CheckArgument(xSize > 0, "xSize should be positive");
+            Validate.CheckArgument(ySize > 0, "ySize should be positive");
             
             size = new IntVector2(xSize, ySize);
             cells = new Cell[size.x, size.y];
@@ -42,6 +45,10 @@ namespace TrappedGame.Model.LevelUtils {
         
         public void AddTimeBonus(IntVector2 coordinate, LevelTick levelTick) {
             timeBonuses.Add(coordinate, levelTick);
+        }
+
+        public void AddPlatform(IntVector2 coordinate) {
+            platforms.Add(new Platform(coordinate.x, coordinate.y));    
         }
 
         public void SetStart(int x, int y) {
@@ -70,6 +77,10 @@ namespace TrappedGame.Model.LevelUtils {
         
         public IList<IntVector2> GetBonuses() {
             return bonuses;
+        }
+
+        public IList<Platform> GetPlatforms() {
+            return platforms;
         }
 
         public IDictionary<IntVector2, LevelTick> GetTimeBonuses() {
