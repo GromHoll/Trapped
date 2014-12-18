@@ -9,11 +9,13 @@ using UnityEngine;
 namespace TrappedGame.View.Graphic {
     public class CellGOFactory : MonoBehaviour {
 
-        public GameObject emptyCellsFolder;
-        public GameObject spearCellsFolder;
-        public GameObject laserCellsFolder;
-        public GameObject wallCellsFolder;
-
+        private const string MAP_FOLDER = "Map/";
+        private const string PIT_CELLS_FOLDER = MAP_FOLDER + "PitCells";
+        private const string WALL_CELLS_FOLDER = MAP_FOLDER + "WallCells";
+        private const string EMPTY_CELLS_FOLDER = MAP_FOLDER + "EmptyCells";
+        private const string SPEAR_CELLS_FOLDER = MAP_FOLDER + "SpearCells";
+        private const string LASER_CELLS_FOLDER = MAP_FOLDER + "LaserCells";
+        
         public GameObject emptyCellPrefab;
         public GameObject pitCellPrefab;
         public GameObject unknownPrefab;
@@ -35,26 +37,27 @@ namespace TrappedGame.View.Graphic {
             };       
         }
 
-        private GameObject CreateCellGameObject(Cell cell, Level level, GameObject folder) {
+        private GameObject CreateCellGameObject(Cell cell, Level level, string folderPath) {
             var prefab = cellPrefabs[cell.GetType()];
-            return CreateCellGameObject(cell, prefab, level, folder);
+            return CreateCellGameObject(cell, prefab, level, folderPath);
         }
 
-        private GameObject CreateCellGameObject(Cell cell, GameObject prefab, Level level, GameObject folder) {
+        private GameObject CreateCellGameObject(Cell cell, GameObject prefab, Level level, string folderPath) {
+            var folder = GameUtils.GetSubFolderByPath(gameObject, folderPath);
             var coord = GameUtils.ConvertToGameCoord(cell.Coordinate, level);
             return GameUtils.InstantiateChild(prefab, coord, folder);
         }
         
         public void CreateEmptyCells(Level level) {
             foreach (Cell cell in level.Cells) {
-                CreateCellGameObject(cell, emptyCellPrefab, level, emptyCellsFolder);
+                CreateCellGameObject(cell, emptyCellPrefab, level, EMPTY_CELLS_FOLDER);
             }
         }
 
         public IList<SpearController> CreateSpearCells(Level level) {
             IList<SpearController> spears = new List<SpearController>();
             foreach (var spear in level.GetCells<SpearCell>()) {
-                var spearObject = CreateCellGameObject(spear, level, spearCellsFolder);
+                var spearObject = CreateCellGameObject(spear, level, SPEAR_CELLS_FOLDER);
                 var controller = spearObject.GetComponent<SpearController>();
                 controller.Cell = spear;
                 spears.Add(controller);
@@ -64,20 +67,19 @@ namespace TrappedGame.View.Graphic {
 
         public void CreateWallCells(Level level) {
             foreach (var wall in level.GetCells<WallCell>()) {
-                CreateCellGameObject(wall, level, wallCellsFolder);
+                CreateCellGameObject(wall, level, WALL_CELLS_FOLDER);
             }
         }
 
         public void CreatePitCells(Level level) {
             foreach (var pit in level.GetCells<PitCell>()) {
-                // TODO create folder for pits
-                CreateCellGameObject(pit, level, wallCellsFolder);
+                CreateCellGameObject(pit, level, PIT_CELLS_FOLDER);
             }
         }
 
         public void CreateLaserCells(Level level) {
             foreach (var laserCell in level.GetCells<LaserCell>()) {
-                var laserObject = CreateCellGameObject(laserCell, level, laserCellsFolder);
+                var laserObject = CreateCellGameObject(laserCell, level, LASER_CELLS_FOLDER);
                 var controller = laserObject.GetComponent<LaserController>();
                 controller.Cell = laserCell;
                 foreach (var line in laserCell.LaserLines) {

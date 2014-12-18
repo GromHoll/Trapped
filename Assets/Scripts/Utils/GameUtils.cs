@@ -1,9 +1,11 @@
+using System;
+using System.Linq;
 using TrappedGame.Model;
 using TrappedGame.Model.Common;
 
 using UnityEngine;
 using System.Collections.Generic;
-
+using Object = UnityEngine.Object;
 
 namespace TrappedGame.Utils {
     public static class GameUtils {
@@ -28,6 +30,26 @@ namespace TrappedGame.Utils {
                 child.transform.SetParent(parent.transform, worldStay);
             }
             return child;
+        }
+
+        public static GameObject GetSubFolderByPath(GameObject folder, string path) {
+            var names = path.Split(new[] {'/', '\\', '.'}, StringSplitOptions.RemoveEmptyEntries);
+            return names.Aggregate(folder, GetSubFolderByName);
+        }
+
+        public static GameObject GetSubFolderByName(GameObject folder, string name) {
+            return FindChildByName(folder, name) ?? CreateEmptyChild(folder, name);
+        }
+
+        public static GameObject FindChildByName(GameObject parent, string name) {
+            var transform = parent.transform.FindChild(name);
+            return transform != null ? transform.gameObject : null;
+        }
+
+        public static GameObject CreateEmptyChild(GameObject parent, string name) {
+            var result = new GameObject(name);
+            result.transform.SetParent(parent.transform);
+            return result;
         }
 
 		public static void DestroyAllChild(GameObject parent) {

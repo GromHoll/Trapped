@@ -1,5 +1,5 @@
-﻿using TrappedGame.Model;
-using TrappedGame.Model.Cells;
+﻿using TrappedGame.Model.Cells;
+using TrappedGame.Utils;
 using UnityEngine;
 
 namespace TrappedGame.View.Controllers {
@@ -19,12 +19,11 @@ namespace TrappedGame.View.Controllers {
         public int direction;
         public LaserCell Cell { get; set; }
 
-
         private void Start() {
             isEnable = IsEnable();
-            disabledState = FindChildByName("DisabledState");
-            passiveState = FindChildByName("PassiveState");
-            activeState = FindChildByName("ActiveState");
+            disabledState = GameUtils.FindChildByName(gameObject, "DisabledState");
+            passiveState = GameUtils.FindChildByName(gameObject, "PassiveState");
+            activeState = GameUtils.FindChildByName(gameObject, "ActiveState");
 
             disabledState.SetActive(!isEnable);
             passiveState.SetActive(isEnable);
@@ -36,11 +35,6 @@ namespace TrappedGame.View.Controllers {
                 passiveState.SetActive(!Cell.IsOn);
                 activeState.SetActive(Cell.IsOn);
             }
-        }
-
-        // TODO Maybe move to Utils
-        private GameObject FindChildByName(string childName) {
-            return transform.FindChild(childName).gameObject;
         }
 
         private bool IsEnable() {
