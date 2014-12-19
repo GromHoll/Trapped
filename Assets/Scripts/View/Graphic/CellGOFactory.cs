@@ -1,20 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TrappedGame.Model;
 using TrappedGame.Model.Cells;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
+using TrappedGame.View.Sync;
 using UnityEngine;
 
 namespace TrappedGame.View.Graphic {
     public class CellGOFactory : MonoBehaviour {
-
+        
         private const string MAP_FOLDER = "Map/";
         private const string PIT_CELLS_FOLDER = MAP_FOLDER + "PitCells";
         private const string WALL_CELLS_FOLDER = MAP_FOLDER + "WallCells";
         private const string EMPTY_CELLS_FOLDER = MAP_FOLDER + "EmptyCells";
         private const string SPEAR_CELLS_FOLDER = MAP_FOLDER + "SpearCells";
         private const string LASER_CELLS_FOLDER = MAP_FOLDER + "LaserCells";
+        private const string UNKNOWN_CELLS_FOLDER = MAP_FOLDER + "UnknownCells";
         
         public GameObject emptyCellPrefab;
         public GameObject pitCellPrefab;
@@ -24,68 +27,63 @@ namespace TrappedGame.View.Graphic {
         public GameObject wallPrefab;
         public GameObject spearPrefab;
 
-        private IDictionary<Type, GameObject> cellPrefabs;
+        private IDictionary<Type, CellGraphicInfo> cellGraphicInfo;
 
         void Start() {
-            cellPrefabs = new Dictionary<Type, GameObject> {
-                {typeof(EmptyCell), emptyCellPrefab},   
-                {typeof(WallCell), wallPrefab},   
-                {typeof(SpearCell), spearPrefab},   
-                {typeof(LaserCell), laserPrefab},   
-                {typeof(PitCell), pitCellPrefab},  
-                {typeof(UnknownCell), unknownPrefab},  
-            };       
+            cellGraphicInfo = new Dictionary<Type, CellGraphicInfo> {
+                {typeof(EmptyCell),   new CellGraphicInfo(emptyCellPrefab, CreateSimpleCell, false, EMPTY_CELLS_FOLDER)},   
+                {typeof(WallCell),    new CellGraphicInfo(wallPrefab, CreateSimpleCell, false, WALL_CELLS_FOLDER)},   
+                {typeof(SpearCell),   new CellGraphicInfo(spearPrefab, CreateSpearCell, true, SPEAR_CELLS_FOLDER)},   
+                {typeof(LaserCell),   new CellGraphicInfo(laserPrefab, CreateLaserCell, true, LASER_CELLS_FOLDER)},   
+                {typeof(PitCell),     new CellGraphicInfo(pitCellPrefab, CreateSimpleCell, false, PIT_CELLS_FOLDER)},  
+                {typeof(UnknownCell), new CellGraphicInfo(unknownPrefab, CreateSimpleCell, false, UNKNOWN_CELLS_FOLDER)},  
+            }; 
         }
 
-        private GameObject CreateCellGameObject(Cell cell, Level level, string folderPath) {
-            var prefab = cellPrefabs[cell.GetType()];
-            return CreateCellGameObject(cell, prefab, level, folderPath);
+        public IList<ISyncGameObject> CreateLevel(Level level) {
+            return level.Cells.Cast<Cell>()
+                        .Select(cell => CreateCell(cell, level))
+                        .Where(syncGO => syncGO != null)
+                        .ToList();
         }
 
-        private GameObject CreateCellGameObject(Cell cell, GameObject prefab, Level level, string folderPath) {
-            var folder = GameUtils.GetSubFolderByPath(gameObject, folderPath);
+        private ISyncGameObject CreateCell(Cell cell, Level level) {
+            var graphicInfo = cellGraphicInfo[cell.GetType()];
+            if (graphicInfo.IsNeedsEmptyCell) {
+                var emptyGraphicInfo = cellGraphicInfo[typeof(EmptyCell)];
+                CreateCellGameObject(cell, level, emptyGraphicInfo);
+            }
+            return graphicInfo.CreateFunction(cell, level, graphicInfo);
+        }
+
+        private GameObject CreateCellGameObject(Cell cell, Level level, CellGraphicInfo graphicInfo) {
+            var folder = GameUtils.GetSubFolderByPath(gameObject, graphicInfo.FolderName);
             var coord = GameUtils.ConvertToGameCoord(cell.Coordinate, level);
-            return GameUtils.InstantiateChild(prefab, coord, folder);
+            return GameUtils.InstantiateChild(graphicInfo.Prefab, coord, folder);
         }
         
-        public void CreateEmptyCells(Level level) {
-            foreach (Cell cell in level.Cells) {
-                CreateCellGameObject(cell, emptyCellPrefab, level, EMPTY_CELLS_FOLDER);
-            }
+        private ISyncGameObject CreateSimpleCell(Cell cell, Level level, CellGraphicInfo graphicInfo) {
+            CreateCellGameObject(cell, level, graphicInfo);
+            return null;
         }
 
-        public IList<SpearController> CreateSpearCells(Level level) {
-            IList<SpearController> spears = new List<SpearController>();
-            foreach (var spear in level.GetCells<SpearCell>()) {
-                var spearObject = CreateCellGameObject(spear, level, SPEAR_CELLS_FOLDER);
-                var controller = spearObject.GetComponent<SpearController>();
-                controller.Cell = spear;
-                spears.Add(controller);
-            }
-            return spears;
+        private ISyncGameObject CreateSpearCell(Cell cell, Level level, CellGraphicInfo graphicInfo) {
+            var spearCell = cell as SpearCell;
+            var spearObject = CreateCellGameObject(spearCell, level, graphicInfo);
+            var controller = spearObject.GetComponent<SpearController>();
+            controller.Cell = spearCell;
+            return controller;
         }
 
-        public void CreateWallCells(Level level) {
-            foreach (var wall in level.GetCells<WallCell>()) {
-                CreateCellGameObject(wall, level, WALL_CELLS_FOLDER);
+        private ISyncGameObject CreateLaserCell(Cell cell, Level level, CellGraphicInfo graphicInfo) {
+            var laserCell = cell as LaserCell;
+            var laserObject = CreateCellGameObject(laserCell, level, graphicInfo);
+            var controller = laserObject.GetComponent<LaserController>();
+            controller.Cell = laserCell;
+            foreach (var line in laserCell.LaserLines) {
+                CreateLaserLinesForLaser(level, line, laserObject);
             }
-        }
-
-        public void CreatePitCells(Level level) {
-            foreach (var pit in level.GetCells<PitCell>()) {
-                CreateCellGameObject(pit, level, PIT_CELLS_FOLDER);
-            }
-        }
-
-        public void CreateLaserCells(Level level) {
-            foreach (var laserCell in level.GetCells<LaserCell>()) {
-                var laserObject = CreateCellGameObject(laserCell, level, LASER_CELLS_FOLDER);
-                var controller = laserObject.GetComponent<LaserController>();
-                controller.Cell = laserCell;
-                foreach (var line in laserCell.LaserLines) {
-                    CreateLaserLinesForLaser(level, line, laserObject);  
-                }
-            }
+            return null;
         }
 
         private void CreateLaserLinesForLaser(Level level, LaserCell.Line line, GameObject laser) {

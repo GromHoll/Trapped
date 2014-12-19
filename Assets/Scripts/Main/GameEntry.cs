@@ -55,15 +55,7 @@ namespace TrappedGame.Main {
         }
 
         private void CreateLevelObjects() {
-            // TODO make generic create method
-            cellGameObjectFactory.CreateEmptyCells(level);
-            cellGameObjectFactory.CreateWallCells(level);
-            cellGameObjectFactory.CreatePitCells(level);
-            cellGameObjectFactory.CreateLaserCells(level);
-            var spears = cellGameObjectFactory.CreateSpearCells(level);
-            foreach (var spearController in spears) {
-                syncGameObjects.Add(spearController);
-            }
+            syncGameObjects = cellGameObjectFactory.CreateLevel(level);
                         
             var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.StartX, level.StartY, level), gameObject);
             heroController = hero.GetComponent<HeroController>();
