@@ -57,6 +57,7 @@ namespace TrappedGame.View.Controllers {
             }
         }
         
+        // TODO rewrite without listeners
         public void HeroMoved(Hero eventHero) {
             targetPosition = GameUtils.ConvertToGameCoord(eventHero.X, eventHero.Y, level);
         }

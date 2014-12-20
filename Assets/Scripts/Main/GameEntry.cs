@@ -13,27 +13,26 @@ using UnityEngine;
 namespace TrappedGame.Main {
     public class GameEntry : MonoBehaviour, ISyncGameObject {
 
-        public CellGOFactory cellGameObjectFactory;
         public PathGOFactory pathGoFactory;
+        public CellGOFactory cellGameObjectFactory;
 
-        private HeroInput heroInput;
-        private Level level;
-        private Game game;
-
-        private readonly IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
-
-        private WinMenu winMenu;
-		public GameObject winMenuObject;
-                
     	public GameObject heroPrefab;
         public GameObject bonusPrefab;
     	public GameObject finishPrefab;
         public GameObject platformPrefab;
         public GameObject timeBonusPrefab;
 
+		public GameObject winMenuObject;
+
+        private Game game;
+        private Level level;
+        private HeroInput heroInput;
         private HeroController heroController;
 
+        private WinMenu winMenu;
+
         private IList<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
+        private readonly IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
 
         void Start() {   
 			var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
@@ -68,7 +67,10 @@ namespace TrappedGame.Main {
                 GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject);
             }
             foreach (var platform in level.Platforms) {
-                GameUtils.InstantiateChild(platformPrefab, GameUtils.ConvertToGameCoord(platform.Coordinate, level), gameObject);
+                var platformGameObject = GameUtils.InstantiateChild(platformPrefab, GameUtils.ConvertToGameCoord(platform.Coordinate, level), gameObject);
+                var controller = platformGameObject.GetComponent<PlatformController>();
+                controller.Platform = platform;
+                controller.Level = level;
             }
             
             winMenu = winMenuObject.GetComponent<WinMenu>();
