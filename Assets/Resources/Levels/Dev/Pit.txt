@@ -9,20 +9,21 @@
     "s_...",
   ],
   "symbols": [
-     {
-       "symbol": "s",
-       "type": "START"
-     }, {
-	   "symbol": "f",
-       "type": "FINISH"
-     }, {
-	   "symbol": ".",
-       "type": "EMPTY"
-     }, {
-	   "symbol": "p",
-       "type": "PIT"
-     }, {
-	   "symbol": "_",
-       "type": "PLATFORM"
-     }
+    {
+      "symbol": "s",
+      "type": "START"
+    }, {
+	  "symbol": "f",
+      "type": "FINISH"
+    }, {
+	  "symbol": ".",
+      "type": "EMPTY"
+    }, {
+	  "symbol": "p",
+      "type": "PIT"
+    }, {
+	  "symbol": "_",
+      "type": "PLATFORM"
+    }
+  ]
 }

@@ -16,10 +16,9 @@ namespace TrappedGame.Main {
         public CellGOFactory cellGameObjectFactory;
         public PathGOFactory pathGoFactory;
 
-        private ILevelLoader loader;
         private HeroInput heroInput;
-        private Game game;
         private Level level;
+        private Game game;
 
         private readonly IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
 
@@ -28,8 +27,9 @@ namespace TrappedGame.Main {
                 
     	public GameObject heroPrefab;
         public GameObject bonusPrefab;
-        public GameObject timeBonusPrefab;
     	public GameObject finishPrefab;
+        public GameObject platformPrefab;
+        public GameObject timeBonusPrefab;
 
         private HeroController heroController;
 
@@ -37,11 +37,9 @@ namespace TrappedGame.Main {
 
         void Start() {   
 			var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
-			loader = LevelLoaderFactory.GetLoader(levelName);
+			var loader = LevelLoaderFactory.GetLoader(levelName);
             level = loader.LoadLevel(levelName);
-
             game = new Game(level);
-            
             heroInput = CreateInput();
             CreateLevelObjects();
         }
@@ -67,7 +65,10 @@ namespace TrappedGame.Main {
                 GameUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
             foreach (var coord in level.TimeBonuses.Keys) {
-                GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
+                GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject);
+            }
+            foreach (var platform in level.Platforms) {
+                GameUtils.InstantiateChild(platformPrefab, GameUtils.ConvertToGameCoord(platform.Coordinate, level), gameObject);
             }
             
             winMenu = winMenuObject.GetComponent<WinMenu>();
