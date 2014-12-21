@@ -7,9 +7,8 @@ namespace TrappedGame.Utils {
             if (!condition) throw new ArgumentException(message);
         }
 
-        // TODO change to NPE exceptions
         public static void NotNull(Object obj, string message = "Argument should be not null") {
-            if (obj == null) throw new ArgumentException(message);
+            if (obj == null) throw new ArgumentNullException(message);
         }
 
     }
