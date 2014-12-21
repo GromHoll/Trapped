@@ -5,7 +5,9 @@ using UnityEngine;
 namespace TrappedGame.View.Controllers {
     public class SpearController : MonoBehaviour, ISyncGameObject {
 
-        public static readonly string STATUS_KEY = "Status";
+        private const string STATUS_KEY = "Status";
+        private const string DISABLED_NAME = "Disabled";
+        private const string ENABLED_NAME = "Enabled";
 
         private Animator aminator;
 
@@ -33,10 +35,9 @@ namespace TrappedGame.View.Controllers {
         }
 
         public bool IsSync() {
-            // TODO use constant
             if (aminator == null) return false;
             var currentState = aminator.GetCurrentAnimatorStateInfo(0);
-            return currentState.IsName("Disabled") || currentState.IsName("Enabled");
+            return currentState.IsName(DISABLED_NAME) || currentState.IsName(ENABLED_NAME);
         }
     }
 }

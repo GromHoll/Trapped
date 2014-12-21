@@ -41,7 +41,6 @@ namespace TrappedGame.Model.LevelLoader.Ascii {
             descriptions.Add(symbol, description);
         }
         
-        // TODO refactor
         public Level CreateLevel() {
             var levelBuilder = new LevelBuilder(LevelName, XSize, YSize);
             var cellFacrory = new CellFactory();

@@ -40,35 +40,46 @@ namespace TrappedGame.Model {
             MoveHeroTo(Hero.X - 1, Hero.Y);
         }
 
-        // TODO make it easy
         private void MoveHeroTo(int x, int y) {
             if (!HeroOnMap(x, y)) return;
             if (!IsAvailableForMovementCell(x, y)) return;
 
             if (IsBackTurn(x, y)) {
-                var levelTick = Level.GetLevelTick(Hero.X, Hero.Y);
-                levelTick.BackTick(Level);
-                var platform = Level.GetPlatform(Hero.X, Hero.Y);
-                if (platform != null) {
-                    platform.MoveBack();
-                }
-                Hero.MoveBack();
+                MoveBack();
             } else {
-                if (Hero.IsDead) return;
-                if (HeroWasHere(x, y)) return;
-                var levelTick = Level.GetLevelTick(x, y);
-                levelTick.NextTick(Level);
-
-                var platform = Level.GetPlatform(Hero.X, Hero.Y);
-                if (platform != null) {
-                    var cell = Level.GetCell(x, y);
-                    if (cell is PitCell && Level.GetPlatform(x, y) == null) {
-                        platform.MoveTo(x, y);
-                    }
-                }
-                Hero.MoveTo(x, y);
+                MoveForward(x, y);
             }
             CheckDeadlyCell();
+        }
+
+        private void MoveBack() {
+            var levelTick = Level.GetLevelTick(Hero.X, Hero.Y);
+            levelTick.BackTick(Level);
+
+            var platform = Level.GetPlatform(Hero.X, Hero.Y);
+            if (platform != null) {
+                platform.MoveBack();
+            }
+            
+            Hero.MoveBack();    
+        }
+
+        private void MoveForward(int x, int y) {
+            if (Hero.IsDead) return;
+            if (HeroWasHere(x, y)) return;
+
+            var levelTick = Level.GetLevelTick(x, y);
+            levelTick.NextTick(Level);
+
+            var platform = Level.GetPlatform(Hero.X, Hero.Y);
+            if (platform != null) {
+                var cell = Level.GetCell(x, y);
+                if (cell is PitCell && Level.GetPlatform(x, y) == null) {
+                    platform.MoveTo(x, y);
+                }
+            }
+
+            Hero.MoveTo(x, y);
         }
 
         private void CheckDeadlyCell() {

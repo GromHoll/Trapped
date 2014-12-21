@@ -29,7 +29,7 @@ namespace TrappedGame.Model.Common {
             return x.Equals(vector.x) && y.Equals(vector.y);
         }
         
-        // TODO non read only value in HashCode
+        // TODO not a readonly value in HashCode
         public override int GetHashCode() {
             return x.GetHashCode () ^ y.GetHashCode () << 2;
         }
