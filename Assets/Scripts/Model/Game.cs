@@ -66,7 +66,6 @@ namespace TrappedGame.Model {
                         platform.MoveTo(x, y);
                     }
                 }
-                // TODO check other platform
                 Hero.MoveTo(x, y);
             }
             CheckDeadlyCell();
