@@ -1,16 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using TrappedGame.Model.Listeners;
 
 namespace TrappedGame.Model {
     public class Game {
 
         public Level Level { get; private set; }
         public Hero Hero { get; private set; }
-
-        private readonly IList<IHeroMovementListener> heroMovementListeners = new List<IHeroMovementListener>();
-
+        
         public Game(Level level) {
             if (level == null) throw new ArgumentNullException("level");
             Level = level;
@@ -58,7 +54,6 @@ namespace TrappedGame.Model {
                 levelTick.NextTick(Level);
                 Hero.MoveTo(x, y);
             }
-            NotifyHeroMovementListener();
             CheckDeadlyCell();
         }
 
@@ -85,20 +80,6 @@ namespace TrappedGame.Model {
 
         private bool HeroWasHere(int x, int y) {
             return Hero.WasHere(x, y);
-        }
-
-        public void AddHeroMovementListener(IHeroMovementListener listener) {
-            heroMovementListeners.Add(listener);
-        }        
-        
-        public void RemoveHeroMovementListener(IHeroMovementListener listener) {
-            heroMovementListeners.Remove(listener);
-        }        
-        
-        private void NotifyHeroMovementListener() {
-            foreach(var listener in heroMovementListeners) {
-                listener.HeroMoved(Hero);
-            }
         }
     }
 }
