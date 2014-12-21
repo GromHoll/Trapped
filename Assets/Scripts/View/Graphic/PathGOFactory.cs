@@ -9,7 +9,7 @@ namespace TrappedGame.View.Graphic {
         public GameObject pathSegment;
 
         public GameObject CreatePathSegment(Path.PathLink link, Vector2 coord) {
-            var pathGameObject = GameUtils.InstantiateChild(pathSegment, coord, pathFolder);
+            var pathGameObject = GameObjectUtils.InstantiateChild(pathSegment, coord, pathFolder);
             var rotation = link.IsWentUp() ? 180
                 : link.IsWentRight() ? 90
                     : link.IsWentDown() ? 0

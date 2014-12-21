@@ -21,9 +21,9 @@ namespace TrappedGame.View.Controllers {
 
         private void Start() {
             isEnable = IsEnable();
-            disabledState = GameUtils.FindChildByName(gameObject, "DisabledState");
-            passiveState = GameUtils.FindChildByName(gameObject, "PassiveState");
-            activeState = GameUtils.FindChildByName(gameObject, "ActiveState");
+            disabledState = GameObjectUtils.FindChildByName(gameObject, "DisabledState");
+            passiveState = GameObjectUtils.FindChildByName(gameObject, "PassiveState");
+            activeState = GameObjectUtils.FindChildByName(gameObject, "ActiveState");
 
             disabledState.SetActive(!isEnable);
             passiveState.SetActive(isEnable);

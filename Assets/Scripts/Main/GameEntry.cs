@@ -54,20 +54,20 @@ namespace TrappedGame.Main {
         private void CreateLevelObjects() {
             syncGameObjects = cellGameObjectFactory.CreateLevel(level);
                         
-            var hero = GameUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.StartX, level.StartY, level), gameObject);
+            var hero = GameObjectUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.StartX, level.StartY, level), gameObject);
             heroController = hero.GetComponent<HeroController>();
             heroController.Game = game;
             syncGameObjects.Add(heroController);
 
-            GameUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.FinishX, level.FinishY, level), gameObject);
+            GameObjectUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.FinishX, level.FinishY, level), gameObject);
             foreach (var coord in level.Bonuses) {
-                GameUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
+                GameObjectUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
             }
             foreach (var coord in level.TimeBonuses.Keys) {
-                GameUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject);
+                GameObjectUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject);
             }
             foreach (var platform in level.Platforms) {
-                var platformGameObject = GameUtils.InstantiateChild(platformPrefab, GameUtils.ConvertToGameCoord(platform.Coordinate, level), gameObject);
+                var platformGameObject = GameObjectUtils.InstantiateChild(platformPrefab, GameUtils.ConvertToGameCoord(platform.Coordinate, level), gameObject);
                 var controller = platformGameObject.GetComponent<PlatformController>();
                 controller.SerPlatform(platform, level);
             }

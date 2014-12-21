@@ -57,9 +57,9 @@ namespace TrappedGame.View.Graphic {
         }
 
         private GameObject CreateCellGameObject(Cell cell, Level level, CellGraphicInfo graphicInfo) {
-            var folder = GameUtils.GetSubFolderByPath(gameObject, graphicInfo.FolderName);
+            var folder = GameObjectUtils.GetSubFolderByPath(gameObject, graphicInfo.FolderName);
             var coord = GameUtils.ConvertToGameCoord(cell.Coordinate, level);
-            return GameUtils.InstantiateChild(graphicInfo.Prefab, coord, folder);
+            return GameObjectUtils.InstantiateChild(graphicInfo.Prefab, coord, folder);
         }
         
         private ISyncGameObject CreateSimpleCell(Cell cell, Level level, CellGraphicInfo graphicInfo) {
@@ -89,7 +89,7 @@ namespace TrappedGame.View.Graphic {
         private void CreateLaserLinesForLaser(Level level, LaserCell.Line line, GameObject laser) {
             var cover = line.Cover;
             var coord = GameUtils.ConvertToGameCoord(cover.MinX, cover.MinY, level);
-            var laserObject = GameUtils.InstantiateChild(laserLinePrefab, coord, laser);
+            var laserObject = GameObjectUtils.InstantiateChild(laserLinePrefab, coord, laser);
             var controller = laserObject.GetComponent<LaserLineController>();
             controller.Line = line;
         }

@@ -25,7 +25,7 @@ namespace TrappedGame.View.GUI {
 		}
 
 		public void OpenPacks() {
-			GameUtils.DestroyAllChild(Packs);
+			GameObjectUtils.DestroyAllChild(Packs);
 
 			foreach (string packName in levelInfo.GetPackNames()) {
 				CreatePackButton(packName);
@@ -37,7 +37,7 @@ namespace TrappedGame.View.GUI {
 		}
 
 		public void OpenLevels(string packName) {
-			GameUtils.DestroyAllChild(Levels);
+			GameObjectUtils.DestroyAllChild(Levels);
 
 			foreach (LevelT level in levelInfo.GetLevelPaths(packName)) {
 				CreateLevelButton(level);
@@ -69,7 +69,7 @@ namespace TrappedGame.View.GUI {
 		}
 
 		private void CreatePackButton(string packName) {
-			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Packs, false);
+			var button = GameObjectUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Packs, false);
 			button.GetComponent<Button>().onClick.AddListener(() => {
 				OpenLevels(packName);
 			});
@@ -77,7 +77,7 @@ namespace TrappedGame.View.GUI {
 		}
 		
 		private void CreateLevelButton(LevelT level) {
-			var button = GameUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Levels, false);
+			var button = GameObjectUtils.InstantiateChildForWorld(buttonPrefab, Vector2.zero, Levels, false);
 			button.GetComponent<Button>().onClick.AddListener(() => {
 				PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, level.path);
 				Application.LoadLevel("Level");

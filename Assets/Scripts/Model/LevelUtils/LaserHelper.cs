@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
+using TrappedGame.Utils;
 
 namespace TrappedGame.Model.LevelUtils {
     public class LaserHelper {
@@ -55,19 +56,11 @@ namespace TrappedGame.Model.LevelUtils {
 
         public IList<LaserCell.Line> CreateLaserLines(LaserCell laser, Level level) {
             IList<LaserCell.Line> result = new List<LaserCell.Line>();
-            AddIfNotNull(result, CreateUpLaser(laser, level));
-            AddIfNotNull(result, CreateRightLaser(laser, level));
-            AddIfNotNull(result, CreateDownLaser(laser, level));
-            AddIfNotNull(result, CreateLeftLaser(laser, level));
+            GameUtils.AddIfNotNull(result, CreateUpLaser(laser, level));
+            GameUtils.AddIfNotNull(result, CreateRightLaser(laser, level));
+            GameUtils.AddIfNotNull(result, CreateDownLaser(laser, level));
+            GameUtils.AddIfNotNull(result, CreateLeftLaser(laser, level));
             return result;
         }
-        
-        // TODO Move to utils
-        private void AddIfNotNull<T>(IList<T> list, T element) {
-            if (element != null) {
-                list.Add(element);   
-            }
-        }
-
     }
 }
