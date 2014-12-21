@@ -80,6 +80,10 @@ namespace TrappedGame.Model {
             return TimeBonuses.ContainsKey(coord) ? TimeBonuses[coord] : LevelTick.DEFAULT_LEVEL_TICK;
         }
 
+        public Platform GetPlatform(int x, int y) {
+            return Platforms.FirstOrDefault(platform => platform.X == x && platform.Y == y);
+        }
+
         public bool IsDeadlyCell(int x, int y) {            
             var cell = GetCell(x, y);
             return cell.IsDeadly() || GetCells<LaserCell>().Any(laser => laser.IsDeadlyFor(x, y));

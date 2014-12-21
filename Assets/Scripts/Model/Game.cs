@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using TrappedGame.Model.Cells;
 
 namespace TrappedGame.Model {
     public class Game {
@@ -39,6 +40,7 @@ namespace TrappedGame.Model {
             MoveHeroTo(Hero.X - 1, Hero.Y);
         }
 
+        // TODO make it easy
         private void MoveHeroTo(int x, int y) {
             if (!HeroOnMap(x, y)) return;
             if (!IsAvailableForMovementCell(x, y)) return;
@@ -46,12 +48,25 @@ namespace TrappedGame.Model {
             if (IsBackTurn(x, y)) {
                 var levelTick = Level.GetLevelTick(Hero.X, Hero.Y);
                 levelTick.BackTick(Level);
+                var platform = Level.GetPlatform(Hero.X, Hero.Y);
+                if (platform != null) {
+                    platform.MoveBack();
+                }
                 Hero.MoveBack();
             } else {
                 if (Hero.IsDead) return;
                 if (HeroWasHere(x, y)) return;
                 var levelTick = Level.GetLevelTick(x, y);
                 levelTick.NextTick(Level);
+
+                var platform = Level.GetPlatform(Hero.X, Hero.Y);
+                if (platform != null) {
+                    var cell = Level.GetCell(x, y);
+                    if (cell is PitCell && Level.GetPlatform(x, y) == null) {
+                        platform.MoveTo(x, y);
+                    }
+                }
+                // TODO check other platform
                 Hero.MoveTo(x, y);
             }
             CheckDeadlyCell();

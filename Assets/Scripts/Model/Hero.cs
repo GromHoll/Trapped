@@ -4,6 +4,7 @@ using TrappedGame.Model.Common;
 namespace TrappedGame.Model {
     public class Hero {
 
+        // TODO Hero shoul have Coordinate property
         private IntVector2 position;
         public int X { get { return position.x; } }
         public int Y { get { return position.y; } }

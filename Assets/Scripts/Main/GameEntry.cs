@@ -69,8 +69,7 @@ namespace TrappedGame.Main {
             foreach (var platform in level.Platforms) {
                 var platformGameObject = GameUtils.InstantiateChild(platformPrefab, GameUtils.ConvertToGameCoord(platform.Coordinate, level), gameObject);
                 var controller = platformGameObject.GetComponent<PlatformController>();
-                controller.Platform = platform;
-                controller.Level = level;
+                controller.SerPlatform(platform, level);
             }
             
             winMenu = winMenuObject.GetComponent<WinMenu>();

@@ -13,6 +13,13 @@ namespace TrappedGame.View.Controllers {
         private Hero hero;
 
         private Vector3 targetPosition;
+
+        public Game Game {
+            set {
+                level = value.Level;
+                hero = value.Hero;
+            }
+        }
         public float speed = 10;
 
         void Start() {
@@ -24,13 +31,6 @@ namespace TrappedGame.View.Controllers {
             aminator.SetBool(IS_DEAD_KEY, IsDead());
             UpdatePosition();
     	}
-
-        public Game Game {
-            set {
-                level = value.Level;
-                hero = value.Hero;
-            }
-        }
 
         public bool IsSync() {
             return targetPosition == gameObject.transform.position;    
