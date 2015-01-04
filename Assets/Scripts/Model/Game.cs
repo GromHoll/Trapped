@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using TrappedGame.Model.Cells;
+using UnityEngine;
 
 namespace TrappedGame.Model {
     public class Game {
@@ -61,25 +62,46 @@ namespace TrappedGame.Model {
                 platform.MoveBack();
             }
             
-            Hero.MoveBack();    
+            Hero.MoveBack();
+
+            if (Level.GetCell(Hero.X, Hero.Y) is PortalCell) {
+                Hero.MoveBack();
+                Hero.MoveBack();
+            }
         }
 
+        // TODO Refactor this
         private void MoveForward(int x, int y) {
             if (Hero.IsDead) return;
             if (HeroWasHere(x, y)) return;
 
-            var levelTick = Level.GetLevelTick(x, y);
-            levelTick.NextTick(Level);
+            var toCell = Level.GetCell(x, y);
+            if (toCell is PortalCell) {
+                var endPoint = (toCell as PortalCell).EndPoint(Hero.Coordinate);
+                if (!HeroOnMap(endPoint.x, endPoint.y)) return;
+                if (!IsAvailableForMovementCell(endPoint.x, endPoint.y)) return;
+                if (HeroWasHere(endPoint.x, endPoint.y)) return;
+            }
 
             var platform = Level.GetPlatform(Hero.X, Hero.Y);
             if (platform != null) {
-                var cell = Level.GetCell(x, y);
-                if (cell is PitCell && Level.GetPlatform(x, y) == null) {
+                if (toCell is PitCell && Level.GetPlatform(x, y) == null) {
                     platform.MoveTo(x, y);
                 }
             }
+            
+            var levelTick = Level.GetLevelTick(x, y);
+            levelTick.NextTick(Level);
 
+            var fromCoordinate = Hero.Coordinate.Clone();
             Hero.MoveTo(x, y);
+
+            if (toCell is PortalCell) {
+                var portalCell = toCell as PortalCell;
+                Hero.MoveTo(portalCell.Pair.X, portalCell.Pair.Y);
+                var endPoint = portalCell.EndPoint(fromCoordinate);
+                Hero.MoveTo(endPoint.x, endPoint.y);
+            }
         }
 
         private void CheckDeadlyCell() {

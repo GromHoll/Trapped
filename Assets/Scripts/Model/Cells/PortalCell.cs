@@ -1,4 +1,4 @@
-﻿using TrappedGame.Utils;
+﻿using TrappedGame.Model.Common;
 
 namespace TrappedGame.Model.Cells {
     class PortalCell : Cell {
@@ -14,5 +14,11 @@ namespace TrappedGame.Model.Cells {
             pairedPortal.Pair = this;
         }
 
+        public IntVector2 EndPoint(IntVector2 income) {
+            var result = Pair.Coordinate.Clone();
+            result.x += Coordinate.x - income.x;
+            result.y += Coordinate.y - income.y;
+            return result;
+        }
     }
 }

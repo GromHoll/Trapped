@@ -2,9 +2,9 @@
   "name": "levelName",
   "size": [7, 3],
   "map": [
-    "..._...",
-    "sp._.pf",
-    "..._...",
+    ".......",
+    "s....pf",
+    ".p.....",
   ],
   "symbols": [
     {
@@ -16,9 +16,6 @@
     }, {
 	  "symbol": ".",
       "type": "EMPTY"
-    }, {
-	  "symbol": "_",
-      "type": "PIT"
     }, {
 	  "symbol": "p",
       "type": "PORTAL",

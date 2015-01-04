@@ -13,6 +13,10 @@ namespace TrappedGame.Model.Common {
             y = newY;
         }
 
+        public IntVector2 Clone() {
+            return new IntVector2(x, y);
+        }
+
         public static bool operator == (IntVector2 left, IntVector2 right) {
             return left.x == right.x && left.y == right.y;
         }

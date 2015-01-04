@@ -14,7 +14,7 @@ namespace TrappedGame.Model.Cells {
         public virtual bool IsBlocked() {
             return false;
         }
-
+        
         public virtual bool IsDeadly() {
             return false;
         }
