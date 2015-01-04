@@ -19,6 +19,7 @@ namespace TrappedGame.Model.LevelUtils {
         private readonly IList<Platform> platforms   = new List<Platform>();
         private readonly IList<IntVector2> bonuses = new List<IntVector2>();
         private readonly IDictionary<IntVector2, LevelTick> timeBonuses = new Dictionary<IntVector2, LevelTick>();
+        private readonly IDictionary<String, PortalCell> portalsWithoutPair = new Dictionary<String, PortalCell>();
         
         public LevelBuilder(string name, int xSize, int ySize) {
             Validate.CheckArgument(xSize > 0, "xSize should be positive");
@@ -49,6 +50,19 @@ namespace TrappedGame.Model.LevelUtils {
 
         public void AddPlatform(IntVector2 coordinate) {
             platforms.Add(new Platform(coordinate.x, coordinate.y));    
+        }
+
+        public void AddPortal(IntVector2 coordinate, string key) {
+            PortalCell newPortal;
+            if (portalsWithoutPair.ContainsKey(key)) {
+                var oldPortal = portalsWithoutPair[key];
+                portalsWithoutPair.Remove(key);
+                newPortal = new PortalCell(coordinate.x, coordinate.y, oldPortal);
+            } else {
+                newPortal = new PortalCell(coordinate.x, coordinate.y);
+                portalsWithoutPair[key] = newPortal;
+            }
+            AddCell(newPortal);
         }
 
         public void SetStart(int x, int y) {

@@ -64,9 +64,8 @@ namespace TrappedGame.Model.LevelLoader.Json {
         }
 
         private void MakePortal(LevelBuilder builder, IntVector2 coordinate) {
-            // TODO Portal adding
             var key = cellDescription["key"];
-            builder.AddCell(new PortalCell(coordinate.x, coordinate.y, new PortalCell.PortalKey(key)));
+            builder.AddPortal(coordinate, key);
         }
 
         private void MakeLaser(LevelBuilder builder, IntVector2 coordinate) {
