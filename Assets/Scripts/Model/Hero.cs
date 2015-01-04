@@ -1,12 +1,13 @@
 using TrappedGame.Model.Common;
 using TrappedGame.Model.Elements;
+using TrappedGame.Utils.Observer;
 
 namespace TrappedGame.Model {
     public class Hero : MovableElement {
 
         public bool IsDead { get; private set; }
         public int DeathCount { get; private set; }
-        
+
         public Hero(int x, int y) {
             position = new IntVector2(x, y);
         }
@@ -17,5 +18,7 @@ namespace TrappedGame.Model {
                 DeathCount++;
             }
         }
+        
+
     }
 }

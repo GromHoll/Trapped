@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using TrappedGame.Model.Common;
+using TrappedGame.Utils.Observer;
 
 namespace TrappedGame.Model.Elements {
     public class MovableElement {
@@ -12,10 +13,14 @@ namespace TrappedGame.Model.Elements {
         protected readonly Path path = new Path();
         public Path Path { get { return path; } }
 
+        private readonly SimpleSubject<Path.PathLink> movementSubject = new SimpleSubject<Path.PathLink>();
+        public SimpleSubject<Path.PathLink> MovementSubject { get { return movementSubject; } }
+
         public void MoveTo(int x, int y) {
-            path.AddLink(position.x, position.y, x, y);
+            var link = path.AddLink(position.x, position.y, x, y);
             position.x = x;
             position.y = y;
+            movementSubject.NotifyObservers(link);
         }
 
         public void MoveBack() {
@@ -23,6 +28,7 @@ namespace TrappedGame.Model.Elements {
                 var link = path.RemoveLink();
                 position.x = link.FromX;
                 position.y = link.FromY;
+                movementSubject.NotifyObservers(link.Reverse());
             }
         }
 

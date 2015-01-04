@@ -19,6 +19,10 @@ namespace TrappedGame.Model {
                 To = new IntVector2(toX, toY);
             }
 
+            public PathLink Reverse() {
+                return new PathLink(ToX, ToY, FromX, FromY);
+            }
+
             public bool IsFrom(int x, int y) {
                 return FromX == x && FromY == y;
             }
@@ -56,8 +60,10 @@ namespace TrappedGame.Model {
         private readonly Stack<PathLink> links = new Stack<PathLink>();
         public IEnumerable<PathLink> Links { get { return links; } }
 
-        public void AddLink(int fromX, int fromY, int toX, int toY) {
-            links.Push(new PathLink(fromX, fromY, toX, toY));
+        public PathLink AddLink(int fromX, int fromY, int toX, int toY) {
+            var pathLink = new PathLink(fromX, fromY, toX, toY);
+            links.Push(pathLink);
+            return pathLink;
         }
 
         public PathLink RemoveLink() {
