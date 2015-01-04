@@ -26,6 +26,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
                 case "FINISH"   : MakeFinish(builder, coordinate);      break;
                 case "BONUS"    : MakeBonus(builder, coordinate);       break;
                 case "PLATFORM" : MakePlatform(builder, coordinate);    break;
+                case "PORTAL"   : MakePortal(builder, coordinate);      break;
                 default         : Debug.Log("Unknown cell type");       break;
             }
 		}
@@ -60,6 +61,12 @@ namespace TrappedGame.Model.LevelLoader.Json {
         private void MakeBonus(LevelBuilder builder, IntVector2 coordinate) {
             builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
             builder.AddBonus(coordinate);
+        }
+
+        private void MakePortal(LevelBuilder builder, IntVector2 coordinate) {
+            // TODO Portal adding
+            var key = cellDescription["key"];
+            builder.AddCell(new PortalCell(coordinate.x, coordinate.y, new PortalCell.PortalKey(key)));
         }
 
         private void MakeLaser(LevelBuilder builder, IntVector2 coordinate) {

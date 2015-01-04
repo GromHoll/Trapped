@@ -115,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emptyCellPrefab: {fileID: 100000, guid: 002834dafc4fde546805c70c1c0c9059, type: 2}
   pitCellPrefab: {fileID: 100000, guid: c8a741beabac41b4db0af43a3ac391c7, type: 2}
+  portalCellPrefab: {fileID: 133240, guid: 009efc743d7eb3e4ba63b71f06aa88db, type: 2}
   unknownPrefab: {fileID: 100000, guid: 81c9f8d7acd32b14e8dda0ca4e35942c, type: 2}
   laserPrefab: {fileID: 100000, guid: 69571f54f6f93f84d8e6f2bbd11cf961, type: 2}
   laserLinePrefab: {fileID: 100000, guid: 428a543f7165e3948827b828068c9bce, type: 2}
@@ -875,7 +876,6 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Priority: 3
   ignoreReversedGraphics: 1
   blockingObjects: 0
   m_BlockingMask:

@@ -19,7 +19,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
         private const int LEVEL_SIZE_X_INDEX = 0;
         private const int LEVEL_SIZE_Y_INDEX = 1;
 
-        private JsonCellBuiler cellBuilder = new JsonCellBuiler();
+        private readonly JsonCellBuiler cellBuilder = new JsonCellBuiler();
         
 		public Level LoadLevel(string fileName) {
 			var levelFile = Resources.Load<TextAsset>(fileName);

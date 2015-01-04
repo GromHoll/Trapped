@@ -5,7 +5,8 @@
       "Folder": "Levels/Dev/",
       "Levels": [ 
 	    { "Source": "JsonLevel" },
-		{ "Source": "Pit" }
+		{ "Source": "Pit" },
+		{ "Source": "Portals" }
       ]
     }, {
 	  "Name": "Tutorial",

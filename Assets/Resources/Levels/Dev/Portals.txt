@@ -1,0 +1,28 @@
+{
+  "name": "levelName",
+  "size": [7, 3],
+  "map": [
+    "..._...",
+    "sp._.pf",
+    "..._...",
+  ],
+  "symbols": [
+    {
+      "symbol": "s",
+      "type": "START"
+    }, {
+	  "symbol": "f",
+      "type": "FINISH"
+    }, {
+	  "symbol": ".",
+      "type": "EMPTY"
+    }, {
+	  "symbol": "_",
+      "type": "PIT"
+    }, {
+	  "symbol": "p",
+      "type": "PORTAL",
+      "key": "BLUE"
+    }
+  ]
+}
