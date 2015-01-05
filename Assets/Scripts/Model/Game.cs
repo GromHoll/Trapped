@@ -53,6 +53,7 @@ namespace TrappedGame.Model {
             CheckDeadlyCell();
         }
 
+        // TODO Refactor this (too hard for undestanding)
         private void MoveBack() {
             var levelTick = Level.GetLevelTick(Hero.X, Hero.Y);
             levelTick.BackTick(Level);
@@ -60,6 +61,12 @@ namespace TrappedGame.Model {
             var platform = Level.GetPlatform(Hero.X, Hero.Y);
             if (platform != null) {
                 platform.MoveBack();
+            }
+
+            foreach (var key in Level.Keys) {
+                if (key.Coordinate == Hero.Coordinate) {
+                    key.Drop();
+                }    
             }
             
             Hero.MoveBack();
@@ -70,7 +77,7 @@ namespace TrappedGame.Model {
             }
         }
 
-        // TODO Refactor this
+        // TODO Refactor this (too hard for undestanding)
         private void MoveForward(int x, int y) {
             if (Hero.IsDead) return;
             if (HeroWasHere(x, y)) return;
@@ -101,6 +108,12 @@ namespace TrappedGame.Model {
                 Hero.MoveTo(portalCell.Pair.X, portalCell.Pair.Y);
                 var endPoint = portalCell.EndPoint(fromCoordinate);
                 Hero.MoveTo(endPoint.x, endPoint.y);
+            }
+
+            foreach (var key in Level.Keys) {
+                if (key.Coordinate == Hero.Coordinate) {
+                    key.PickUp();
+                }
             }
         }
 

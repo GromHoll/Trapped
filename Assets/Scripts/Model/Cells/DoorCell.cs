@@ -11,7 +11,7 @@ namespace TrappedGame.Model.Cells {
         public DoorCell(int x, int y) : base(x, y) {}
 
         public override bool IsBlocked() {
-            return keys.All(k => !k.PickedUp());
+            return keys.All(k => !k.IsPickedUp());
         }
 
         public void AddKey(Key key) {

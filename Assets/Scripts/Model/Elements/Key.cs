@@ -24,7 +24,7 @@ namespace TrappedGame.Model.Elements {
 	        
 	    }
 
-        public bool PickedUp() {
+        public bool IsPickedUp() {
             return isPickedUp;
         }
 
