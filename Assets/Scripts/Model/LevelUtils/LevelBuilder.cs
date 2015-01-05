@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TrappedGame.Model.Cells;
 using TrappedGame.Model.Common;
 using TrappedGame.Model.Elements;
@@ -20,6 +21,8 @@ namespace TrappedGame.Model.LevelUtils {
         private readonly IList<IntVector2> bonuses = new List<IntVector2>();
         private readonly IDictionary<IntVector2, LevelTick> timeBonuses = new Dictionary<IntVector2, LevelTick>();
         private readonly IDictionary<String, PortalCell> portalsWithoutPair = new Dictionary<String, PortalCell>();
+        private readonly IDictionary<String, IList<DoorCell>> doors = new Dictionary<String, IList<DoorCell>>();
+        private readonly IDictionary<String, IList<Key>> keys = new Dictionary<String, IList<Key>>();
         
         public LevelBuilder(string name, int xSize, int ySize) {
             Validate.CheckArgument(xSize > 0, "xSize should be positive");
@@ -66,13 +69,32 @@ namespace TrappedGame.Model.LevelUtils {
         }
 
         public void AddDoor(IntVector2 coordinate, string doorKey) {
-            // TODO Link door and key
-            AddCell(new DoorCell(coordinate.x, coordinate.y));
+            // TODO Maybe create miltimap class?
+            var doorList = doors.ContainsKey(doorKey) ? doors[doorKey] : doors[doorKey] = new List<DoorCell>();
+            var door = new DoorCell(coordinate.x, coordinate.y);
+            doorList.Add(door);
+
+            if (keys.ContainsKey(doorKey)) {
+                var keysList = keys[doorKey];
+                foreach (var key in keysList) {
+                    door.AddKey(key);
+                }
+            }
+            AddCell(door);
         }
 
         public void AddKey(IntVector2 coordinate, string doorKey) {
-            // TODO Link door and key
-            
+            // TODO Maybe create miltimap class?
+            var keyList = keys.ContainsKey(doorKey) ? keys[doorKey] : keys[doorKey] = new List<Key>();
+            var key = new Key(coordinate.x, coordinate.y);
+            keyList.Add(key);
+
+            if (doors.ContainsKey(doorKey)) {
+                var doorsList = doors[doorKey];
+                foreach (var door in doorsList) {
+                    door.AddKey(key);
+                }
+            }
         }
 
         public void SetStart(int x, int y) {
@@ -105,6 +127,14 @@ namespace TrappedGame.Model.LevelUtils {
 
         public IList<Platform> GetPlatforms() {
             return platforms;
+        }
+
+        public IList<Key> GetKeys() {
+            var allKeys = new List<Key>();
+            foreach (var keysList in keys.Values) {
+                allKeys.AddRange(keysList);   
+            }
+            return allKeys;
         }
 
         public IDictionary<IntVector2, LevelTick> GetTimeBonuses() {

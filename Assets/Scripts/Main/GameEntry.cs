@@ -16,6 +16,7 @@ namespace TrappedGame.Main {
         public PathGOFactory pathGoFactory;
         public CellGOFactory cellGameObjectFactory;
 
+        public GameObject keyPrefab;
     	public GameObject heroPrefab;
         public GameObject bonusPrefab;
     	public GameObject finishPrefab;
@@ -65,6 +66,9 @@ namespace TrappedGame.Main {
             }
             foreach (var coord in level.TimeBonuses.Keys) {
                 GameObjectUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject);
+            } 
+            foreach (var key in level.Keys) {
+                GameObjectUtils.InstantiateChild(keyPrefab, GameUtils.ConvertToGameCoord(key.Coordinate, level), gameObject);
             }
             foreach (var platform in level.Platforms) {
                 var platformGameObject = GameObjectUtils.InstantiateChild(platformPrefab, GameUtils.ConvertToGameCoord(platform.Coordinate, level), gameObject);

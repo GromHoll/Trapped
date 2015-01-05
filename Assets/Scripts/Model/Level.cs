@@ -27,10 +27,12 @@ namespace TrappedGame.Model {
         public int FinishX { get { return finish.x; } }
         public int FinishY { get { return finish.y; } }
 
+        public IList<Key> Keys { get; private set; }
         public IList<Platform> Platforms { get; private set; }
         public IList<IntVector2> Bonuses { get; private set; }
         public IDictionary<IntVector2, LevelTick> TimeBonuses { get; private set; }
         
+        // TODO make this constructor available only from LevelBuilder
         // Use LevelBuilder.Build() instead this constructor
         public Level(LevelBuilder builder) {
             size = builder.GetSize();
@@ -38,6 +40,7 @@ namespace TrappedGame.Model {
             finish = builder.GetFinish();
             cells = builder.GetCells();
 
+            Keys = builder.GetKeys();
             Bonuses = builder.GetBonuses();
             Platforms = builder.GetPlatforms();
             TimeBonuses = builder.GetTimeBonuses();

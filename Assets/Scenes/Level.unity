@@ -151,6 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathGoFactory: {fileID: 788622611}
   cellGameObjectFactory: {fileID: 8404433}
+  keyPrefab: {fileID: 165082, guid: c820936c631af8b479ed46d4b27addf3, type: 2}
   heroPrefab: {fileID: 100000, guid: 474277112d61efa40998cc1258717504, type: 2}
   bonusPrefab: {fileID: 100000, guid: 39e470f0fdc57ea4b93554947ad1aa81, type: 2}
   finishPrefab: {fileID: 100000, guid: 90a6102ce5736564b90efb503e589860, type: 2}

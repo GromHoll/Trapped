@@ -72,14 +72,13 @@ namespace TrappedGame.Model.LevelLoader.Json {
         }
         
         private void MakeDoor(LevelBuilder builder, IntVector2 coordinate) {
-            var key = cellDescription["key"];
+            var key = cellDescription["symbol"];
             builder.AddDoor(coordinate, key);
         }
 
         private void MakeKey(LevelBuilder builder, IntVector2 coordinate) {
             builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
-
-            var key = cellDescription["key"];
+            var key = cellDescription["lock"];
             builder.AddKey(coordinate, key);
         }
 
