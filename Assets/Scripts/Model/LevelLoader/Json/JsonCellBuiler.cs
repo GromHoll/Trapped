@@ -1,4 +1,5 @@
-﻿using SimpleJSON;
+﻿using System;
+using SimpleJSON;
 using UnityEngine;
 
 using TrappedGame.Model.LevelUtils;
@@ -28,7 +29,8 @@ namespace TrappedGame.Model.LevelLoader.Json {
                 case "PLATFORM" : MakePlatform(builder, coordinate);    break;
                 case "PORTAL"   : MakePortal(builder, coordinate);      break;
                 case "DOOR"     : MakeDoor(builder, coordinate);        break;
-                default         : Debug.Log("Unknown cell type");       break;
+                case "KEY"      : MakeKey(builder, coordinate);         break;
+                default: Debug.Log(String.Format("Unknown cell type: {0}, Coordinate: {1}", cellType, coordinate));   break;
             }
 		}
 
@@ -70,7 +72,15 @@ namespace TrappedGame.Model.LevelLoader.Json {
         }
         
         private void MakeDoor(LevelBuilder builder, IntVector2 coordinate) {
-            builder.AddCell(new DoorCell(coordinate.x, coordinate.y));
+            var key = cellDescription["key"];
+            builder.AddDoor(coordinate, key);
+        }
+
+        private void MakeKey(LevelBuilder builder, IntVector2 coordinate) {
+            builder.AddCell(new EmptyCell(coordinate.x, coordinate.y));
+
+            var key = cellDescription["key"];
+            builder.AddKey(coordinate, key);
         }
 
         private void MakeLaser(LevelBuilder builder, IntVector2 coordinate) {

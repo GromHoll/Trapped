@@ -65,6 +65,16 @@ namespace TrappedGame.Model.LevelUtils {
             AddCell(newPortal);
         }
 
+        public void AddDoor(IntVector2 coordinate, string doorKey) {
+            // TODO Link door and key
+            AddCell(new DoorCell(coordinate.x, coordinate.y));
+        }
+
+        public void AddKey(IntVector2 coordinate, string doorKey) {
+            // TODO Link door and key
+            
+        }
+
         public void SetStart(int x, int y) {
             start.Set(x, y);
         }

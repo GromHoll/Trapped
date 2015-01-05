@@ -1,3 +1,5 @@
+using System;
+
 namespace TrappedGame.Model.Common {
     public struct IntVector2 {
         public int y;
@@ -15,6 +17,10 @@ namespace TrappedGame.Model.Common {
 
         public IntVector2 Clone() {
             return new IntVector2(x, y);
+        }
+
+        public override string ToString() {
+            return String.Format("[{0}, {1}]", x, y);
         }
 
         public static bool operator == (IntVector2 left, IntVector2 right) {

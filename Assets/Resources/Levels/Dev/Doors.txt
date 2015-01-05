@@ -26,10 +26,12 @@
       "type": "DOOR"
     }, {
 	  "symbol": "k",
-      "type": "KEY"
+      "type": "KEY",
+	  "lock": "d"
     }, {
 	  "symbol": "K",
-      "type": "KEY"
+      "type": "KEY",
+	  "lock": "D"
     }
   ]
 }
