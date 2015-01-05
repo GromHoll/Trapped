@@ -6,7 +6,8 @@
       "Levels": [ 
 	    { "Source": "JsonLevel" },
 		{ "Source": "Pit" },
-		{ "Source": "Portals" }
+		{ "Source": "Portals" },
+		{ "Source": "Doors" }
       ]
     }, {
 	  "Name": "Tutorial",

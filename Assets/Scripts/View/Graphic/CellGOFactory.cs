@@ -14,20 +14,22 @@ namespace TrappedGame.View.Graphic {
         private const string MAP_FOLDER = "Map/";
         private const string PIT_CELLS_FOLDER = MAP_FOLDER + "PitCells";
         private const string WALL_CELLS_FOLDER = MAP_FOLDER + "WallCells";
+        private const string DOOR_CELLS_FOLDER = MAP_FOLDER + "DoorCells";
         private const string EMPTY_CELLS_FOLDER = MAP_FOLDER + "EmptyCells";
         private const string SPEAR_CELLS_FOLDER = MAP_FOLDER + "SpearCells";
         private const string LASER_CELLS_FOLDER = MAP_FOLDER + "LaserCells";
         private const string PORTAL_CELLS_FOLDER = MAP_FOLDER + "PortalCells";
         private const string UNKNOWN_CELLS_FOLDER = MAP_FOLDER + "UnknownCells";
         
-        public GameObject emptyCellPrefab;
-        public GameObject pitCellPrefab;
-        public GameObject portalCellPrefab;
         public GameObject unknownPrefab;
-        public GameObject laserPrefab;
+        public GameObject portalCellPrefab;
+        public GameObject emptyCellPrefab;
         public GameObject laserLinePrefab;
-        public GameObject wallPrefab;
+        public GameObject laserPrefab;
         public GameObject spearPrefab;
+        public GameObject wallPrefab;
+        public GameObject doorPrefab;
+        public GameObject pitPrefab;
 
         private IDictionary<Type, CellGraphicInfo> cellGraphicInfo;
 
@@ -37,9 +39,10 @@ namespace TrappedGame.View.Graphic {
                 {typeof(WallCell),    new CellGraphicInfo(wallPrefab, CreateSimpleCell, false, WALL_CELLS_FOLDER)},   
                 {typeof(SpearCell),   new CellGraphicInfo(spearPrefab, CreateSpearCell, true, SPEAR_CELLS_FOLDER)},   
                 {typeof(LaserCell),   new CellGraphicInfo(laserPrefab, CreateLaserCell, true, LASER_CELLS_FOLDER)},   
-                {typeof(PitCell),     new CellGraphicInfo(pitCellPrefab, CreateSimpleCell, false, PIT_CELLS_FOLDER)}, 
-                {typeof(UnknownCell), new CellGraphicInfo(unknownPrefab, CreateSimpleCell, false, UNKNOWN_CELLS_FOLDER)}, 
-                {typeof(PortalCell),  new CellGraphicInfo(portalCellPrefab, CreateSimpleCell, true, PORTAL_CELLS_FOLDER)},  
+                {typeof(PitCell),     new CellGraphicInfo(pitPrefab, CreateSimpleCell, false, PIT_CELLS_FOLDER)}, 
+                {typeof(PortalCell),  new CellGraphicInfo(portalCellPrefab, CreateSimpleCell, true, PORTAL_CELLS_FOLDER)},
+                {typeof(DoorCell),    new CellGraphicInfo(doorPrefab, CreateSimpleCell, true, DOOR_CELLS_FOLDER)},
+                {typeof(UnknownCell), new CellGraphicInfo(unknownPrefab, CreateSimpleCell, false, UNKNOWN_CELLS_FOLDER)},   
             }; 
         }
 
