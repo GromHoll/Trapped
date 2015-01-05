@@ -41,7 +41,7 @@ namespace TrappedGame.View.Graphic {
                 {typeof(LaserCell),   new CellGraphicInfo(laserPrefab, CreateLaserCell, true, LASER_CELLS_FOLDER)},   
                 {typeof(PitCell),     new CellGraphicInfo(pitPrefab, CreateSimpleCell, false, PIT_CELLS_FOLDER)}, 
                 {typeof(PortalCell),  new CellGraphicInfo(portalCellPrefab, CreateSimpleCell, true, PORTAL_CELLS_FOLDER)},
-                {typeof(DoorCell),    new CellGraphicInfo(doorPrefab, CreateSimpleCell, true, DOOR_CELLS_FOLDER)},
+                {typeof(DoorCell),    new CellGraphicInfo(doorPrefab, CreateDoorCell, true, DOOR_CELLS_FOLDER)},
                 {typeof(UnknownCell), new CellGraphicInfo(unknownPrefab, CreateSimpleCell, false, UNKNOWN_CELLS_FOLDER)},   
             }; 
         }
@@ -79,6 +79,14 @@ namespace TrappedGame.View.Graphic {
             var controller = spearObject.GetComponent<SpearController>();
             controller.Cell = spearCell;
             return controller;
+        }
+
+        private ISyncGameObject CreateDoorCell(Cell cell, Level level, CellGraphicInfo graphicInfo) {
+            var doorCell = cell as DoorCell;
+            var doorObject = CreateCellGameObject(doorCell, level, graphicInfo);
+            var controller = doorObject.GetComponent<DoorController>();
+            controller.Cell = doorCell;
+            return null;
         }
 
         private ISyncGameObject CreateLaserCell(Cell cell, Level level, CellGraphicInfo graphicInfo) {
