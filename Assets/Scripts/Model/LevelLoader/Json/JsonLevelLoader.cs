@@ -49,14 +49,16 @@ namespace TrappedGame.Model.LevelLoader.Json {
         private LevelBuilder ReadLevel(JSONNode jsonLevel) {
             var builder = CreateBuilerForLevel(jsonLevel);
             var symbols = ReadLevelCodeSymbols(jsonLevel);
-            
-            var rowCount = jsonLevel[MAP_KEY].Count;
+
+            var rowCount = builder.GetSize().y;
+            var rowLenght = builder.GetSize().x;
+
 			for (var y = 0; y < rowCount; y++) {
                 string row = jsonLevel[MAP_KEY][y];
-				for (var x = 0; x < row.Length; x++) {
+                for (var x = 0; x < rowLenght; x++) {
 					var element = row[x];
                     Validate.CheckArgument(symbols.ContainsKey(element), String.Format("Cannot find element '{0}' in symbols", element));
-                    cellBuilder.MakeCell(symbols[element], builder, new IntVector2(x, y));
+                    cellBuilder.MakeCell(symbols[element], builder, new IntVector2(x, rowCount - y - 1));
 				}
 			}
             return builder;
