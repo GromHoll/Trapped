@@ -42,6 +42,7 @@ namespace TrappedGame.Main {
             game = new Game(level);
             heroInput = CreateInput();
             CreateLevelObjects();
+            UpdateCameraScale();
         }
 
         private HeroInput CreateInput() {
@@ -92,7 +93,6 @@ namespace TrappedGame.Main {
             } else {
                 ShowWinWindow();
             }
-            UpdateCameraScale();
     	}
 
         private void UpdateInput() {
