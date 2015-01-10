@@ -15,24 +15,17 @@ namespace TrappedGame.Main {
 
         public PathGOFactory pathGoFactory;
         public CellGOFactory cellGameObjectFactory;
-
-        public GameObject keyPrefab;
-    	public GameObject heroPrefab;
-        public GameObject bonusPrefab;
-    	public GameObject finishPrefab;
-        public GameObject platformPrefab;
-        public GameObject timeBonusPrefab;
+        public ElementsGOFactory elementsGameObjectFactory;
 
 		public GameObject winMenuObject;
 
         private Game game;
         private Level level;
         private HeroInput heroInput;
-        private HeroController heroController;
 
         private WinMenu winMenu;
 
-        private IList<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
+        private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
         private readonly IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
 
         void Start() {   
@@ -54,29 +47,9 @@ namespace TrappedGame.Main {
         }
 
         private void CreateLevelObjects() {
-            syncGameObjects = cellGameObjectFactory.CreateLevel(level);
-                        
-            var hero = GameObjectUtils.InstantiateChild(heroPrefab, GameUtils.ConvertToGameCoord(level.StartX, level.StartY, level), gameObject);
-            heroController = hero.GetComponent<HeroController>();
-            heroController.Game = game;
-            syncGameObjects.Add(heroController);
-
-            GameObjectUtils.InstantiateChild(finishPrefab, GameUtils.ConvertToGameCoord(level.FinishX, level.FinishY, level), gameObject);
-            foreach (var coord in level.Bonuses) {
-                GameObjectUtils.InstantiateChild(bonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject); 
-            }
-            foreach (var coord in level.TimeBonuses.Keys) {
-                GameObjectUtils.InstantiateChild(timeBonusPrefab, GameUtils.ConvertToGameCoord(coord, level), gameObject);
-            } 
-            foreach (var key in level.Keys) {
-                GameObjectUtils.InstantiateChild(keyPrefab, GameUtils.ConvertToGameCoord(key.Coordinate, level), gameObject);
-            }
-            foreach (var platform in level.Platforms) {
-                var platformGameObject = GameObjectUtils.InstantiateChild(platformPrefab, GameUtils.ConvertToGameCoord(platform.Coordinate, level), gameObject);
-                var controller = platformGameObject.GetComponent<PlatformController>();
-                controller.SerPlatform(platform, level);
-            }
-            
+            syncGameObjects.AddRange(cellGameObjectFactory.CreateLevel(level));
+            syncGameObjects.AddRange(elementsGameObjectFactory.CreateGameElements(game));
+           
             winMenu = winMenuObject.GetComponent<WinMenu>();
             winMenu.SetGame(game);
             winMenu.Hide();
