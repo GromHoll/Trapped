@@ -1,0 +1,34 @@
+{
+  "Packs": [
+    {
+      "Name": "Beginner",
+      "Folder": "Levels/Beginner/",
+      "Levels": [
+      ]
+    }, {
+      "Name": "Basic",
+      "Folder": "Levels/Basic/",
+      "Levels": [
+      ]
+    }, {
+      "Name": "Advanced",
+      "Folder": "Levels/Advanced/",
+      "Levels": [
+      ]
+    }, {
+      "Name": "Expert",
+      "Folder": "Levels/Expert/",
+      "Levels": [
+      ]
+    }, , {
+      "Name": "Dev",
+      "Folder": "Levels/Dev/",
+      "Levels": [ 
+        { "Source": "JsonLevel" },
+        { "Source": "Pit" },
+        { "Source": "Portals" },
+        { "Source": "Doors" }
+      ]
+    }
+  ]
+}

@@ -3,6 +3,7 @@ using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
 using TrappedGame.Model.LevelLoader;
+using TrappedGame.Model.LevelLoader.Json;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
 using TrappedGame.View.Graphic;
@@ -30,7 +31,7 @@ namespace TrappedGame.Main {
 
         void Start() {   
 			var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
-			var loader = LevelLoaderFactory.GetLoader(levelName);
+            var loader = new JsonLevelLoader();
             level = loader.LoadLevel(levelName);
             game = new Game(level);
             heroInput = CreateInput();

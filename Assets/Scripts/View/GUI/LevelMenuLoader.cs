@@ -10,9 +10,7 @@ namespace TrappedGame.View.GUI {
 		public GameObject buttonPrefab;
 
 		void Start() {
-
-
-			var levelList = Resources.Load<TextAsset>("LevelList");
+            var levelList = Resources.Load<TextAsset>("Levels");
 			var json = JSON.Parse (levelList.text);
 
 			foreach (JSONNode levelName in json["Levels"].AsArray) {
@@ -26,7 +24,6 @@ namespace TrappedGame.View.GUI {
 				PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, levelName);
 				Application.LoadLevel("Level");
 			});
-
 		}
 	}
 }

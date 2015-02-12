@@ -1,9 +1,0 @@
-GenLevel_69
-4 4
-....
-.Af.
-.#.s
-.... 
-1 
-A:laser r off 3 3 1 
- 

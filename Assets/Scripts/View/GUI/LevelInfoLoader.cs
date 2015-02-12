@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
 
 using SimpleJSON;
 
@@ -30,16 +29,13 @@ namespace TrappedGame.View.GUI {
 		public List<LevelT> GetLevelPaths(string packName) {
 			if(levelsInfo.ContainsKey(packName)) {
 				return levelsInfo[packName];
-			} else {
-				//TODO Pack not exist EXCEPTION
 			}
-
 			return null;
 		}
 
 		private void LoadLevels() {
-			var levelList = Resources.Load<TextAsset>("Levels");
-			var json = JSON.Parse (levelList.text);
+            var levelList = Resources.Load<TextAsset>("Levels/Levels");
+			var json = JSON.Parse(levelList.text);
 
 			string packName;
 			string packFolder;
@@ -51,8 +47,6 @@ namespace TrappedGame.View.GUI {
 
 				if(!levelsInfo.ContainsKey(packName)) {
 					levelsInfo[packName] = new List<LevelT>();
-				} else {
-					//TODO Packs with same name EXCEPTION
 				}
 
 				foreach(JSONNode level in pack["Levels"].AsArray) {
@@ -61,14 +55,5 @@ namespace TrappedGame.View.GUI {
 				}
 			}
 		}
-
-		private void Print() {
-			foreach(string packName in levelsInfo.Keys) {
-				foreach(LevelT level in levelsInfo[packName]){
-					Debug.Log(packName + " : " + level.name + "  ::  " + level.path);
-				}
-			}
-		}
-
 	}
 }
