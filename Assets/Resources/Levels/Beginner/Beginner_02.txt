@@ -1,11 +1,11 @@
 {
-  "name": "Move tutorial",
+  "name": "Wall Tutorial",
   "size": [5, 5],
   "map": [
-    ".....",
-    ".....",
-    "s...f",
-    ".....",
+    "..#..",
+    ".s#f.",
+    "..#..",
+    ".###.",
     ".....",
   ],
   "symbols": [
@@ -18,6 +18,9 @@
     }, {
 	    "symbol": ".",
       "type": "EMPTY"
+    }, {
+      "symbol": "#",
+      "type": "WALL"
     }
   ]
 }
