@@ -36,7 +36,6 @@ namespace TrappedGame.Main {
             game = new Game(level);
             heroInput = CreateInput();
             CreateLevelObjects();
-            UpdateCameraScale();
         }
 
         private HeroInput CreateInput() {
@@ -99,21 +98,6 @@ namespace TrappedGame.Main {
                     }
                 }
             }
-        } 
-
-        private void UpdateCameraScale() {
-            float screenX = Screen.width;
-            float screenY = Screen.height;
-            float screenScale = screenX / screenY;
-  
-            float levelX = level.SizeX;
-            float levelY = level.SizeY;  
-
-            float xScale = screenX/levelX;
-            float yScale = screenY/levelY;
-
-			float scale = xScale >= yScale ? levelY : levelX/screenScale;
-            Camera.main.orthographicSize = scale / 2f;
         }
     
         private void ShowWinWindow() {      

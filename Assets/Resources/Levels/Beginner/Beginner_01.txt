@@ -1,0 +1,23 @@
+{
+  "name": "levelName",
+  "size": [5, 5],
+  "map": [
+    ".....",
+    ".....",
+    "s...f",
+    ".....",
+    ".....",
+  ],
+  "symbols": [
+    {
+      "symbol": "s",
+      "type": "START"
+    }, {
+	    "symbol": "f",
+      "type": "FINISH"
+    }, {
+	    "symbol": ".",
+      "type": "EMPTY"
+    }
+  ]
+}

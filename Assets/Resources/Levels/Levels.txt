@@ -4,6 +4,7 @@
       "Name": "Beginner",
       "Folder": "Levels/Beginner/",
       "Levels": [
+        { "Source": "Beginner_01" },
       ]
     }, {
       "Name": "Basic",
