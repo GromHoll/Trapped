@@ -10,7 +10,8 @@ namespace TrappedGame.View.Controllers {
     public class HeroController : MovableObjectController, ISyncGameObject, IObserver<Path.PathLink> {
         
         public static readonly string IS_DEAD_KEY = "IsDead";
-        
+
+        private CameraController cameraController;
         private Animator aminator;
         private Level level; 
         private Hero hero;
@@ -27,11 +28,13 @@ namespace TrappedGame.View.Controllers {
 
         protected override void Start() {
             aminator = GetComponent<Animator>();
+            cameraController = Camera.main.gameObject.GetComponent<CameraController>();
             base.Start();
     	}
     	
         protected override void Update() {
             aminator.SetBool(IS_DEAD_KEY, IsDead());
+            cameraController.SetDead(IsDead());
             base.Update();
     	}
 
