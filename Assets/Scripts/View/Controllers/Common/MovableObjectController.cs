@@ -3,11 +3,16 @@
 namespace TrappedGame.View.Controllers.Common {
     public abstract class MovableObjectController : MonoBehaviour {
 
-        private Vector3 targetPosition;
         public float speed = 10;
+
+        private Vector3 targetPosition;
+        private Vector3 startPosition;
+        private float timeElapsed;
 
         protected virtual void Start() {
             targetPosition = gameObject.transform.position;
+            startPosition = gameObject.transform.position;
+            timeElapsed = 0;
         }
 
         protected virtual void Update() {
@@ -22,18 +27,12 @@ namespace TrappedGame.View.Controllers.Common {
 
         private void UpdatePosition() {
             if (IsMoving()) {
-                var currentPosition = gameObject.transform.position;
-                var direction = targetPosition - currentPosition;
-                direction.Normalize();
-                direction *= speed * Time.deltaTime;
-
-                var newPosition = gameObject.transform.position + direction;
-                if (Vector3.Distance(targetPosition, newPosition) >= Vector3.Distance(targetPosition, currentPosition)) {
-                    newPosition = targetPosition;
-                }
-                gameObject.transform.position = newPosition;
+                timeElapsed += Time.deltaTime;
+                gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, speed*timeElapsed);
             } else {
                 targetPosition = GetNewPosition();
+                startPosition = gameObject.transform.position;
+                timeElapsed = 0;
             }
         }
     }
