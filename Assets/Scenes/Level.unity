@@ -643,7 +643,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathFolder: {fileID: 326613206}
-  pathSegment: {fileID: 100000, guid: ced00bee5e001024fb81840b1978ac74, type: 2}
+  pathSegment: {fileID: 102136, guid: 549f896996805bb4293a4879cdf5515a, type: 2}
+  pathCrossGameObject: {fileID: 156568, guid: 4c9f962853d3aa842917b526c5eab2bc, type: 2}
+  pathStart: {fileID: 116380, guid: f887c72c6f2edba46af14f6de0e7f839, type: 2}
 --- !u!1 &895065984
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,10 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
-using TrappedGame.Model.LevelLoader;
 using TrappedGame.Model.LevelLoader.Json;
-using TrappedGame.Utils;
-using TrappedGame.View.Controllers;
 using TrappedGame.View.Graphic;
 using TrappedGame.View.GUI;
 using TrappedGame.View.Sync;
@@ -13,7 +10,7 @@ using UnityEngine;
 
 namespace TrappedGame.Main {
     public class GameEntry : MonoBehaviour, ISyncGameObject {
-
+        
         public PathGOFactory pathGoFactory;
         public CellGOFactory cellGameObjectFactory;
         public ElementsGOFactory elementsGameObjectFactory;
@@ -27,7 +24,8 @@ namespace TrappedGame.Main {
         private WinMenu winMenu;
 
         private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
-        private readonly IDictionary<Path.PathLink, GameObject> pathObjects = new Dictionary<Path.PathLink, GameObject>();
+        private readonly IDictionary<Path.PathLink, IList<GameObject>> pathObjects
+            = new Dictionary<Path.PathLink, IList<GameObject>>();
 
         void Start() {   
 			var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
@@ -49,7 +47,9 @@ namespace TrappedGame.Main {
         private void CreateLevelObjects() {
             syncGameObjects.AddRange(cellGameObjectFactory.CreateLevel(level));
             syncGameObjects.AddRange(elementsGameObjectFactory.CreateGameElements(game));
-           
+            
+            pathGoFactory.CreatePathStart(level);
+
             winMenu = winMenuObject.GetComponent<WinMenu>();
             winMenu.SetGame(game);
             winMenu.Hide();
@@ -87,14 +87,15 @@ namespace TrappedGame.Main {
             differens.SymmetricExceptWith(showedLinks);
             foreach (var link in differens) {
                 if (showedLinks.Contains(link)) {
-                    var linkGameObject = pathObjects[link];
+                    var linkGameObjects = pathObjects[link];
                     pathObjects.Remove(link);
-                    Destroy(linkGameObject);
+                    foreach (var go in linkGameObjects) {
+                        Destroy(go);
+                    }
                 } else {
                     if (link.IsAdjacent()) {
-                        var coord = GameUtils.ConvertToGameCoord(link.FromX, link.FromY, level);
-                        var pathGameObject = pathGoFactory.CreatePathSegment(link, coord);
-                        pathObjects[link] = pathGameObject;
+                        var pathGameObjects = pathGoFactory.CreatePathSegment(link, level);
+                        pathObjects[link] = pathGameObjects;
                     }
                 }
             }
