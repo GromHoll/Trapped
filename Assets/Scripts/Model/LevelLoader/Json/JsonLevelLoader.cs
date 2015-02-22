@@ -25,7 +25,6 @@ namespace TrappedGame.Model.LevelLoader.Json {
         private readonly JsonCellBuiler cellBuilder = new JsonCellBuiler();
         
 		public Level LoadLevel(string fileName) {
-            Debug.Log("Load level = " + fileName);
 			var levelFile = Resources.Load<TextAsset>(fileName);
             var jsonLevel = JSON.Parse(levelFile.text);
             var builder = ReadLevel(jsonLevel);
@@ -67,8 +66,8 @@ namespace TrappedGame.Model.LevelLoader.Json {
 			}
 
             var tutorial = jsonLevel[TUTORIAL_KEY];
-            builder.TutorialName = tutorial[TUTORIAL_KEY][TUTORIAL_NAME_KEY];
-            builder.TutorialMessage = tutorial[TUTORIAL_KEY][TUTORIAL_MESSAGE_KEY];
+            builder.TutorialName = tutorial[TUTORIAL_NAME_KEY];
+            builder.TutorialMessage = tutorial[TUTORIAL_MESSAGE_KEY];
 
             return builder;
         }

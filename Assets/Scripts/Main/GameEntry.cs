@@ -14,14 +14,13 @@ namespace TrappedGame.Main {
         public PathGOFactory pathGoFactory;
         public CellGOFactory cellGameObjectFactory;
         public ElementsGOFactory elementsGameObjectFactory;
-
-		public GameObject winMenuObject;
-
+        
         private Game game;
         private Level level;
         private HeroInput heroInput;
 
-        private WinMenu winMenu;
+        public WinMenu winMenu;
+        public TutorialMenu tutorialMenu;
 
         private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
         private readonly IDictionary<Path.PathLink, IList<GameObject>> pathObjects
@@ -50,9 +49,11 @@ namespace TrappedGame.Main {
             
             pathGoFactory.CreatePathStart(level);
 
-            winMenu = winMenuObject.GetComponent<WinMenu>();
             winMenu.SetGame(game);
             winMenu.Hide();
+
+            tutorialMenu.ShowTutorial(level.LevelTutorial);
+            syncGameObjects.Add(tutorialMenu);
         }
 
         public bool IsSync() {

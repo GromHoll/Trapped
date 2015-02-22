@@ -1,4 +1,5 @@
-﻿using TrappedGame.Model;
+﻿using System.Globalization;
+using TrappedGame.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +8,8 @@ namespace TrappedGame.View.GUI {
 
         private Game game;
 
-		public GameObject scoreField;
-		public GameObject deathField;
-		
+        public Text scoreField;
+        public Text deathField;
 
         public void SetGame(Game newGame) {
             game = newGame;
@@ -21,9 +21,8 @@ namespace TrappedGame.View.GUI {
 
         public void Show() {
             gameObject.SetActive(true);
-
-			scoreField.GetComponent<Text>().text = game.GetScore().ToString();
-			deathField.GetComponent<Text>().text = game.Hero.DeathCount.ToString();
+			scoreField.text = game.GetScore().ToString(CultureInfo.InvariantCulture);
+			deathField.text = game.Hero.DeathCount.ToString(CultureInfo.InvariantCulture);
         }
 
 		public void ReturnToMenu() {
