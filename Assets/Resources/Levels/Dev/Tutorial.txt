@@ -2,7 +2,7 @@
   "name": "Tutorial",
   "tutorial": {
     "name": "Test Tutorial",
-	"message": "This is test tutorial message.\n This is second line",
+    "message": "This is test tutorial message.\n This is second line",
   } 
   "size": [5, 5],
   "map": [
