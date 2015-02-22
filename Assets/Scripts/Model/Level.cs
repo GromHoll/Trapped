@@ -12,6 +12,8 @@ namespace TrappedGame.Model {
         
         private string name;
 
+        public Tutorial LevelTutorial {get; private set; }
+
         private readonly Cell[,] cells; 
         public IEnumerable Cells { get { return cells; } }
         
@@ -35,6 +37,8 @@ namespace TrappedGame.Model {
         // TODO make this constructor available only from LevelBuilder
         // Use LevelBuilder.Build() instead this constructor
         public Level(LevelBuilder builder) {
+            LevelTutorial = builder.LevelTutorial;
+
             size = builder.GetSize();
             start = builder.GetStart();
             finish = builder.GetFinish();

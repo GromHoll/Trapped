@@ -43,7 +43,6 @@ namespace TrappedGame.View.Graphic {
 
         private GameObject CreateCross(Path.PathLink link, Level level) {
             var previousLink = link.PreviousLink;
-            Debug.Log("previousLink = " + (previousLink != null));
             if (previousLink == null || !previousLink.IsAdjacent()) { return null; }
             
             var folder = GameObjectUtils.GetSubFolderByPath(gameObject, PATH_FOLDER);

@@ -10,7 +10,18 @@ namespace TrappedGame.Model.LevelUtils {
     public class LevelBuilder {
 
         private string name;
-        
+
+        public string TutorialName { private get; set; }
+        public string TutorialMessage { private get; set; }
+        public Tutorial LevelTutorial {
+            get {
+                if (TutorialName != null && TutorialMessage != null) {
+                    return new Tutorial { Name = TutorialName, Message = TutorialMessage };
+                }
+                return null;
+            }
+        }
+
         private readonly IntVector2 size;
         private readonly Cell[,] cells;
         

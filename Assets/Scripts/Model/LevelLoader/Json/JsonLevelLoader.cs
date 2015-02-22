@@ -12,6 +12,9 @@ namespace TrappedGame.Model.LevelLoader.Json {
 
 	    private const string LEVEL_NAME_KEY = "name";
         private const string LEVEL_SIZE_KEY = "size";
+        private const string TUTORIAL_KEY = "tutorial";
+        private const string TUTORIAL_NAME_KEY = "name";
+        private const string TUTORIAL_MESSAGE_KEY = "message";
         private const string SYMBOLS_KEY = "symbols";
         private const string SYMBOL_KEY = "symbol";
         private const string MAP_KEY = "map";
@@ -62,6 +65,11 @@ namespace TrappedGame.Model.LevelLoader.Json {
                     cellBuilder.MakeCell(symbols[element], builder, new IntVector2(x, rowCount - y - 1));
 				}
 			}
+
+            var tutorial = jsonLevel[TUTORIAL_KEY];
+            builder.TutorialName = tutorial[TUTORIAL_KEY][TUTORIAL_NAME_KEY];
+            builder.TutorialMessage = tutorial[TUTORIAL_KEY][TUTORIAL_MESSAGE_KEY];
+
             return builder;
         }
 	}

@@ -29,7 +29,8 @@
         { "Source": "JsonLevel" },
         { "Source": "Pit" },
         { "Source": "Portals" },
-        { "Source": "Doors" }
+        { "Source": "Doors" },
+        { "Source": "Tutorial" },
       ]
     }
   ]

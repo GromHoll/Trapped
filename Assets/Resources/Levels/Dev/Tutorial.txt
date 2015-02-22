@@ -1,0 +1,41 @@
+{
+  "name": "Tutorial",
+  "tutorial": {
+    "name": "Test Tutorial",
+	"message": "This is test tutorial message.\n This is second line",
+  } 
+  "size": [5, 5],
+  "map": [
+    ".....",
+    ".D.d.",
+    ".....",
+    ".K.k.",
+    "s...f",
+  ],
+  "symbols": [
+    {
+      "symbol": "s",
+      "type": "START"
+    }, {
+	  "symbol": "f",
+      "type": "FINISH"
+    }, {
+	  "symbol": ".",
+      "type": "EMPTY"
+    }, {
+	  "symbol": "D",
+      "type": "DOOR"
+    }, {
+	  "symbol": "d",
+      "type": "DOOR"
+    }, {
+	  "symbol": "k",
+      "type": "KEY",
+	  "lock": "d"
+    }, {
+	  "symbol": "K",
+      "type": "KEY",
+	  "lock": "D"
+    }
+  ]
+}
