@@ -11,5 +11,9 @@ namespace TrappedGame.Utils {
             if (obj == null) throw new ArgumentNullException(message);
         }
 
+        public static void NotNullOrEmpty(string str, string message = "String shoul be not null or empty") {
+            if (string.IsNullOrEmpty(str)) throw new ArgumentException(message);
+        }
+
     }
 }
