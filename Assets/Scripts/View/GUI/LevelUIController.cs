@@ -1,9 +1,19 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using TrappedGame.Model;
+using UnityEngine;
 
 namespace TrappedGame.View.GUI {
     public class LevelUIController : MonoBehaviour {
 
+        public TutorialMenu tutorialMenu;
+        public WinMenu winMenu;
+
+        public void ShowTutorial(Tutorial tutorial) {
+            tutorialMenu.ShowTutorial(tutorial);
+        }
+
+        public void ShowWinMenu(Game game) {
+            winMenu.Show(game);
+        }
 
         public void BackToMainMenu() {
             LoadScene("MainMenu");
@@ -15,7 +25,7 @@ namespace TrappedGame.View.GUI {
         }
 
         private void LoadScene(string sceneName) {
-			Application.LoadLevel(sceneName);	                       
-		}
+            Application.LoadLevel(sceneName);
+        }
 	}
 }

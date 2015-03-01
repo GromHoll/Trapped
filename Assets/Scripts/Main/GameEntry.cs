@@ -19,15 +19,14 @@ namespace TrappedGame.Main {
         private Level level;
         private HeroInput heroInput;
 
-        public WinMenu winMenu;
-        public TutorialMenu tutorialMenu;
+        public LevelUIController uiController;
 
         private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
         private readonly IDictionary<Path.PathLink, IList<GameObject>> pathObjects
-            = new Dictionary<Path.PathLink, IList<GameObject>>();
+                = new Dictionary<Path.PathLink, IList<GameObject>>();
 
         void Start() {   
-			var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
+            var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
             var loader = new JsonLevelLoader();
             level = loader.LoadLevel(levelName);
             game = new Game(level);
@@ -49,11 +48,8 @@ namespace TrappedGame.Main {
             
             pathGoFactory.CreatePathStart(level);
 
-            winMenu.SetGame(game);
-            winMenu.Hide();
-
-            tutorialMenu.ShowTutorial(level.LevelTutorial);
-            syncGameObjects.Add(tutorialMenu);
+            uiController.ShowTutorial(level.LevelTutorial);
+            syncGameObjects.Add(uiController.tutorialMenu);
         }
 
         public bool IsSync() {
@@ -61,13 +57,13 @@ namespace TrappedGame.Main {
         }
 
         void Update() {
-    		if (!game.IsWin()) {
+            if (!game.IsWin()) {
                 UpdateInput();
                 UpdateGraphics();
             } else {
                 ShowWinWindow();
             }
-    	}
+        }
 
         private void UpdateInput() {
             if (IsSync()) {
@@ -86,11 +82,11 @@ namespace TrappedGame.Main {
             var showedLinks = pathObjects.Keys;
             var differens = new HashSet<Path.PathLink>(existLinks);
             differens.SymmetricExceptWith(showedLinks);
-            foreach (var link in differens) {
+            foreach (Path.PathLink link in differens) {
                 if (showedLinks.Contains(link)) {
                     var linkGameObjects = pathObjects[link];
                     pathObjects.Remove(link);
-                    foreach (var go in linkGameObjects) {
+                    foreach (GameObject go in linkGameObjects) {
                         Destroy(go);
                     }
                 } else {
@@ -103,7 +99,7 @@ namespace TrappedGame.Main {
         }
     
         private void ShowWinWindow() {      
-            winMenu.Show();
+            uiController.ShowWinMenu(game);
         }
     }
 }
