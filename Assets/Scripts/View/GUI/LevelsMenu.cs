@@ -30,7 +30,7 @@ namespace TrappedGame.View.GUI {
             var button = buttonGO.GetComponent<Button>();
             button.onClick.AddListener(() => {
                 PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, level.Path);
-                // TODO Channge Level string to constant
+                // TODO Change Level string to constant
                 Application.LoadLevel("Level");
             });
             button.GetComponentInChildren<Text>().text = level.Name;

@@ -10,7 +10,7 @@ namespace TrappedGame.View.GUI {
         public LevelsMenu levelsMenuPrefab;
 
         void Start() {
-            var packs = Levels.Instance.Packs;
+            var packs = Levels.GetPacks();
             foreach (var packInfo in packs) {
                 CreatePack(packInfo);
             }

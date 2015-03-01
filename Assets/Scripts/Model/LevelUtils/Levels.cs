@@ -6,6 +6,7 @@ using TrappedGame.Utils;
 using UnityEngine;
 
 namespace TrappedGame.Model.LevelUtils {
+    // TODO How about storing current level in Levels (not in Preferences)?
 	public class Levels {
 
 	    public class LevelInfo {
@@ -52,13 +53,11 @@ namespace TrappedGame.Model.LevelUtils {
         private const String LEVEL_SOURCE_KEY = "Source";
 
 
-        public static readonly Levels Instance = new Levels();
+        private static readonly Levels Instance = new Levels();
 
-	    public IList<PackInfo> Packs { get; private set; }
+	    private IList<PackInfo> packs = new List<PackInfo>();
 
 	    private Levels() {
-            Packs = new List<PackInfo>();
-
             var levelsText = Resources.Load<TextAsset>(LEVELS_FILENAME);
             var jsonLevels = JSON.Parse(levelsText.text);
 
@@ -73,8 +72,26 @@ namespace TrappedGame.Model.LevelUtils {
                     var level = new LevelInfo(levelSource, levelName);
                     pack.AddLevelInfo(level);
                 }
-                Packs.Add(pack);
+                packs.Add(pack);
             }
 	    }
+
+        public static IList<PackInfo> GetPacks() {
+            return Instance.packs;
+        }
+
+        public static LevelInfo GetNext(string currentName) {
+            var currentLevelFound = false;
+            foreach (var pack in Instance.packs) {
+                foreach (var level in pack.Levels) {
+                    if (currentLevelFound) {
+                        return level;
+                    } else if (level.Path == currentName) {
+                        currentLevelFound = true;
+                    }
+                }
+            }
+            return null;
+        }
 	}
 }

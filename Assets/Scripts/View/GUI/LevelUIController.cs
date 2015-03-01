@@ -1,4 +1,6 @@
-﻿using TrappedGame.Model;
+﻿using TrappedGame.Main;
+using TrappedGame.Model;
+using TrappedGame.Model.LevelUtils;
 using UnityEngine;
 
 namespace TrappedGame.View.GUI {
@@ -22,6 +24,17 @@ namespace TrappedGame.View.GUI {
         public void ReloadLevel() {
             // TODO I think reload full scene os bad idea
             LoadScene("Level");
+        }
+
+        public void NextLevel() {
+            var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
+            var nextLevel = Levels.GetNext(levelName);
+            if (nextLevel != null) {
+                PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, nextLevel.Path);
+                ReloadLevel();
+            } else {
+                BackToMainMenu();
+            }
         }
 
         private void LoadScene(string sceneName) {
