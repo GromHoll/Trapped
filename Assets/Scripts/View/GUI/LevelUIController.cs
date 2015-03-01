@@ -1,7 +1,13 @@
-﻿using TrappedGame.Main;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using TrappedGame.Main;
 using TrappedGame.Model;
 using TrappedGame.Model.LevelUtils;
 using UnityEngine;
+using UnityEngine.Cloud.Analytics;
 
 namespace TrappedGame.View.GUI {
     public class LevelUIController : MonoBehaviour {
@@ -39,6 +45,22 @@ namespace TrappedGame.View.GUI {
 
         private void LoadScene(string sceneName) {
             Application.LoadLevel(sceneName);
+        }
+
+        public void RateLevel(bool like) {
+            var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
+            UnityAnalytics.CustomEvent("RateLevel", new Dictionary<string, object> {
+                { "levelName", levelName },
+                { "isLike", like }
+            });
+        }
+
+        public void RateLevelDifficulty(string difficulty) {
+            var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
+            UnityAnalytics.CustomEvent("RateLevelDifficulty", new Dictionary<string, object> {
+                { "levelName", levelName },
+                { "difficulty", difficulty }
+            });
         }
 	}
 }
