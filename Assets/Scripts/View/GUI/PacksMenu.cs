@@ -25,7 +25,8 @@ namespace TrappedGame.View.GUI {
             levelsMenu.PackInfo = pack;
             levelsMenu.PacksMenu = this;
 
-            var buttonGO = GameObjectUtils.InstantiateChild(buttonPrefab.gameObject, Vector2.zero, gameObject);
+            var buttonGO = GameObjectUtils.InstantiateChildForWorld(buttonPrefab.gameObject,
+                                                                    Vector2.zero, gameObject, false);
             var button = buttonGO.GetComponent<Button>();
             button.onClick.AddListener(() => {
                 gameObject.SetActive(false);

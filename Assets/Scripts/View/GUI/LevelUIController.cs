@@ -1,8 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using TrappedGame.Main;
 using TrappedGame.Model;
 using TrappedGame.Model.LevelUtils;

@@ -26,7 +26,8 @@ namespace TrappedGame.View.GUI {
 	    }
 
         private void CreateLevelButton(Levels.LevelInfo level) {
-            var buttonGO = GameObjectUtils.InstantiateChild(buttonPrefab.gameObject, Vector2.zero, gameObject);
+            var buttonGO = GameObjectUtils.InstantiateChildForWorld(buttonPrefab.gameObject,
+                                                                    Vector2.zero, gameObject, false);
             var button = buttonGO.GetComponent<Button>();
             button.onClick.AddListener(() => {
                 PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, level.Path);
