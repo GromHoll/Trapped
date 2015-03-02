@@ -3,10 +3,7 @@
     {
       "Name": "Beginner",
       "Folder": "Levels/Beginner/",
-      "Levels": [
-        { "Source": "Beginner_01" },
-        { "Source": "Beginner_02" },
-      ]
+      "LoadAll": true
     }, {
       "Name": "Basic",
       "Folder": "Levels/Basic/",
@@ -22,16 +19,21 @@
       "Folder": "Levels/Expert/",
       "Levels": [
       ]
-    }, , {
+    }, {
       "Name": "Dev",
       "Folder": "Levels/Dev/",
-      "Levels": [ 
+      "Levels": [
         { "Source": "JsonLevel" },
         { "Source": "Pit" },
         { "Source": "Portals" },
         { "Source": "Doors" },
         { "Source": "Tutorial" },
       ]
+    }, {
+      "Name": "External",
+      "Folder": "/ExternalLevels/",
+      "External": true,
+      "LoadAll": true
     }
   ]
 }
