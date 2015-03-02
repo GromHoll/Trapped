@@ -82,7 +82,9 @@ namespace TrappedGame.Model.LevelUtils {
                                 var levelInfo = new LevelInfo(fileName, fileName);
                                 pack.AddLevelInfo(levelInfo);
                             }
-                        } catch {}
+                        } catch {
+                            continue;
+                        }
                     } else {
                         var allLevels = Resources.LoadAll(pack.Folder);
                         foreach (var level in allLevels) {
