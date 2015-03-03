@@ -14,8 +14,8 @@ PlayerSettings:
   productName: Trapped
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  defaultScreenWidth: 480
-  defaultScreenHeight: 800
+  defaultScreenWidth: 400
+  defaultScreenHeight: 640
   defaultScreenWidthWeb: 480
   defaultScreenHeightWeb: 800
   m_RenderingPath: 1
@@ -62,10 +62,10 @@ PlayerSettings:
   xboxEnableGuest: 0
   videoMemoryForVertexBuffers: 0
   m_SupportedAspectRatios:
-    4:3: 1
-    5:4: 1
-    16:10: 1
-    16:9: 1
+    4:3: 0
+    5:4: 0
+    16:10: 0
+    16:9: 0
     Others: 1
   iPhoneBundleIdentifier: com.tnt.trapped
   metroEnableIndependentInputSource: 0

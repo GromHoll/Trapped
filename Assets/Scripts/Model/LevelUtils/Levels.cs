@@ -1,13 +1,15 @@
 ﻿using SimpleJSON;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading;
 using TrappedGame.Utils;
 using UnityEngine;
+using FilePath = System.IO.Path;
 
 namespace TrappedGame.Model.LevelUtils {
-    // TODO How about storing current level in Levels (not in Preferences)?
 	public class Levels {
 
 	    public class LevelInfo {
@@ -44,6 +46,11 @@ namespace TrappedGame.Model.LevelUtils {
                 level.Pack = this;
                 Levels.Add(level);
             }
+
+            internal void AddLevelInfo(string source, string name = null) {
+                var levelInfo = new LevelInfo(source, name);
+                AddLevelInfo(levelInfo);
+            }
 	    }
 
         public static readonly string LEVELS_FILENAME = "Levels/Levels";
@@ -62,6 +69,7 @@ namespace TrappedGame.Model.LevelUtils {
 
 	    private IList<PackInfo> packs = new List<PackInfo>();
 
+        // TODO Separate Levels logic and Levels Loading
 	    private Levels() {
             var levelsText = Resources.Load<TextAsset>(LEVELS_FILENAME);
             var jsonLevels = JSON.Parse(levelsText.text);
@@ -72,44 +80,55 @@ namespace TrappedGame.Model.LevelUtils {
                 var external = packNode[PACK_EXTERNAL_KEY].AsBool;
                 var loadAll = packNode[PACK_LOAD_ALL_KEY].AsBool;
                 var pack = new PackInfo(packName, packFolder, external);
-
-                if (loadAll) {
-                    if (external) {
-                        try {
-                            var files = Directory.GetFiles(Application.dataPath + pack.Folder, "*.txt");
-                            for (var i = 0; i < files.Length; i++) {
-                                var fileName = System.IO.Path.GetFileName(files[i]);
-                                var levelInfo = new LevelInfo(fileName, fileName);
-                                pack.AddLevelInfo(levelInfo);
-                            }
-                        } catch {
-                            continue;
-                        }
-                    } else {
-                        var allLevels = Resources.LoadAll(pack.Folder);
-                        foreach (var level in allLevels) {
-                            var fileName = level.name;
-                            var levelInfo = new LevelInfo(fileName, fileName);
-                            pack.AddLevelInfo(levelInfo);
-                        }
-                    }
-                } else {
-                    foreach (JSONNode levelNode in packNode[LEVELS_KEY].AsArray) {
-                        var levelName = levelNode[LEVEL_NAME_KEY];
-                        var levelSource = levelNode[LEVEL_SOURCE_KEY];
-                        var levelInfo = new LevelInfo(levelSource, levelName);
-                        pack.AddLevelInfo(levelInfo);
-                    }
-                }
-
-                packs.Add(pack);
+                var loadedPack = loadAll ? LoadAllFolder(pack) : LoadList(pack, packNode);
+                packs.Add(loadedPack);
             }
 	    }
+
+        private PackInfo LoadList(PackInfo pack, JSONNode packNode) {
+            foreach (JSONNode levelNode in packNode[LEVELS_KEY].AsArray) {
+                var levelName = levelNode[LEVEL_NAME_KEY];
+                var levelSource = levelNode[LEVEL_SOURCE_KEY];
+                pack.AddLevelInfo(levelSource, levelName);
+            }
+            return pack;
+        }
+
+        private PackInfo LoadAllFolder(PackInfo pack) {
+            return pack.External ? LoadAllExternalFolder(pack) : LoadAllResourcesFolder(pack);
+        }
+
+        private PackInfo LoadAllExternalFolder(PackInfo pack) {
+            var files = GetAllFilesInFolder(pack.Folder);
+            foreach (var filePath in files) {
+                var fileName = FilePath.GetFileName(filePath);
+                pack.AddLevelInfo(fileName);
+            }
+            return pack;
+        }
+
+        private IEnumerable<String> GetAllFilesInFolder(String folder) {
+            try {
+                return Directory.GetFiles(FilePath.Combine(Application.dataPath, folder), "*.txt");
+            } catch {
+                return new List<String>();
+            }
+        }
+
+        private PackInfo LoadAllResourcesFolder(PackInfo pack) {
+            var levels = Resources.LoadAll(pack.Folder);
+            foreach (var level in levels) {
+                var fileName = level.name;
+                pack.AddLevelInfo(fileName);
+            }
+            return pack;
+        }
 
         public static IList<PackInfo> GetPacks() {
             return Instance.packs;
         }
 
+        // TODO How about storing current level in Levels (not in Preferences)?
         public static LevelInfo GetLevelByName(string levelName) {
             foreach (var pack in Instance.packs) {
                 foreach (var level in pack.Levels) {

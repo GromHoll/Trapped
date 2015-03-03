@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using TrappedGame.Model.Common;
 using TrappedGame.Model.LevelUtils;
 using TrappedGame.Utils;
 using UnityEngine;
+using FilePath = System.IO.Path;
 
 namespace TrappedGame.Model.LevelLoader.Json {
 	public class JsonLevelLoader : ILevelLoader {
@@ -28,7 +30,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
 		public Level LoadLevel(string fileName) {
             var level = Levels.GetLevelByName(fileName);
             var levelText = (level.Pack.External)
-                    ? File.OpenText(Application.dataPath + fileName).ReadToEnd()
+                    ? File.OpenText(FilePath.Combine(Application.dataPath, fileName)).ReadToEnd()
                     : Resources.Load<TextAsset>(fileName).text;
             var jsonLevel = JSON.Parse(levelText);
             var builder = ReadLevel(jsonLevel);
