@@ -6,7 +6,7 @@ namespace TrappedGame.View.Controllers {
         public DoorCell Cell { get; set; }
 
         private void Update() {
-            renderer.enabled = Cell.IsBlocked();
+            GetComponent<Renderer>().enabled = Cell.IsBlocked();
         }
     }
 }

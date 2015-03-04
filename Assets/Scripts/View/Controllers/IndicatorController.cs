@@ -7,7 +7,7 @@ namespace TrappedGame.View.Controllers {
         public CountCell Cell { get; set; }
 
         private void Update() {
-            renderer.enabled = Cell.IsOnOnNextTick() == state;
+            GetComponent<Renderer>().enabled = Cell.IsOnOnNextTick() == state;
         }
     }
 }

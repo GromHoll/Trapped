@@ -12,12 +12,12 @@ namespace TrappedGame.View.Controllers {
 
         private void Start() {
             targetColor = defautColor;
-            camera.backgroundColor = defautColor;
+            GetComponent<Camera>().backgroundColor = defautColor;
         }
 
         private void Update() {
-            if (camera.backgroundColor != targetColor) {
-                camera.backgroundColor = Color.Lerp(camera.backgroundColor, targetColor, Time.deltaTime*changeSpeed);
+            if (GetComponent<Camera>().backgroundColor != targetColor) {
+                GetComponent<Camera>().backgroundColor = Color.Lerp(GetComponent<Camera>().backgroundColor, targetColor, Time.deltaTime*changeSpeed);
             }
         }
 
