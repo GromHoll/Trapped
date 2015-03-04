@@ -41,11 +41,13 @@ namespace UnityTest
         }
 
         public Object GetFailureReferenceObject()
-        {
+		{
+			#if UNITY_EDITOR
             if (!string.IsNullOrEmpty(m_CreatedInFilePath))
             {
                 return Resources.LoadAssetAtPath(m_CreatedInFilePath, typeof(Object));
-            }
+			}
+			#endif
             return this;
         }
 
