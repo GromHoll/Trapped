@@ -31,7 +31,7 @@
       ]
     }, {
       "Name": "External",
-      "Folder": "/ExternalLevels/",
+      "Folder": "ExternalLevels/",
       "External": true,
       "LoadAll": true
     }
