@@ -30,6 +30,18 @@
         { "Source": "Tutorial" },
       ]
     }, {
+      "Name": "Gen Spear 1",
+      "Folder": "Levels/GenSpear1/",
+      "LoadAll": true
+    }, {
+      "Name": "Gen Spear 2",
+      "Folder": "Levels/GenSpear2/",
+      "LoadAll": true
+    }, {
+      "Name": "Gen Spear 3",
+      "Folder": "Levels/GenSpear3/",
+      "LoadAll": true
+    }, {
       "Name": "External",
       "Folder": "ExternalLevels/",
       "External": true,

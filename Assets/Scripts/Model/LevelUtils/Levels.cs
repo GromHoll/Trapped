@@ -83,7 +83,10 @@ namespace TrappedGame.Model.LevelUtils {
                                         packName, packFolder, external));
                 var pack = new PackInfo(packName, packFolder, external);
                 var loadedPack = loadAll ? LoadAllFolder(pack) : LoadList(pack, packNode);
-                packs.Add(loadedPack);
+
+                if (loadedPack.Levels.Count != 0) {
+                    packs.Add(loadedPack);
+                }
             }
 	    }
 
