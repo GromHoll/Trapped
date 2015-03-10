@@ -60,7 +60,7 @@ namespace TrappedGame.Main {
             if (!game.IsWin()) {
                 UpdateInput();
                 UpdateGraphics();
-            } else {
+            } else if (IsSync()) {
                 ShowWinWindow();
             }
         }

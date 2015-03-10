@@ -23,7 +23,7 @@
     }, 
     {
       "symbol": "o", 
-      "type": "HERO"
+      "type": "START"
     }, 
     {
       "symbol": "^", 
