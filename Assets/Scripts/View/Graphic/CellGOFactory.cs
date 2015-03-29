@@ -37,7 +37,7 @@ namespace TrappedGame.View.Graphic {
             cellGraphicInfo = new Dictionary<Type, CellGraphicInfo> {
                 {typeof(EmptyCell),   new CellGraphicInfo(emptyCellPrefab, CreateSimpleCell, false, EMPTY_CELLS_FOLDER)},   
                 {typeof(WallCell),    new CellGraphicInfo(wallPrefab, CreateSimpleCell, false, WALL_CELLS_FOLDER)},   
-                {typeof(SpearCell),   new CellGraphicInfo(spearPrefab, CreateSpearCell, true, SPEAR_CELLS_FOLDER)},   
+                {typeof(SpearCell),   new CellGraphicInfo(spearPrefab, CreateSpearCell, false, SPEAR_CELLS_FOLDER)},
                 {typeof(LaserCell),   new CellGraphicInfo(laserPrefab, CreateLaserCell, true, LASER_CELLS_FOLDER)},   
                 {typeof(PitCell),     new CellGraphicInfo(pitPrefab, CreateSimpleCell, false, PIT_CELLS_FOLDER)}, 
                 {typeof(PortalCell),  new CellGraphicInfo(portalCellPrefab, CreateSimpleCell, true, PORTAL_CELLS_FOLDER)},
