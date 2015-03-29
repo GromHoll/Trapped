@@ -3,9 +3,10 @@ using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
 using TrappedGame.Model.LevelLoader.Json;
-using TrappedGame.View.Graphic;
 using TrappedGame.View.GUI;
+using TrappedGame.View.Graphic;
 using TrappedGame.View.Sync;
+using UnityEditor;
 using UnityEngine;
 
 namespace TrappedGame.Main {
@@ -21,6 +22,9 @@ namespace TrappedGame.Main {
 
         public LevelUIController uiController;
 
+        public AudioClip next;
+        public AudioClip back;
+
         private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
         private readonly IDictionary<Path.PathLink, IList<GameObject>> pathObjects
                 = new Dictionary<Path.PathLink, IList<GameObject>>();
@@ -29,6 +33,8 @@ namespace TrappedGame.Main {
             var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
             var loader = new JsonLevelLoader();
             level = loader.LoadLevel(levelName);
+            level.AddNextTickAction(() => AudioSource.PlayClipAtPoint(next, Vector3.zero));
+            level.AddBackTickAction(() => AudioSource.PlayClipAtPoint(back, Vector3.zero));
             game = new Game(level);
             heroInput = CreateInput();
             CreateLevelObjects();

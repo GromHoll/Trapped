@@ -33,6 +33,9 @@ namespace TrappedGame.Model {
         public IList<Platform> Platforms { get; private set; }
         public IList<IntVector2> Bonuses { get; private set; }
         public IDictionary<IntVector2, LevelTick> TimeBonuses { get; private set; }
+
+        private IList<Action> nextTickActions = new List<Action>();
+        private IList<Action> backTickActions = new List<Action>();
         
         // TODO make this constructor available only from LevelBuilder
         // Use LevelBuilder.Build() instead this constructor
@@ -70,12 +73,26 @@ namespace TrappedGame.Model {
             foreach (var cell in cells) {
                 cell.NextTick();
             }
+            foreach (var action in nextTickActions) {
+                action.Invoke();
+            }
         }
 
         public void BackTick() {
             foreach (var cell in cells) {
                 cell.BackTick();
             }
+            foreach (var action in backTickActions) {
+                action.Invoke();
+            }
+        }
+
+        public void AddNextTickAction(Action action) {
+            nextTickActions.Add(action);
+        }
+
+        public void AddBackTickAction(Action action) {
+            backTickActions.Add(action);
         }
 
         public IList<T> GetCells<T>() where T: Cell {
