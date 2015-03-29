@@ -3,7 +3,6 @@ using TrappedGame.Model;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
 using TrappedGame.View.Sync;
-using UnityEditor;
 using UnityEngine;
 
 namespace TrappedGame.View.Graphic {
