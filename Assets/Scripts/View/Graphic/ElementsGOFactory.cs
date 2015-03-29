@@ -3,6 +3,7 @@ using TrappedGame.Model;
 using TrappedGame.Utils;
 using TrappedGame.View.Controllers;
 using TrappedGame.View.Sync;
+using UnityEditor;
 using UnityEngine;
 
 namespace TrappedGame.View.Graphic {
@@ -11,6 +12,7 @@ namespace TrappedGame.View.Graphic {
         public GameObject keyPrefab;
         public GameObject heroPrefab;
         public GameObject bonusPrefab;
+        public GameObject borderPrefab;
         public GameObject finishPrefab;
         public GameObject platformPrefab;
         public GameObject timeBonusPrefab;
@@ -77,6 +79,32 @@ namespace TrappedGame.View.Graphic {
                 controllers.Add(controller);
             }
             return controllers;
+        }
+
+        public void CreateBorder(Level level) {
+            var folder = GameObjectUtils.GetSubFolderByPath(gameObject, "Borders");
+
+            var rightBorder = GameObjectUtils.InstantiateChild(borderPrefab, new Vector2((level.SizeX + 1)/2f, 0), folder);
+            var rightBorderScale = rightBorder.transform.localScale;
+            rightBorderScale.y = level.SizeY + 1;
+            rightBorder.transform.localScale = rightBorderScale;
+
+            var leftBorder = GameObjectUtils.InstantiateChild(borderPrefab, new Vector2(-(level.SizeX + 1)/2f, 0), folder);
+            var leftBorderScale = leftBorder.transform.localScale;
+            leftBorderScale.y = level.SizeY + 1;
+            leftBorder.transform.localScale = leftBorderScale;
+
+            var upBorder = GameObjectUtils.InstantiateChild(borderPrefab, new Vector2(0, (level.SizeY + 1)/2f), folder);
+            var upBorderScale = upBorder.transform.localScale;
+            upBorderScale.y = level.SizeX + 1;
+            upBorder.transform.localScale = upBorderScale;
+            upBorder.transform.Rotate(0, 0, 90);
+
+            var downBorder = GameObjectUtils.InstantiateChild(borderPrefab, new Vector2(0, -(level.SizeY + 1)/2f), folder);
+            var downBorderScale = downBorder.transform.localScale;
+            downBorderScale.y = level.SizeX + 1;
+            downBorder.transform.localScale = downBorderScale;
+            downBorder.transform.Rotate(0, 0, 90);
         }
 
     }

@@ -3,9 +3,11 @@ using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
 using TrappedGame.Model.LevelLoader.Json;
+using TrappedGame.Utils;
 using TrappedGame.View.GUI;
 using TrappedGame.View.Graphic;
 using TrappedGame.View.Sync;
+using UnityEditor;
 using UnityEngine;
 
 namespace TrappedGame.Main {
@@ -14,7 +16,9 @@ namespace TrappedGame.Main {
         public PathGOFactory pathGoFactory;
         public CellGOFactory cellGameObjectFactory;
         public ElementsGOFactory elementsGameObjectFactory;
-        
+
+        public GameObject border;
+
         private Game game;
         private Level level;
         private HeroInput heroInput;
@@ -53,6 +57,7 @@ namespace TrappedGame.Main {
             
             pathGoFactory.CreatePathStart(level);
 
+            elementsGameObjectFactory.CreateBorder(level);
             uiController.ShowTutorial(level.LevelTutorial);
             syncGameObjects.Add(uiController.tutorialMenu);
         }

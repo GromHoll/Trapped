@@ -229,6 +229,7 @@ MonoBehaviour:
   pathGoFactory: {fileID: 788622611}
   cellGameObjectFactory: {fileID: 8404433}
   elementsGameObjectFactory: {fileID: 478879210}
+  border: {fileID: 152008, guid: 380e89e735b089945a6ec47f73f54ecf, type: 2}
   uiController: {fileID: 1467625797}
   next: {fileID: 8300000, guid: fd751a4c19aa02b418c4829da9eb7b86, type: 3}
   back: {fileID: 8300000, guid: 64d67e4b7898d554ea7c6fb3bb65e5ed, type: 3}
@@ -827,6 +828,7 @@ MonoBehaviour:
   keyPrefab: {fileID: 165082, guid: c820936c631af8b479ed46d4b27addf3, type: 2}
   heroPrefab: {fileID: 100000, guid: 474277112d61efa40998cc1258717504, type: 2}
   bonusPrefab: {fileID: 100000, guid: 39e470f0fdc57ea4b93554947ad1aa81, type: 2}
+  borderPrefab: {fileID: 152008, guid: 380e89e735b089945a6ec47f73f54ecf, type: 2}
   finishPrefab: {fileID: 100000, guid: 90a6102ce5736564b90efb503e589860, type: 2}
   platformPrefab: {fileID: 100000, guid: dace5499e762572428ebe282cf1af0ab, type: 2}
   timeBonusPrefab: {fileID: 100000, guid: 9b7c90cee085b6d49987a59eb5522a7b, type: 2}
