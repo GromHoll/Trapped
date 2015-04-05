@@ -10,7 +10,7 @@ using TrappedGame.Model.LevelUtils;
 namespace TrappedGame.Model {
     public class Level : ITickable {
         
-        private string name;
+        public string Name { get; private set; }
 
         public Tutorial LevelTutorial {get; private set; }
 
@@ -47,6 +47,7 @@ namespace TrappedGame.Model {
             finish = builder.GetFinish();
             cells = builder.GetCells();
 
+            Name = builder.Name;
             Keys = builder.GetKeys();
             Bonuses = builder.GetBonuses();
             Platforms = builder.GetPlatforms();

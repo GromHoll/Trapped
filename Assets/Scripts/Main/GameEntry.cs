@@ -38,6 +38,8 @@ namespace TrappedGame.Main {
             level.AddNextTickAction(() => AudioSource.PlayClipAtPoint(next, Vector3.zero));
             level.AddBackTickAction(() => AudioSource.PlayClipAtPoint(back, Vector3.zero));
             game = new Game(level);
+            uiController.Game = game;
+
             heroInput = CreateInput();
             CreateLevelObjects();
         }
@@ -70,7 +72,7 @@ namespace TrappedGame.Main {
                 UpdateInput();
                 UpdateGraphics();
             } else if (IsSync()) {
-                ShowWinWindow();
+                uiController.ShowWinMenu();
             }
         }
 
@@ -106,9 +108,6 @@ namespace TrappedGame.Main {
                 }
             }
         }
-    
-        private void ShowWinWindow() {      
-            uiController.ShowWinMenu(game);
-        }
+
     }
 }

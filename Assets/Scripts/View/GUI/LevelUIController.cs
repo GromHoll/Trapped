@@ -4,18 +4,28 @@ using TrappedGame.Model;
 using TrappedGame.Model.LevelUtils;
 using UnityEngine;
 using UnityEngine.Cloud.Analytics;
+using UnityEngine.UI;
 
 namespace TrappedGame.View.GUI {
     public class LevelUIController : MonoBehaviour {
 
         public TutorialMenu tutorialMenu;
         public WinMenu winMenu;
+        public Text levelName;
+
+        private Game game;
+        public Game Game {
+            set {
+                game = value;
+                levelName.text = game.Level.Name;
+            }
+        }
 
         public void ShowTutorial(Tutorial tutorial) {
             tutorialMenu.ShowTutorial(tutorial);
         }
 
-        public void ShowWinMenu(Game game) {
+        public void ShowWinMenu() {
             winMenu.Show(game);
         }
 

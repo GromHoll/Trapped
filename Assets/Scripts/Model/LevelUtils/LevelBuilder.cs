@@ -9,7 +9,7 @@ using UnityEngine;
 namespace TrappedGame.Model.LevelUtils {
     public class LevelBuilder {
 
-        private string name;
+        public string Name { get; private set; }
 
         public string TutorialName { private get; set; }
         public string TutorialMessage { private get; set; }
@@ -38,7 +38,8 @@ namespace TrappedGame.Model.LevelUtils {
         public LevelBuilder(string name, int xSize, int ySize) {
             Validate.CheckArgument(xSize > 0, "xSize should be positive");
             Validate.CheckArgument(ySize > 0, "ySize should be positive");
-            
+
+            Name = name;
             size = new IntVector2(xSize, ySize);
             cells = new Cell[size.x, size.y];
             for (var x = 0; x < size.x; x++) {
