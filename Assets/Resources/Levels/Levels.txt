@@ -22,13 +22,7 @@
     }, {
       "Name": "Dev",
       "Folder": "Levels/Dev/",
-      "Levels": [
-        { "Source": "JsonLevel" },
-        { "Source": "Pit" },
-        { "Source": "Portals" },
-        { "Source": "Doors" },
-        { "Source": "Tutorial" },
-      ]
+      "LoadAll": true
     }, {
       "Name": "Gen Spear 1",
       "Folder": "Levels/GenSpear1/",
