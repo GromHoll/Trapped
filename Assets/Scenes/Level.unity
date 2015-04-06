@@ -238,10 +238,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
-    m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-    m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
+    m_NormalColor: {r: .925490201, g: .941176474, b: .945098042, a: 1}
+    m_HighlightedColor: {r: .925490201, g: .941176474, b: .945098042, a: 1}
+    m_PressedColor: {r: .498039216, g: .549019635, b: .552941203, a: 1}
+    m_DisabledColor: {r: .498039216, g: .549019635, b: .552941203, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: .100000001
   m_SpriteState:
@@ -674,10 +674,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
-    m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-    m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
+    m_NormalColor: {r: .925490201, g: .941176474, b: .945098042, a: 1}
+    m_HighlightedColor: {r: .925490201, g: .941176474, b: .945098042, a: 1}
+    m_PressedColor: {r: .498039216, g: .549019635, b: .552941203, a: 1}
+    m_DisabledColor: {r: .498039216, g: .549019635, b: .552941203, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: .100000001
   m_SpriteState:
@@ -1005,8 +1005,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d85a5b440be334d9e9f2d39acbf67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defautColor: {r: .41491735, g: .687155485, b: .745098054, a: 1}
-  deathColor: {r: 1, g: .235294104, b: .235294104, a: 1}
+  defautColor: {r: .741176486, g: .764705896, b: .78039217, a: 1}
+  deathColor: {r: .905882359, g: .298039228, b: .235294119, a: 1}
   changeSpeed: 5
 --- !u!1 &1249890350
 GameObject:
@@ -1806,7 +1806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: .39199999}
+  m_Color: {r: .639215708, g: .694117665, b: .698039234, a: 1}
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
