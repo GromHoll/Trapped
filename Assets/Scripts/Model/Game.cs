@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TrappedGame.Model.Cells;
 using UnityEngine;
@@ -8,6 +10,8 @@ namespace TrappedGame.Model {
 
         public Level Level { get; private set; }
         public Hero Hero { get; private set; }
+
+        private IList<Action> wrongTurnActions = new List<Action>();
         
         public Game(Level level) {
             if (level == null) throw new ArgumentNullException("level");
@@ -23,6 +27,16 @@ namespace TrappedGame.Model {
             var bonuses = Level.Bonuses;
             var path = Hero.Path;
             return path.Links.Count(link => bonuses.Contains(link.From));
+        }
+
+        public void AddWrongTurnAAction(Action action) {
+            wrongTurnActions.Add(action);
+        }
+
+        public void NotifyAboutWrongTurn() {
+            foreach (Action action in wrongTurnActions) {
+                action.Invoke();
+            }
         }
 
         public void MoveHeroUp() {
@@ -42,8 +56,10 @@ namespace TrappedGame.Model {
         }
 
         private void MoveHeroTo(int x, int y) {
-            if (!HeroOnMap(x, y)) return;
-            if (!IsAvailableForMovementCell(x, y)) return;
+            if (!HeroOnMap(x, y) || !IsAvailableForMovementCell(x, y)) {
+                NotifyAboutWrongTurn();
+                return;
+            }
 
             if (IsBackTurn(x, y)) {
                 MoveBack();
@@ -79,15 +95,18 @@ namespace TrappedGame.Model {
 
         // TODO Refactor this (too hard for undestanding)
         private void MoveForward(int x, int y) {
-            if (Hero.IsDead) return;
-            if (HeroWasHere(x, y)) return;
+            if (Hero.IsDead || HeroWasHere(x, y)) {
+                NotifyAboutWrongTurn();
+                return;
+            }
 
             var toCell = Level.GetCell(x, y);
             if (toCell is PortalCell) {
                 var endPoint = (toCell as PortalCell).EndPoint(Hero.Coordinate);
-                if (!HeroOnMap(endPoint.x, endPoint.y)) return;
-                if (!IsAvailableForMovementCell(endPoint.x, endPoint.y)) return;
-                if (HeroWasHere(endPoint.x, endPoint.y)) return;
+                if (!HeroOnMap(endPoint.x, endPoint.y) || !IsAvailableForMovementCell(endPoint.x, endPoint.y) || HeroWasHere(endPoint.x, endPoint.y)) {
+                    NotifyAboutWrongTurn();
+                    return;
+                }
             }
 
             var platform = Level.GetPlatform(Hero.X, Hero.Y);

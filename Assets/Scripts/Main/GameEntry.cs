@@ -26,6 +26,7 @@ namespace TrappedGame.Main {
 
         public AudioClip next;
         public AudioClip back;
+        public AudioClip wrongTurn;
 
         private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
         private readonly IDictionary<Path.PathLink, IList<GameObject>> pathObjects
@@ -38,6 +39,7 @@ namespace TrappedGame.Main {
             level.AddNextTickAction(() => AudioSource.PlayClipAtPoint(next, Vector3.zero));
             level.AddBackTickAction(() => AudioSource.PlayClipAtPoint(back, Vector3.zero));
             game = new Game(level);
+            game.AddWrongTurnAAction(() => AudioSource.PlayClipAtPoint(wrongTurn, Vector3.zero));
             uiController.Game = game;
 
             heroInput = CreateInput();

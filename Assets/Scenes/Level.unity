@@ -168,7 +168,8 @@ MonoBehaviour:
   border: {fileID: 152008, guid: 380e89e735b089945a6ec47f73f54ecf, type: 2}
   uiController: {fileID: 1467625797}
   next: {fileID: 8300000, guid: fd751a4c19aa02b418c4829da9eb7b86, type: 3}
-  back: {fileID: 8300000, guid: 64d67e4b7898d554ea7c6fb3bb65e5ed, type: 3}
+  back: {fileID: 8300000, guid: 556cd27e25afa024d9e3a1cdd32de887, type: 3}
+  wrongTurn: {fileID: 8300000, guid: 64d67e4b7898d554ea7c6fb3bb65e5ed, type: 3}
 --- !u!4 &33747369
 Transform:
   m_ObjectHideFlags: 0
