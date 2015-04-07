@@ -7,33 +7,22 @@
     }, {
       "Name": "Basic",
       "Folder": "Levels/Basic/",
-      "Levels": [
-      ]
+      "LoadAll": true
     }, {
       "Name": "Advanced",
       "Folder": "Levels/Advanced/",
-      "Levels": [
-      ]
+      "LoadAll": true
     }, {
       "Name": "Expert",
       "Folder": "Levels/Expert/",
-      "Levels": [
-      ]
+      "LoadAll": true
     }, {
       "Name": "Dev",
       "Folder": "Levels/Dev/",
       "LoadAll": true
     }, {
-      "Name": "Gen Spear 1",
-      "Folder": "Levels/GenSpear1/",
-      "LoadAll": true
-    }, {
-      "Name": "Gen Spear 2",
-      "Folder": "Levels/GenSpear2/",
-      "LoadAll": true
-    }, {
-      "Name": "Gen Spear 3",
-      "Folder": "Levels/GenSpear3/",
+      "Name": "Hard Gen levels",
+      "Folder": "Levels/Hard/",
       "LoadAll": true
     }, {
       "Name": "External",
