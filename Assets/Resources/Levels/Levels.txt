@@ -25,6 +25,18 @@
       "Folder": "Levels/Hard/",
       "LoadAll": true
     }, {
+      "Name": "Spear Gen 1 levels",
+      "Folder": "Levels/Spears_1/",
+      "LoadAll": true
+    }, {
+      "Name": "Spear Gen 2 levels",
+      "Folder": "Levels/Spears_2/",
+      "LoadAll": true
+    }, {
+      "Name": "Spear Gen 3 levels",
+      "Folder": "Levels/Spears_3/",
+      "LoadAll": true
+    }, {
       "Name": "External",
       "Folder": "ExternalLevels/",
       "External": true,
