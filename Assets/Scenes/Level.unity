@@ -1757,6 +1757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreField: {fileID: 708515976}
   deathField: {fileID: 1828601650}
+  winAudio: {fileID: 8300000, guid: ef69759890baaea4393d2af4f77b8bdf, type: 3}
 --- !u!1 &1967308236
 GameObject:
   m_ObjectHideFlags: 0
