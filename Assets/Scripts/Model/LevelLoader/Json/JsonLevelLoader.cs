@@ -37,7 +37,7 @@ namespace TrappedGame.Model.LevelLoader.Json {
             return builder.Build();
 		}
 
-        private LevelBuilder CreateBuilerForLevel(JSONNode jsonLevel) {
+        private LevelBuilder CreateBuilderForLevel(JSONNode jsonLevel) {
             var levelName  = jsonLevel[LEVEL_NAME_KEY].Value;
             var levelXSize = jsonLevel[LEVEL_SIZE_KEY][LEVEL_SIZE_X_INDEX].AsInt;
             var levelYSize = jsonLevel[LEVEL_SIZE_KEY][LEVEL_SIZE_Y_INDEX].AsInt;
@@ -56,15 +56,15 @@ namespace TrappedGame.Model.LevelLoader.Json {
         }
 
         private LevelBuilder ReadLevel(JSONNode jsonLevel) {
-            var builder = CreateBuilerForLevel(jsonLevel);
+            var builder = CreateBuilderForLevel(jsonLevel);
             var symbols = ReadLevelCodeSymbols(jsonLevel);
 
             var rowCount = builder.GetSize().y;
-            var rowLenght = builder.GetSize().x;
+            var rowLength = builder.GetSize().x;
 
 			for (var y = 0; y < rowCount; y++) {
                 string row = jsonLevel[MAP_KEY][y];
-                for (var x = 0; x < rowLenght; x++) {
+                for (var x = 0; x < rowLength; x++) {
 					var element = row[x];
                     Validate.CheckArgument(symbols.ContainsKey(element), String.Format("Cannot find element '{0}' in symbols", element));
                     cellBuilder.MakeCell(symbols[element], builder, new IntVector2(x, rowCount - y - 1));
