@@ -8,7 +8,7 @@ namespace TrappedGame.View.GUI {
 
         public Button buttonPrefab;
         public LevelsMenu levelsMenuPrefab;
-        public Canvas menuCanvas;
+        public GameObject packsPanel;
 
         void Start() {
             var packs = Levels.GetPacks();
@@ -19,15 +19,15 @@ namespace TrappedGame.View.GUI {
 
         private void CreatePack(Levels.PackInfo pack) {
             var levelsMenuGO = GameObjectUtils.InstantiateChildForWorld(levelsMenuPrefab.gameObject, Vector2.zero,
-                                                                        menuCanvas.gameObject, false);
+                                                                        transform.parent.gameObject, false);
             levelsMenuGO.SetActive(false);
             levelsMenuGO.name = "LevelsMenu - " + pack.Name;
             var levelsMenu = levelsMenuGO.GetComponent<LevelsMenu>();
             levelsMenu.PackInfo = pack;
             levelsMenu.PacksMenu = this;
 
-            var buttonGO = GameObjectUtils.InstantiateChildForWorld(buttonPrefab.gameObject,
-                                                                    Vector2.zero, gameObject, false);
+            var buttonGO = GameObjectUtils.InstantiateChildForWorld(buttonPrefab.gameObject, Vector2.zero,
+                                                                    packsPanel.gameObject, false);
             var button = buttonGO.GetComponent<Button>();
             button.onClick.AddListener(() => {
                 gameObject.SetActive(false);

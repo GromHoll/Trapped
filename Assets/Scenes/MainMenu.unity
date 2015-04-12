@@ -673,10 +673,10 @@ RectTransform:
   - {fileID: 1708340617}
   m_Father: {fileID: 1946534913}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: .0900000036}
+  m_AnchorMin: {x: 0, y: .100000001}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -.999938965}
-  m_SizeDelta: {x: 0, y: 2}
+  m_AnchoredPosition: {x: 0, y: 3.05175781e-05}
+  m_SizeDelta: {x: 0, y: 6.10351562e-05}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &601411694
 MonoBehaviour:
@@ -1112,9 +1112,9 @@ RectTransform:
   m_Father: {fileID: 1946534913}
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: .0900000036}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: .100000001}
+  m_AnchoredPosition: {x: 0, y: -5}
+  m_SizeDelta: {x: 0, y: -10}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1111140691
 MonoBehaviour:
@@ -1503,7 +1503,6 @@ GameObject:
   - 224: {fileID: 1708340617}
   - 222: {fileID: 1708340621}
   - 114: {fileID: 1708340620}
-  - 114: {fileID: 1708340619}
   - 114: {fileID: 1708340618}
   - 114: {fileID: 1708340622}
   m_Layer: 5
@@ -1528,7 +1527,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: 1}
   m_AnchorMax: {x: .5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 1214.59998}
+  m_SizeDelta: {x: 800, y: 1215}
   m_Pivot: {x: .5, y: 1}
 --- !u!114 &1708340618
 MonoBehaviour:
@@ -1550,20 +1549,6 @@ MonoBehaviour:
   m_Spacing: 40
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
---- !u!114 &1708340619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1708340616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7460bf00e0f07874bb9ff5c13948e65c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonPrefab: {fileID: 11482958, guid: cce4f888d7c7c974e87fb6110ec6d18a, type: 2}
-  levelsMenuPrefab: {fileID: 11466102, guid: 49b8a9929e52a594da7b06d1c17098c2, type: 2}
-  menuCanvas: {fileID: 2140780488}
 --- !u!114 &1708340620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1678,6 +1663,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 1946534913}
+  - 114: {fileID: 1946534914}
   m_Layer: 5
   m_Name: PackMenu
   m_TagString: Untagged
@@ -1704,6 +1690,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
+--- !u!114 &1946534914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1946534912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7460bf00e0f07874bb9ff5c13948e65c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonPrefab: {fileID: 11482958, guid: cce4f888d7c7c974e87fb6110ec6d18a, type: 2}
+  levelsMenuPrefab: {fileID: 11434398, guid: 49b8a9929e52a594da7b06d1c17098c2, type: 2}
+  packsPanel: {fileID: 1708340616}
 --- !u!1 &2013007240
 GameObject:
   m_ObjectHideFlags: 0
