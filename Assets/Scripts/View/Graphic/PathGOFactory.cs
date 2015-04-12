@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections;
 using System.Xml;
 using TrappedGame.Model;
 using TrappedGame.Utils;
@@ -20,11 +21,19 @@ namespace TrappedGame.View.Graphic {
             GameObjectUtils.InstantiateChild(pathStart, coord, folder);
         }
 
+        public void DestroyPathSegment(IList<GameObject> links) {
+            foreach (GameObject link in links) {
+                Destroy(link);
+            }
+        }
+
         public IList<GameObject> CreatePathSegment(Path.PathLink link, Level level) {
-            return new List<GameObject> {
+            var result = new List<GameObject> {
                 CreateSegment(link, level),
                 CreateCross(link, level)
             };
+            result.RemoveAll(item => item == null);
+            return result;
         }
 
         private GameObject CreateSegment(Path.PathLink link, Level level) {

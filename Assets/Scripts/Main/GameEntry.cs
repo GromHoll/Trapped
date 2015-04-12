@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
@@ -99,15 +100,13 @@ namespace TrappedGame.Main {
             var path = game.Hero.Path;
             var existLinks = path.Links;
             var showedLinks = pathObjects.Keys;
-            var differens = new HashSet<Path.PathLink>(existLinks);
-            differens.SymmetricExceptWith(showedLinks);
-            foreach (Path.PathLink link in differens) {
+            var difference = new HashSet<Path.PathLink>(existLinks);
+            difference.SymmetricExceptWith(showedLinks);
+            foreach (Path.PathLink link in difference) {
                 if (showedLinks.Contains(link)) {
-                    var linkGameObjects = pathObjects[link];
+                    var links = pathObjects[link];
                     pathObjects.Remove(link);
-                    foreach (GameObject go in linkGameObjects) {
-                        Destroy(go);
-                    }
+                    pathGoFactory.DestroyPathSegment(links);
                 } else {
                     if (link.IsAdjacent()) {
                         var pathGameObjects = pathGoFactory.CreatePathSegment(link, level);
