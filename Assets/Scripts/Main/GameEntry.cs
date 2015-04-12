@@ -21,6 +21,7 @@ namespace TrappedGame.Main {
         private Game game;
         private Level level;
         private HeroInput heroInput;
+        private InputQueue inputQueue = new InputQueue();
 
         public LevelUIController uiController;
 
@@ -81,9 +82,12 @@ namespace TrappedGame.Main {
         }
 
         private void UpdateInput() {
+            var heroMovement = heroInput.GetMovement();
+            inputQueue.AddMovement(heroMovement);
+
             if (IsSync()) {
-                var heroMovement = heroInput.GetMovement();
-                heroMovement.MoveHeroInGame(game);
+                var movement = inputQueue.GetNextMovement();
+                movement.MoveHeroInGame(game);
             }
         }
 
