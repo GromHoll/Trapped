@@ -9,6 +9,7 @@ namespace TrappedGame.View.GUI {
 
 	    public Button backButton;
 	    public Button buttonPrefab;
+        public GameObject levelsPanel;
 
         public Levels.PackInfo PackInfo { get; set; }
         public PacksMenu PacksMenu { get; set; }
@@ -26,8 +27,8 @@ namespace TrappedGame.View.GUI {
 	    }
 
         private void CreateLevelButton(Levels.LevelInfo level) {
-            var buttonGO = GameObjectUtils.InstantiateChildForWorld(buttonPrefab.gameObject,
-                                                                    Vector2.zero, gameObject, false);
+            var buttonGO = GameObjectUtils.InstantiateChildForWorld(buttonPrefab.gameObject, Vector2.zero,
+                                                                    levelsPanel.gameObject, false);
             var button = buttonGO.GetComponent<Button>();
             button.onClick.AddListener(() => {
                 PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, level.Path);
