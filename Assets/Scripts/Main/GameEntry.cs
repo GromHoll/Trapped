@@ -1,10 +1,11 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TrappedGame.Control.Hero;
 using TrappedGame.Model;
 using TrappedGame.Model.LevelLoader.Json;
 using TrappedGame.Utils;
+using TrappedGame.View.Controllers;
 using TrappedGame.View.GUI;
 using TrappedGame.View.Graphic;
 using TrappedGame.View.Sync;
@@ -32,6 +33,8 @@ namespace TrappedGame.Main {
         public AudioClip wrongTurn;
 
         private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
+        private readonly IList<PathLinkController> pathLinks = new List<PathLinkController>();
+
         private readonly IDictionary<Path.PathLink, IList<GameObject>> pathObjects
                 = new Dictionary<Path.PathLink, IList<GameObject>>();
 
@@ -61,9 +64,6 @@ namespace TrappedGame.Main {
         private void CreateLevelObjects() {
             syncGameObjects.AddRange(cellGameObjectFactory.CreateLevel(level));
             syncGameObjects.AddRange(elementsGameObjectFactory.CreateGameElements(game));
-            
-            pathGoFactory.CreatePathStart(level);
-
             elementsGameObjectFactory.CreateBorder(level);
             uiController.ShowTutorial(level.LevelTutorial);
             syncGameObjects.Add(uiController.tutorialMenu);
@@ -99,18 +99,15 @@ namespace TrappedGame.Main {
         private void UpdatePath() {
             var path = game.Hero.Path;
             var existLinks = path.Links;
-            var showedLinks = pathObjects.Keys;
+            var showedLinks = pathLinks.Select(item => item.PathLink);
             var difference = new HashSet<Path.PathLink>(existLinks);
             difference.SymmetricExceptWith(showedLinks);
+
             foreach (Path.PathLink link in difference) {
-                if (showedLinks.Contains(link)) {
-                    var links = pathObjects[link];
-                    pathObjects.Remove(link);
-                    pathGoFactory.DestroyPathSegment(links);
-                } else {
+                if (!showedLinks.Contains(link)) {
                     if (link.IsAdjacent()) {
-                        var pathGameObjects = pathGoFactory.CreatePathSegment(link, level);
-                        pathObjects[link] = pathGameObjects;
+                        var pathLinkController = pathGoFactory.CreateLink(link, level, game.Hero);
+                        pathLinks.Add(pathLinkController);
                     }
                 }
             }
