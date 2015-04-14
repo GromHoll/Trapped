@@ -14,6 +14,7 @@ namespace TrappedGame.View.Controllers {
 
 		void Start() {
             transform.Rotate(0, 0, GetRotation());
+            UpdateLineScale();
             if (crossRotation) {
                 cross.transform.Rotate(0, 0, GetCrossRotation());
             }
@@ -39,15 +40,33 @@ namespace TrappedGame.View.Controllers {
             return 0;
         }
 
+        private void UpdateLineScale() {
+            var heroCoord = HeroController.transform.position;
+            var linkCoord = transform.position;
+
+            var deviation = PathLink.IsVertical() ? heroCoord.x - linkCoord.x : heroCoord.y - linkCoord.y;
+
+            var localScale = line.transform.localScale;
+            if (deviation == 0) {
+                var scale = PathLink.IsHorizontal() ? heroCoord.x - linkCoord.x : heroCoord.y - linkCoord.y;
+                localScale.x = Mathf.Min(Mathf.Abs(scale), 1);
+            } else {
+                localScale.x = 1;
+            }
+            line.transform.localScale = localScale;
+        }
+
 		void Update() {
             if (HeroController.transform.position == transform.position) {
-                if (!HeroController.Hero.WasHere(PathLink.From)) {
+                if (!HeroController.Hero.Contains(PathLink)) {
                     GameObject.Destroy(gameObject);
                 }
             } else {
-                // TODO Portal links not destroys
+                UpdateLineScale();
             }
 		}
+
+
 
 	}
 }
