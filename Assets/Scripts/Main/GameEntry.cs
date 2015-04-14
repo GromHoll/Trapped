@@ -32,11 +32,10 @@ namespace TrappedGame.Main {
         public AudioClip death;
         public AudioClip wrongTurn;
 
+        private HeroController heroController;
+
         private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
         private readonly IList<PathLinkController> pathLinks = new List<PathLinkController>();
-
-        private readonly IDictionary<Path.PathLink, IList<GameObject>> pathObjects
-                = new Dictionary<Path.PathLink, IList<GameObject>>();
 
         void Start() {   
             var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
@@ -64,6 +63,10 @@ namespace TrappedGame.Main {
         private void CreateLevelObjects() {
             syncGameObjects.AddRange(cellGameObjectFactory.CreateLevel(level));
             syncGameObjects.AddRange(elementsGameObjectFactory.CreateGameElements(game));
+
+            heroController = elementsGameObjectFactory.CreateHero(game);
+            syncGameObjects.Add(heroController);
+
             elementsGameObjectFactory.CreateBorder(level);
             uiController.ShowTutorial(level.LevelTutorial);
             syncGameObjects.Add(uiController.tutorialMenu);
@@ -106,7 +109,7 @@ namespace TrappedGame.Main {
             foreach (Path.PathLink link in difference) {
                 if (!showedLinks.Contains(link)) {
                     if (link.IsAdjacent()) {
-                        var pathLinkController = pathGoFactory.CreateLink(link, level, game.Hero);
+                        var pathLinkController = pathGoFactory.CreateLink(link, level, heroController);
                         pathLinks.Add(pathLinkController);
                     }
                 }

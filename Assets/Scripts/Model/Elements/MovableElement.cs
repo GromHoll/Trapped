@@ -39,5 +39,9 @@ namespace TrappedGame.Model.Elements {
         public bool WasHere(int x, int y) {
             return path.Links.Any(link => link.FromX == x && link.FromY == y);
         }
+
+        public bool WasHere(IntVector2 coord) {
+            return path.Links.Any(link => link.From == coord);
+        }
     }
 }

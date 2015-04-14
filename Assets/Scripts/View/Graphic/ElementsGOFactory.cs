@@ -19,9 +19,6 @@ namespace TrappedGame.View.Graphic {
         public IList<ISyncGameObject> CreateGameElements(Game game) {
             var syncGameObjects = new List<ISyncGameObject>();
 
-            var hero = CreateHero(game);
-            syncGameObjects.Add(hero);
-
             var platforms = CreatePlatforms(game.Level);
             syncGameObjects.AddRange(platforms);
 
@@ -33,7 +30,7 @@ namespace TrappedGame.View.Graphic {
             return syncGameObjects;
         }
 
-        private ISyncGameObject CreateHero(Game game) {
+        public HeroController CreateHero(Game game) {
             var level = game.Level;
             var position = GameUtils.ConvertToGameCoord(level.StartX, level.StartY, level);
             var hero = GameObjectUtils.InstantiateChild(heroPrefab, position, gameObject);

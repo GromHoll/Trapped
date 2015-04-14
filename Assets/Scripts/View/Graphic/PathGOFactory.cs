@@ -17,11 +17,11 @@ namespace TrappedGame.View.Graphic {
         public GameObject crossPathLink;
         public GameObject straightPathLine;
 
-        public PathLinkController CreateLink(Path.PathLink link, Level level, Hero hero) {
+        public PathLinkController CreateLink(Path.PathLink link, Level level, HeroController hero) {
             var pathGameObject = CreatePathLink(link, level);
             var pathLinkController = pathGameObject.GetComponent<PathLinkController>();
+            pathLinkController.HeroController = hero;
             pathLinkController.PathLink = link;
-            pathLinkController.Hero = hero;
             return pathLinkController;
         }
 
@@ -32,8 +32,10 @@ namespace TrappedGame.View.Graphic {
             if (previousLink == null) {
                 return GameObjectUtils.InstantiateChild(startPathLink, coord, folder);
             }
-            if (previousLink.IsHorizontal() && link.IsVertical() || previousLink.IsVertical() && link.IsHorizontal()) {
-                return GameObjectUtils.InstantiateChild(crossPathLink, coord, folder);
+            if (previousLink.IsAdjacent()) {
+                if (previousLink.IsHorizontal() && link.IsVertical() || previousLink.IsVertical() && link.IsHorizontal()) {
+                    return GameObjectUtils.InstantiateChild(crossPathLink, coord, folder);
+                }
             }
             return GameObjectUtils.InstantiateChild(straightPathLine, coord, folder);
         }

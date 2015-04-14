@@ -11,29 +11,30 @@ namespace TrappedGame.View.Controllers {
         
         public static readonly string IS_DEAD_KEY = "IsDead";
 
+        public Hero Hero { get; private set; }
+        public Level Level { get; private set; }
+
         private CameraController cameraController;
-        private Animator aminator;
-        private Level level; 
-        private Hero hero;
+        private Animator animator;
 
         private readonly Queue<Path.PathLink> movementsQueue = new Queue<Path.PathLink>();
         
         public Game Game {
             set {
-                level = value.Level;
-                hero = value.Hero;
-                hero.MovementSubject.AddObserver(this);
+                Level = value.Level;
+                Hero = value.Hero;
+                Hero.MovementSubject.AddObserver(this);
             }
         }
 
         protected override void Start() {
-            aminator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();
             cameraController = Camera.main.gameObject.GetComponent<CameraController>();
             base.Start();
     	}
     	
         protected override void Update() {
-            aminator.SetBool(IS_DEAD_KEY, IsDead());
+            animator.SetBool(IS_DEAD_KEY, IsDead());
             cameraController.SetDead(IsDead());
             base.Update();
     	}
@@ -43,7 +44,7 @@ namespace TrappedGame.View.Controllers {
         }
 
         private bool IsDead() {
-            return hero != null && hero.IsDead;
+            return Hero != null && Hero.IsDead;
         }
 
         protected override Vector3 GetNewPosition() {
@@ -53,9 +54,9 @@ namespace TrappedGame.View.Controllers {
                 }
                 var link = movementsQueue.Dequeue();
                 if (link.IsAdjacent()) {
-                    return GameUtils.ConvertToGameCoord(link.ToX, link.ToY, level);
+                    return GameUtils.ConvertToGameCoord(link.ToX, link.ToY, Level);
                 }
-                gameObject.transform.position = GameUtils.ConvertToGameCoord(link.ToX, link.ToY, level);
+                gameObject.transform.position = GameUtils.ConvertToGameCoord(link.ToX, link.ToY, Level);
             }
         }
 

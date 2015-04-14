@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7e60ad6eea2b44893674b73a69aeed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crossRotation: 0
   cross: {fileID: 197398}
   line: {fileID: 161524}
 --- !u!212 &21237400

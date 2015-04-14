@@ -5,15 +5,18 @@ using UnityEngine;
 namespace TrappedGame.View.Controllers {
 	public class PathLinkController : MonoBehaviour {
 
+        public bool crossRotation = true;
 		public GameObject cross;
 		public GameObject line;
 
         public Path.PathLink PathLink { get; set; }
-        public Hero Hero { get; set; } // TODO Maybe needs HeroController instead Hero
+        public HeroController HeroController { get; set; }
 
 		void Start() {
             transform.Rotate(0, 0, GetRotation());
-            cross.transform.Rotate(0, 0, GetCrossRotation());
+            if (crossRotation) {
+                cross.transform.Rotate(0, 0, GetCrossRotation());
+            }
 		}
 
         private float GetRotation() {
@@ -37,9 +40,12 @@ namespace TrappedGame.View.Controllers {
         }
 
 		void Update() {
-            // TODO add line resizing
-            if (Hero.Coordinate == PathLink.From) {
-                GameObject.Destroy(gameObject);
+            if (HeroController.transform.position == transform.position) {
+                if (!HeroController.Hero.WasHere(PathLink.From)) {
+                    GameObject.Destroy(gameObject);
+                }
+            } else {
+                // TODO Portal links not destroys
             }
 		}
 
