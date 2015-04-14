@@ -14,7 +14,6 @@ using UnityEngine;
 namespace TrappedGame.Main {
     public class GameEntry : MonoBehaviour, ISyncGameObject {
         
-        public PathGOFactory pathGoFactory;
         public CellGOFactory cellGameObjectFactory;
         public ElementsGOFactory elementsGameObjectFactory;
 
@@ -79,7 +78,6 @@ namespace TrappedGame.Main {
         void Update() {
             if (!game.IsWin()) {
                 UpdateInput();
-                UpdateGraphics();
             } else if (IsSync()) {
                 uiController.ShowWinMenu();
             }
@@ -92,27 +90,6 @@ namespace TrappedGame.Main {
             if (IsSync()) {
                 var movement = inputQueue.GetNextMovement();
                 movement.MoveHeroInGame(game);
-            }
-        }
-
-        private void UpdateGraphics() {
-            UpdatePath();
-        }
-
-        private void UpdatePath() {
-            var path = game.Hero.Path;
-            var existLinks = path.Links;
-            var showedLinks = pathLinks.Select(item => item.PathLink);
-            var difference = new HashSet<Path.PathLink>(existLinks);
-            difference.SymmetricExceptWith(showedLinks);
-
-            foreach (Path.PathLink link in difference) {
-                if (!showedLinks.Contains(link)) {
-                    if (link.IsAdjacent()) {
-                        var pathLinkController = pathGoFactory.CreateLink(link, level, heroController);
-                        pathLinks.Add(pathLinkController);
-                    }
-                }
             }
         }
 

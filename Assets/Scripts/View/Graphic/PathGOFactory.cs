@@ -17,8 +17,8 @@ namespace TrappedGame.View.Graphic {
         public GameObject crossPathLink;
         public GameObject straightPathLine;
 
-        public PathLinkController CreateLink(Path.PathLink link, Level level, HeroController hero) {
-            var pathGameObject = CreatePathLink(link, level);
+        public PathLinkController CreateLink(Path.PathLink link, HeroController hero) {
+            var pathGameObject = CreatePathLink(link, hero.Level);
             var pathLinkController = pathGameObject.GetComponent<PathLinkController>();
             pathLinkController.HeroController = hero;
             pathLinkController.PathLink = link;
@@ -26,7 +26,9 @@ namespace TrappedGame.View.Graphic {
         }
 
         private GameObject CreatePathLink(Path.PathLink link, Level level) {
-            var folder = GameObjectUtils.GetSubFolderByPath(gameObject, PATH_FOLDER);
+            /* Hardcoded path to parent */
+            var parent = gameObject.transform.parent.parent.gameObject;
+            var folder = GameObjectUtils.GetSubFolderByPath(parent, PATH_FOLDER);
             var coord = GameUtils.ConvertToGameCoord(link.From, level);
             var previousLink = link.PreviousLink;
             if (previousLink == null) {

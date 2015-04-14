@@ -182,7 +182,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1352813475}
-  - {fileID: 326613207}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!1 &82249924
@@ -433,33 +432,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 184516494}
---- !u!1 &326613206
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 326613207}
-  m_Layer: 0
-  m_Name: PathFolder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &326613207
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 326613206}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 33747369}
-  m_RootOrder: 1
 --- !u!1 &478879209
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,9 +883,6 @@ MonoBehaviour:
   startPathLink: {fileID: 117646, guid: 6ea53928df6073741aa92cddcc458487, type: 2}
   crossPathLink: {fileID: 165012, guid: b1add0706a4754f4ca020c206f970375, type: 2}
   straightPathLine: {fileID: 191748, guid: 4bc1104d4f2b9df44818422464f0adb6, type: 2}
-  pathSegment: {fileID: 1450206194}
-  pathCrossGameObject: {fileID: 1450206194}
-  pathStart: {fileID: 1450206194}
 --- !u!1 &895065984
 GameObject:
   m_ObjectHideFlags: 0

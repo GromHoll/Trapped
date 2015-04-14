@@ -43,5 +43,9 @@ namespace TrappedGame.Model.Elements {
         public bool WasHere(IntVector2 coord) {
             return path.Links.Any(link => link.From == coord);
         }
+
+        public bool Contains(Path.PathLink link) {
+            return path.Links.Contains(link);
+        }
     }
 }

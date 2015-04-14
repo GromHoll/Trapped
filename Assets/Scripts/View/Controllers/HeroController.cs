@@ -3,6 +3,7 @@ using TrappedGame.Model;
 using TrappedGame.Utils;
 using TrappedGame.Utils.Observer;
 using TrappedGame.View.Controllers.Common;
+using TrappedGame.View.Graphic;
 using TrappedGame.View.Sync;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ namespace TrappedGame.View.Controllers {
     public class HeroController : MovableObjectController, ISyncGameObject, IObserver<Path.PathLink> {
         
         public static readonly string IS_DEAD_KEY = "IsDead";
+
+        public PathGOFactory pathFactory;
 
         public Hero Hero { get; private set; }
         public Level Level { get; private set; }
@@ -53,7 +56,11 @@ namespace TrappedGame.View.Controllers {
                     return gameObject.transform.position;
                 }
                 var link = movementsQueue.Dequeue();
+
                 if (link.IsAdjacent()) {
+                    if (Hero.Contains(link)) {
+                        pathFactory.CreateLink(link, this);
+                    }
                     return GameUtils.ConvertToGameCoord(link.ToX, link.ToY, Level);
                 }
                 gameObject.transform.position = GameUtils.ConvertToGameCoord(link.ToX, link.ToY, Level);
