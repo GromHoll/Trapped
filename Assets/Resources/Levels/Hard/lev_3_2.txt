@@ -7,7 +7,7 @@
     "..W#TX.", 
     "#.^.YV#"
   ], 
-  "name": "noname", 
+  "name": "lev_3_2", 
   "size": [
     7, 
     6
