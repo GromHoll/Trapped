@@ -1,0 +1,93 @@
+{
+  "map": [
+    "T..W##", 
+    "^ZYX.#", 
+    "U.#...", 
+    "..#.#.", 
+    "#.....", 
+    "#.oV.#"
+  ], 
+  "name": "lvl22", 
+  "size": [
+    6, 
+    6
+  ], 
+  "symbols": [
+    {
+      "symbol": ".", 
+      "type": "EMPTY"
+    }, 
+    {
+      "symbol": "#", 
+      "type": "WALL"
+    }, 
+    {
+      "symbol": "o", 
+      "type": "START"
+    }, 
+    {
+      "symbol": "^", 
+      "type": "FINISH"
+    }, 
+    {
+      "symbol": "+", 
+      "type": "BONUS"
+    }, 
+    {
+      "currentPeriod": 0, 
+      "currentState": "off", 
+      "offPeriod": 1, 
+      "onPeriod": 2, 
+      "symbol": "Z", 
+      "type": "SPEAR"
+    }, 
+    {
+      "currentPeriod": 2, 
+      "currentState": "off", 
+      "offPeriod": 3, 
+      "onPeriod": 3, 
+      "symbol": "Y", 
+      "type": "SPEAR"
+    }, 
+    {
+      "currentPeriod": 1, 
+      "currentState": "on", 
+      "offPeriod": 2, 
+      "onPeriod": 2, 
+      "symbol": "X", 
+      "type": "SPEAR"
+    }, 
+    {
+      "currentPeriod": 1, 
+      "currentState": "off", 
+      "offPeriod": 2, 
+      "onPeriod": 3, 
+      "symbol": "W", 
+      "type": "SPEAR"
+    }, 
+    {
+      "currentPeriod": 0, 
+      "currentState": "on", 
+      "offPeriod": 3, 
+      "onPeriod": 3, 
+      "symbol": "V", 
+      "type": "SPEAR"
+    }, 
+    {
+      "currentPeriod": 0, 
+      "currentState": "off", 
+      "offPeriod": 1, 
+      "onPeriod": 2, 
+      "symbol": "U", 
+      "type": "SPEAR"
+    }, 
+    {
+      "currentPeriod": 0, 
+      "currentState": "on", 
+      "offPeriod": 2, 
+      "onPeriod": 2, 
+      "symbol": "T", 
+      "type": "SPEAR"
+    }
+  ]
+}

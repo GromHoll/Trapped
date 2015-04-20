@@ -21,14 +21,14 @@
       "Folder": "Levels/Dev/",
       "LoadAll": true
     }, {
-      "Name": "Hard Gen levels",
+      "Name": "Spear Gen M1",
+      "Folder": "Levels/m1/",
+      "LoadAll": true
+    }, {
+      "Name": "Spear Gen H1",
       "Folder": "Levels/Hard/",
       "LoadAll": true
-    }, {
-      "Name": "Spear Gen levels",
-      "Folder": "Levels/Spears/",
-      "LoadAll": true
-    }, {
+	}, {
       "Name": "External",
       "Folder": "ExternalLevels/",
       "External": true,

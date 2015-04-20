@@ -7,7 +7,7 @@
     "#S^V..#", 
     "#Z.T.##"
   ], 
-  "name": "noname", 
+  "name": "lev_1_2", 
   "size": [
     7, 
     6
