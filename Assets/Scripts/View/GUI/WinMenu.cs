@@ -21,9 +21,5 @@ namespace TrappedGame.View.GUI {
                 AudioSource.PlayClipAtPoint(winAudio, Vector3.zero);
             }
         }
-
-        public void ReturnToMenu() {
-            Application.LoadLevel("MainMenu");
-        }
     }
 }

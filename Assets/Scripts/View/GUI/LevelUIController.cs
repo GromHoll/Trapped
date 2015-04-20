@@ -21,6 +21,15 @@ namespace TrappedGame.View.GUI {
             }
         }
 
+        void Update() {
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Backspace)) {
+                ReturnToMenu();
+            } else if (Input.GetKeyDown(KeyCode.Space) && winMenu.isActiveAndEnabled) {
+                NextLevel();
+            }
+        }
+
+
         public void ShowTutorial(Tutorial tutorial) {
             tutorialMenu.ShowTutorial(tutorial);
         }
@@ -29,7 +38,7 @@ namespace TrappedGame.View.GUI {
             winMenu.Show(game);
         }
 
-        public void BackToMainMenu() {
+        public void ReturnToMenu() {
             LoadScene("MainMenu");
         }
 
@@ -45,7 +54,7 @@ namespace TrappedGame.View.GUI {
                 PlayerPrefs.SetString(Preferences.CURRENT_LEVEL, nextLevel.Path);
                 ReloadLevel();
             } else {
-                BackToMainMenu();
+                ReturnToMenu();
             }
         }
 
@@ -68,5 +77,6 @@ namespace TrappedGame.View.GUI {
                 { "difficulty", difficulty }
             });
         }
+
 	}
 }
