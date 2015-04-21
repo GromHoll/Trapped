@@ -34,7 +34,6 @@ namespace TrappedGame.Main {
         private HeroController heroController;
 
         private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
-        private readonly IList<PathLinkController> pathLinks = new List<PathLinkController>();
 
         void Start() {   
             var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);

@@ -79,8 +79,6 @@ namespace TrappedGame.Model.LevelUtils {
                 var packFolder = packNode[PACK_FOLDER_KEY].Value;
                 var external = packNode[PACK_EXTERNAL_KEY].AsBool;
                 var loadAll = packNode[PACK_LOAD_ALL_KEY].AsBool;
-                Debug.Log(String.Format("Loading pack \"{0}\": folder = {1}, isExternal = {2}",
-                                        packName, packFolder, external));
                 var pack = new PackInfo(packName, packFolder, external);
                 var loadedPack = loadAll ? LoadAllFolder(pack) : LoadList(pack, packNode);
 
@@ -91,7 +89,6 @@ namespace TrappedGame.Model.LevelUtils {
 	    }
 
         private PackInfo LoadList(PackInfo pack, JSONNode packNode) {
-            Debug.Log("Loading list of levels for pack " + pack.Name);
             foreach (JSONNode levelNode in packNode[LEVELS_KEY].AsArray) {
                 var levelName = levelNode[LEVEL_NAME_KEY];
                 var levelSource = levelNode[LEVEL_SOURCE_KEY];
@@ -105,9 +102,7 @@ namespace TrappedGame.Model.LevelUtils {
         }
 
         private PackInfo LoadAllExternalFolder(PackInfo pack) {
-            Debug.Log("Loading pack " + pack.Name + " from external folder " + pack.Folder);
             var files = GetAllFilesInFolder(pack.Folder);
-            Debug.Log("List of files in folder " + pack.Folder + ": " + String.Join(",", files.ToArray()));
             foreach (var filePath in files) {
                 var fileName = FilePath.GetFileName(filePath);
                 pack.AddLevelInfo(fileName);
@@ -117,7 +112,6 @@ namespace TrappedGame.Model.LevelUtils {
 
         private IEnumerable<String> GetAllFilesInFolder(String folder) {
             try {
-                Debug.Log("Loading files from folder " + FilePath.Combine(Application.dataPath, folder));
                 return Directory.GetFiles(FilePath.Combine(Application.dataPath, folder), "*.txt");
             } catch {
                 return new List<String>();
@@ -125,7 +119,6 @@ namespace TrappedGame.Model.LevelUtils {
         }
 
         private PackInfo LoadAllResourcesFolder(PackInfo pack) {
-            Debug.Log("Loading all resource folder for pack " + pack.Name);
             var levels = Resources.LoadAll(pack.Folder);
             foreach (var level in levels) {
                 var fileName = level.name;
