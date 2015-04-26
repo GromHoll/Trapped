@@ -16,7 +16,7 @@ namespace TrappedGame.View.Controllers {
             get { return cell; }
             set {
                 cell = value;
-                foreach (var indicators in GetComponentsInChildren<IndicatorController>()) {
+                foreach (var indicators in GetComponentsInChildren<Indicator4Controller>()) {
                     indicators.Cell = value;
                 }    
             }
