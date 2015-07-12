@@ -35,6 +35,5 @@ namespace TrappedGame.View.GUI {
             });
             button.GetComponentInChildren<Text>().text = pack.Name;
         }
-
-	}
+    }
 }

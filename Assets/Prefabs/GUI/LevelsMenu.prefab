@@ -44,6 +44,7 @@ GameObject:
   - 222: {fileID: 22266102}
   - 114: {fileID: 11466094}
   - 114: {fileID: 11466092}
+  - 114: {fileID: 11466778}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -347,6 +348,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11466778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 166102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd0bdc782a2c8f4ba835b8d5a6fcd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &22238970
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -475,7 +487,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -.572666347, y: 1.45569026}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!1001 &100100000
