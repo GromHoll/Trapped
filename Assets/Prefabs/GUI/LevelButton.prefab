@@ -29,6 +29,7 @@ GameObject:
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11428480}
+  - 114: {fileID: 11411256}
   m_Layer: 5
   m_Name: LevelButton
   m_TagString: Untagged
@@ -124,6 +125,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11411256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b061a8a40193b2f4ebcc2effc3d3647b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notStartedColor: {r: .925490201, g: .941176474, b: .945098042, a: 1}
+  startedColor: {r: .741176486, g: .764705896, b: .78039217, a: 1}
+  finishedColor: {r: .546355486, g: .78039217, b: .455993861, a: 1}
 --- !u!114 &11428480
 MonoBehaviour:
   m_ObjectHideFlags: 1

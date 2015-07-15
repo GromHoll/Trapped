@@ -13,18 +13,32 @@ namespace TrappedGame.Model.LevelUtils {
 	public class Levels {
 
 	    public class LevelInfo {
+
+            private readonly string PLAYER_PREF_LEVEL_STATE_PREFIX = "level_state_"; 
+
+            public enum LEVEL_STATE { NOT_STARTED, STARTED, FINISHED };
+
             public PackInfo Pack { get; internal set; }
             public string Source { get; private set; }
             public string Name { get; private set; }
 	        public string Path {
 	            get { return Pack.Folder + Source; }
 	        }
+            public LEVEL_STATE State { 
+                get {
+                    return (LEVEL_STATE) PlayerPrefs.GetInt(PLAYER_PREF_LEVEL_STATE_PREFIX + Path);   
+                }
+                set {
+                    PlayerPrefs.SetInt(PLAYER_PREF_LEVEL_STATE_PREFIX + Path, (int) value); 
+                }
+            }
 
-	        internal LevelInfo(string source, string name = null) {
+            internal LevelInfo(string source, string name = null) {
                 Validate.NotNullOrEmpty(source, "Source can't be a null or empty");
                 Source = source;
                 Name = name ?? source;
             }
+                        
 	    }
 
         public class PackInfo {
@@ -156,5 +170,6 @@ namespace TrappedGame.Model.LevelUtils {
             }
             return null;
         }
-	}
+	
+    }
 }

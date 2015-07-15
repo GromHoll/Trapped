@@ -9,6 +9,7 @@ using TrappedGame.View.Controllers;
 using TrappedGame.View.GUI;
 using TrappedGame.View.Graphic;
 using TrappedGame.View.Sync;
+using TrappedGame.Model.LevelUtils;
 using UnityEngine;
 
 namespace TrappedGame.Main {
@@ -21,6 +22,7 @@ namespace TrappedGame.Main {
 
         private Game game;
         private Level level;
+        private Levels.LevelInfo levelInfo;
         private HeroInput heroInput;
         private InputQueue inputQueue = new InputQueue();
 
@@ -35,10 +37,10 @@ namespace TrappedGame.Main {
 
         private readonly List<ISyncGameObject> syncGameObjects = new List<ISyncGameObject>();
 
-        void Start() {   
-            var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
+        void Start() {
+            levelInfo = getLevelInfo();
             var loader = new JsonLevelLoader();
-            level = loader.LoadLevel(levelName);
+            level = loader.LoadLevel(levelInfo.Path);
             level.AddNextTickAction(() => AudioSource.PlayClipAtPoint(next, Vector3.zero));
             level.AddBackTickAction(() => AudioSource.PlayClipAtPoint(back, Vector3.zero));
             game = new Game(level);
@@ -48,6 +50,7 @@ namespace TrappedGame.Main {
 
             heroInput = CreateInput();
             CreateLevelObjects();
+            startLevelProgres();
         }
 
         private HeroInput CreateInput() {
@@ -78,8 +81,22 @@ namespace TrappedGame.Main {
             if (!game.IsWin()) {
                 UpdateInput();
             } else if (IsSync()) {
+                saveLevelProgres(); // TODO It's can be called only once
                 uiController.ShowWinMenu();
             }
+        }
+
+        private void startLevelProgres() {
+            levelInfo.State = Levels.LevelInfo.LEVEL_STATE.STARTED;
+        }
+
+        private void saveLevelProgres() {
+            levelInfo.State = Levels.LevelInfo.LEVEL_STATE.FINISHED;
+        }
+
+        private Levels.LevelInfo getLevelInfo() {
+            var levelName = PlayerPrefs.GetString(Preferences.CURRENT_LEVEL);
+           return Levels.GetLevelByName(levelName);
         }
 
         private void UpdateInput() {

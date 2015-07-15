@@ -40,7 +40,9 @@ namespace TrappedGame.View.GUI {
                 Application.LoadLevel("Level");
             });
             button.GetComponentInChildren<Text>().text = level.Name;
+            
+            LevelButton levelButton = buttonGO.GetComponent<LevelButton>();
+            levelButton.Level = level;
         }
-
 	}
 }
