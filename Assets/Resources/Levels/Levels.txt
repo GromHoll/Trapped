@@ -21,6 +21,50 @@
       "Folder": "Levels/Dev/",
       "LoadAll": true
     }, {
+      "Name": "Case_0",
+      "Folder": "Levels/Case_0/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_1",
+      "Folder": "Levels/Case_1/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_2",
+      "Folder": "Levels/Case_2/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_3",
+      "Folder": "Levels/Case_3/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_4",
+      "Folder": "Levels/Case_4/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_5",
+      "Folder": "Levels/Case_5/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_6",
+      "Folder": "Levels/Case_6/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_7",
+      "Folder": "Levels/Case_7/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_8",
+      "Folder": "Levels/Case_8/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_9",
+      "Folder": "Levels/Case_9/",
+      "LoadAll": true
+    }, {
+      "Name": "Case_10",
+      "Folder": "Levels/Case_10/",
+      "LoadAll": true
+    }, {
       "Name": "Spear Gen M1",
       "Folder": "Levels/m1/",
       "LoadAll": true
